@@ -1,0 +1,64 @@
+{
+  "name": "rest-client-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "react-router build",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
+    "lint": "eslint . --fix",
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "prepare": "husky",
+    "deploy": "vite build && gh-pages -d dist",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.{json,md,css,scss,html}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@react-router/node": "^7.7.1",
+    "@react-router/serve": "^7.7.1",
+    "axios": "^1.11.0",
+    "eslint-plugin-unused-imports": "^4.2.0",
+    "gh-pages": "^6.3.0",
+    "isbot": "^5.1.27",
+    "normalize.css": "^8.0.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router": "^7.7.1",
+    "tailwindcss": "^4.1.12",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "devDependencies": {
+    "@react-router/dev": "^7.7.1",
+    "@tailwindcss/vite": "^4.1.4",
+    "@types/node": "^20",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@vitejs/plugin-react": "^5.0.0",
+    "babel-plugin-react-compiler": "^19.1.0-rc.2",
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-compiler": "^19.0.0-beta-af1b7da-20250417",
+    "eslint-plugin-react-hooks": "^6.0.0-rc.1",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
+    "prettier": "3.6.2",
+    "tailwindcss": "^4.1.4",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.39.1",
+    "vite": "^6.3.3",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
