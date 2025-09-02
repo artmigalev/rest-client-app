@@ -1,13 +1,13 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type React from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router';
 
-const Footer = (): React.JSX.Element => {
+const Footer = memo((): React.JSX.Element => {
   return (
     <footer className="w-[95%] m-auto border rounded-2xl p-[2rem] flex flex-row items-center justify-around text-[250%]">
       <Link to={'https://github.com/artmigalev'}>
-        {/* <img className='w-[50px] h-[50px]' src="/github-brands-solid-full.svg" alt="" /> */}
         <FontAwesomeIcon icon={faGithub} />
       </Link>
       <span>2025</span>
@@ -16,6 +16,7 @@ const Footer = (): React.JSX.Element => {
       </Link>
     </footer>
   );
-};
+});
+Footer.displayName = 'Footer';
 
 export default Footer;
