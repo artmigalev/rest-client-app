@@ -8,9 +8,14 @@
 
 html,
 body {
+  display: flex;
+  flex-direction: column;
   width: 100vw;
+  height: 100vh;
   font-size: 10px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family:
+    'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   @apply bg-white dark:bg-gray-950;
 
   @media (prefers-color-scheme: dark) {

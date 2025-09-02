@@ -4,11 +4,7 @@ const Navigation = () => {
   return (
     <nav className=" flex  justify-around items-center gap-4 mt-[1rem] mb-[1rem] w-[100%]">
       <Link to={'/routes/home'}>
-        <img
-          src="/public/postman2csharp.png"
-          alt="logo"
-          className="max-w-[50px]"
-        />
+        <img src="/postman2csharp.png" alt="logo" className="max-w-[50px]" />
       </Link>
 
       <select

@@ -1,4 +1,5 @@
 import Header from '~/layout/header';
+import Main from '~/layout/main';
 import Navigation from '~/navigation/Navigation';
 
 export function meta() {
@@ -11,6 +12,7 @@ export default function Home() {
       <Header>
         <Navigation />
       </Header>
+      <Main />
     </>
   );
 }
