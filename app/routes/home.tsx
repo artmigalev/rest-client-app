@@ -1,3 +1,4 @@
+import Footer from '~/layout/footer';
 import Header from '~/layout/header';
 import Main from '~/layout/main';
 import Navigation from '~/navigation/Navigation';
@@ -13,6 +14,7 @@ export default function Home() {
         <Navigation />
       </Header>
       <Main />
+      <Footer />
     </>
   );
 }
