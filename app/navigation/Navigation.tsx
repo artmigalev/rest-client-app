@@ -1,0 +1,35 @@
+import { Link } from 'react-router';
+
+const Navigation = () => {
+  return (
+    <nav className=" flex  justify-around items-center gap-4 mt-[1rem] mb-[1rem] w-[100%]">
+      <Link to={'/routes/home'}>
+        <img
+          src="/public/postman2csharp.png"
+          alt="logo"
+          className="max-w-[50px]"
+        />
+      </Link>
+
+      <select
+        className="text-2xl background: black cursor-pointer"
+        name="pets"
+        id="pet-select"
+      >
+        <option className="cursor-pointer" value="english">
+          English
+        </option>
+        <option className="cursor-pointer" value="russian">
+          Russian
+        </option>
+      </select>
+      <Link className="text-2xl" to={'/auth/login'}>
+        Sing in
+      </Link>
+      <Link className="text-2xl" to={'/auth/register'}>
+        Sing up
+      </Link>
+    </nav>
+  );
+};
+export default Navigation;
