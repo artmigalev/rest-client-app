@@ -1,7 +1,7 @@
 import { ErrorMessage } from '@hookform/error-message';
-import { Form, useForm } from 'react-hook-form';
 
-type FormInputsLogin = {
+import { Form, useForm } from 'react-hook-form';
+export type FormInputsLogin = {
   username: string;
   password: string;
 };
@@ -30,7 +30,7 @@ const Login = () => {
 
   return (
     <Form
-      className="flex flex-col gap-[1rem]"
+      className="flex flex-col gap-[1rem] w-[100%]"
       control={control}
       action={'/login'}
       onSubmit={handleSubmit(onSubmit)}
@@ -60,7 +60,9 @@ const Login = () => {
           render={({ messages }) =>
             messages &&
             Object.entries(messages).map(([type, message]) => (
-              <span key={type}>{message}</span>
+              <span className="text-red-700 text-[.5em]" key={type}>
+                {message}
+              </span>
             ))
           }
         />
@@ -93,7 +95,9 @@ const Login = () => {
           render={({ messages }) =>
             messages &&
             Object.entries(messages).map(([type, message]) => (
-              <span key={type}>{message}</span>
+              <span className="text-red-700 text-[.5em] pt-0.5" key={type}>
+                {message}
+              </span>
             ))
           }
         />
