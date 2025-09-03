@@ -1,3 +1,4 @@
+import { ErrorMessage } from '@hookform/error-message';
 import { Form, useForm } from 'react-hook-form';
 
 type FormInputsLogin = {
@@ -38,44 +39,68 @@ const Login = () => {
       <div className="flex flex-col border-b  p-[1rem] gap-0.5">
         <label htmlFor="username">Username:</label>
         <input
-          className="border rounded-2xl pl-1"
+          className="border rounded-2xl pl-3 "
           type="text"
           {...register('username', {
             required: {
               value: true,
               message: 'must be required',
             },
+            minLength: {
+              value: 2,
+              message: 'must contain at least 2 letters',
+            },
           })}
           placeholder=" username"
           id="username"
         />
-        {errors.username && (
-          <span className="text-amber-50 text-2xl">
-            {errors.username.message}
-          </span>
-        )}
-        {}
+        <ErrorMessage
+          errors={errors}
+          name="username"
+          render={({ messages }) =>
+            messages &&
+            Object.entries(messages).map(([type, message]) => (
+              <span key={type}>{message}</span>
+            ))
+          }
+        />
       </div>
       <div className="flex flex-col border-b  p-[1rem] gap-0.5">
         <label htmlFor="">Password:</label>
         <input
-          className="border rounded-2xl pl-1"
+          className="border rounded-2xl pl-3"
           type="text"
           {...register('password', {
-            required: true,
-            minLength: 8,
-            maxLength: 16,
+            required: {
+              value: true,
+              message: 'must be  required',
+            },
+            minLength: {
+              value: 8,
+              message: 'must contain at least 8 letters',
+            },
+            maxLength: {
+              value: 16,
+              message: 'must contain at max 16 letters',
+            },
           })}
           placeholder=" password"
         />
-        {errors.username && (
-          <span className="text-amber-50 text-2xl">
-            {errors.username.message}
-          </span>
-        )}
+
+        <ErrorMessage
+          errors={errors}
+          name="password"
+          render={({ messages }) =>
+            messages &&
+            Object.entries(messages).map(([type, message]) => (
+              <span key={type}>{message}</span>
+            ))
+          }
+        />
       </div>
       <input
-        className="border rounded-2xl mt-[1rem]  p-[.5rem] "
+        className="border rounded-2xl mt-[1rem]  p-[.5rem] cursor-pointer "
+        onClick={() => console.log(errors)}
         type="submit"
         value="Login"
       />
