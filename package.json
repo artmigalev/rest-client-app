@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "prepare": "husky",
-    "deploy": "vite build && gh-pages -d dist",
+    "deploy": "vite build && gh-pages -d build",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
