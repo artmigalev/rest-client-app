@@ -1,10 +1,9 @@
 import { Link } from 'react-router';
 import SignOut from '~/auth/sing-out';
 export type NavProps = {
-  userStatus: boolean;
-  toggle: (value: boolean) => void;
+  isLogin: boolean;
 };
-const Navigation = ({ userStatus, toggle }: NavProps) => {
+const Navigation = ({ isLogin }: NavProps) => {
   return (
     <nav className=" flex  justify-around items-center  w-[100%]">
       <Link to={'/home'}>
@@ -23,8 +22,8 @@ const Navigation = ({ userStatus, toggle }: NavProps) => {
           Russian
         </option>
       </select>
-      {userStatus ? (
-        <SignOut toggle={toggle} />
+      {isLogin ? (
+        <SignOut />
       ) : (
         <>
           <Link to={'/login'}>Sing in</Link>
