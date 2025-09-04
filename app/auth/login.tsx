@@ -1,12 +1,16 @@
 import { ErrorMessage } from '@hookform/error-message';
+import { useEffect } from 'react';
 
 import { Form, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { login } from '~/utils/user/login';
 export type FormInputsLogin = {
   username: string;
   password: string;
 };
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -20,19 +24,23 @@ const Login = () => {
     },
     criteriaMode: 'all',
   });
-  const onSubmit = () => {
-    setError(
-      'username',
-      { type: 'minLength', message: 'must be required' },
-      { shouldFocus: true }
-    );
-  };
 
+  const onSubmit = (data: FormInputsLogin) => {
+    console.log(data);
+
+    const isLogin = login(data);
+    console.log(isLogin);
+    if (isLogin) {
+      navigate('/home');
+    }
+  };
+  useEffect(() => {
+    setError('username', { message: 'invalid' });
+  }, [setError]);
   return (
     <Form
       className="flex flex-col gap-[1rem] w-[100%]"
       control={control}
-      action={'/login'}
       onSubmit={handleSubmit(onSubmit)}
       validateStatus={(status) => status === 200}
     >
@@ -104,9 +112,8 @@ const Login = () => {
       </div>
       <input
         className="border rounded-2xl mt-[1rem]  p-[.5rem] cursor-pointer "
-        onClick={() => console.log(errors)}
         type="submit"
-        value="Login"
+        value="Sing In"
       />
     </Form>
   );

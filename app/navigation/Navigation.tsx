@@ -1,6 +1,10 @@
 import { Link } from 'react-router';
-
-const Navigation = () => {
+import SignOut from '~/auth/sing-out';
+export type NavProps = {
+  userStatus: boolean;
+  toggle: (value: boolean) => void;
+};
+const Navigation = ({ userStatus, toggle }: NavProps) => {
   return (
     <nav className=" flex  justify-around items-center  w-[100%]">
       <Link to={'/home'}>
@@ -8,8 +12,8 @@ const Navigation = () => {
       </Link>
 
       <select
-        className=" background: black cursor-pointer"
-        name="pets"
+        className=" bg-black cursor-pointer"
+        name="language"
         id="pet-select"
       >
         <option className="cursor-pointer" value="english">
@@ -19,8 +23,14 @@ const Navigation = () => {
           Russian
         </option>
       </select>
-      <Link to={'/login'}>Sing in</Link>
-      <Link to={'/register'}>Sing up</Link>
+      {userStatus ? (
+        <SignOut toggle={toggle} />
+      ) : (
+        <>
+          <Link to={'/login'}>Sing in</Link>
+          <Link to={'/register'}>Sing up</Link>
+        </>
+      )}
     </nav>
   );
 };

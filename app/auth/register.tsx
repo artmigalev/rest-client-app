@@ -1,6 +1,9 @@
 import { Form, useForm } from 'react-hook-form';
 import type { FormInputsLogin } from './login';
 import { ErrorMessage } from '@hookform/error-message';
+import { useEffect } from 'react';
+import registered from '~/utils/user/sing-up';
+import { useNavigate } from 'react-router';
 
 type FormInputsRegister = {
   firstName: string;
@@ -10,10 +13,12 @@ type FormInputsRegister = {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
   const {
+    reset,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid, isSubmitted, isSubmitSuccessful },
     control,
   } = useForm<FormInputsRegister>({
     defaultValues: {
@@ -24,12 +29,23 @@ const Register = () => {
     },
     criteriaMode: 'all',
   });
-  const onSubmit = () => {};
+
+  useEffect(() => {
+    if (isValid) {
+      if (isSubmitted) {
+        reset();
+        navigate('/home');
+      }
+    }
+  }, [isSubmitSuccessful, isValid, isSubmitted]);
+  const onSubmit = (data: FormInputsLogin) => {
+    const { username, password } = data;
+    registered(username, password);
+  };
   return (
     <Form
       className="flex flex-col gap-[1rem] w-[100%]"
       control={control}
-      action={'/register'}
       onSubmit={handleSubmit(onSubmit)}
       validateStatus={(status) => status === 200}
     >
@@ -163,9 +179,9 @@ const Register = () => {
       </div>
       <input
         className="border rounded-2xl mt-[1rem]  p-[.5rem] cursor-pointer "
-        onClick={() => console.log(errors)}
+        // onClick={() => redirect('/home')}
         type="submit"
-        value="Login"
+        value="Sing Up"
       />
     </Form>
   );
