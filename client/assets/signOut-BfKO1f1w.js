@@ -1,1 +1,0 @@
-import{w as s,j as i,e as n}from"./chunk-PVWAREVJ-DRdnRszu.js";import{a as e,l as a}from"./userSlice-C-aroggc.js";const r=()=>{localStorage.setItem("isLogin",JSON.stringify(!1))},c=()=>{const t=e(),o=()=>{r(),t(a())};return i.jsx(n,{to:"/",onClick:()=>{o()},children:"Sing Out"})},u=s(c);export{u as default};
