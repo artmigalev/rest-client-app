@@ -12,7 +12,7 @@ const SignOut = () => {
 
   return (
     <Link
-      to={'/home'}
+      to={'/'}
       onClick={() => {
         exit();
       }}

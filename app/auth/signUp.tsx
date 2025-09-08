@@ -1,5 +1,5 @@
 import { Form, useForm } from 'react-hook-form';
-import type { FormInputsLogin } from './login';
+import type { FormInputsLogin } from './signIn';
 import { ErrorMessage } from '@hookform/error-message';
 import { useEffect } from 'react';
 import registered from '~/utils/user/sing-up';
@@ -34,7 +34,7 @@ const Register = () => {
     if (isValid) {
       if (isSubmitted) {
         reset();
-        navigate('/home');
+        navigate('/');
       }
     }
   }, [isSubmitSuccessful, isValid, isSubmitted]);

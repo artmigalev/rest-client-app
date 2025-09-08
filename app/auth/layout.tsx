@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from 'react-router';
-import Login from './login';
-import Register from './register';
+import Login from './signIn';
+import Register from './signUp';
 
 const Layout = () => {
   const location = useLocation();
@@ -15,7 +15,7 @@ const Layout = () => {
           }
         >
           Sing In
-        </NavLink>{' '}
+        </NavLink>
         /
         <NavLink
           to={'/register'}
@@ -23,7 +23,6 @@ const Layout = () => {
             isActive ? 'text-blue-800' : 'text-white'
           }
         >
-          {' '}
           Sing Up
         </NavLink>
       </div>

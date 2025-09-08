@@ -1,5 +1,4 @@
 import { ErrorMessage } from '@hookform/error-message';
-import { useEffect } from 'react';
 
 import { Form, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -11,6 +10,7 @@ export type FormInputsLogin = {
 
 const Login = () => {
   const navigate = useNavigate();
+  // const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -26,17 +26,18 @@ const Login = () => {
   });
 
   const onSubmit = (data: FormInputsLogin) => {
-    console.log(data);
-
-    const isLogin = login(data);
-    console.log(isLogin);
-    if (isLogin) {
-      navigate('/home');
+    const result = login(data);
+    console.log(result);
+    if (result.isLogged === true) {
+      navigate('/');
+      localStorage.setItem('isLogin', JSON.stringify(result.isLogged));
+      // dispatch(changeByValue(result.username));
+      // dispatch(loggedIn());
+    } else {
+      setError('username', { type: 'value', message: 'invalid' });
     }
   };
-  useEffect(() => {
-    setError('username', { message: 'invalid' });
-  }, [setError]);
+
   return (
     <Form
       className="flex flex-col gap-[1rem] w-[100%]"

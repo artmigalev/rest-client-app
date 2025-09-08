@@ -1,16 +1,19 @@
 export type RegisterProps = {
   firstName: string;
   lastNAme: string;
-  userName: string;
+  username: string;
   password: string;
 };
 
 const registered = (
-  userName: RegisterProps['userName'],
+  username: RegisterProps['username'],
   password: RegisterProps['password']
 ) => {
   const LS = localStorage;
-  LS.setItem(userName, password);
+  LS.setItem(
+    'user',
+    JSON.stringify({ username: username, password: password })
+  );
   const isRegistered = true;
   localStorage.setItem('isLogin', JSON.stringify(isRegistered));
 };

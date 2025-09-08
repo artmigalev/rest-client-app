@@ -1,12 +1,12 @@
 import { Link } from 'react-router';
-import SignOut from '~/auth/sing-out';
+import SignOut from '~/auth/signOut';
 export type NavProps = {
   isLogin: boolean;
 };
 const Navigation = ({ isLogin }: NavProps) => {
   return (
     <nav className=" flex  justify-around items-center  w-[100%]">
-      <Link to={'/home'}>
+      <Link to={'/'}>
         <img src="/postman2csharp.png" alt="logo" className="max-w-[50px]" />
       </Link>
 
@@ -26,8 +26,8 @@ const Navigation = ({ isLogin }: NavProps) => {
         <SignOut />
       ) : (
         <>
-          <Link to={'/login'}>Sing in</Link>
-          <Link to={'/register'}>Sing up</Link>
+          <Link to={'login'}>Sing in</Link>
+          <Link to={'register'}>Sing up</Link>
         </>
       )}
     </nav>

@@ -1,24 +1,11 @@
-import { useEffect } from 'react';
+import { useLocalStorage } from '@uidotdev/usehooks';
 import Footer from '~/layout/footer';
 import Header from '~/layout/header';
 import Main from '~/layout/main';
 import Navigation from '~/navigation/Navigation';
-import { selectStatus, toggleByValue } from '~/state-management/userSlice';
-import { useAppDispatch, useAppSelector } from '~/utils/hooks';
-
-export function meta() {
-  return [{ title: 'Postman Clone' }];
-}
 
 export default function Home() {
-  const isLogin = useAppSelector(selectStatus);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const storedStatus = localStorage.getItem('isLogin') === 'true';
-    console.log(storedStatus);
-    dispatch(toggleByValue(storedStatus));
-  }, [isLogin]);
+  const [isLogin] = useLocalStorage<boolean>('isLogin');
 
   return (
     <>
