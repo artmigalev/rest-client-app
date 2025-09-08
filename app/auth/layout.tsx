@@ -6,8 +6,8 @@ const Layout = () => {
   const location = useLocation();
 
   return (
-    <div className=" flex-col p-5 items-center text-[250%] border rounded-2xl flex justify-center  w-max   m-auto">
-      <div className="border-b">
+    <div className="z-99 w-[350px] h-[80%] m-auto  pt-1 auth text-[2rem] ">
+      <div className="border-b text-center">
         <NavLink
           to={'/login'}
           className={({ isActive }) =>

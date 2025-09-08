@@ -45,7 +45,7 @@ const Login = () => {
       <div className="flex flex-col border-b  p-[1rem] gap-0.5">
         <label htmlFor="username">Username:</label>
         <input
-          className="border rounded-2xl pl-3 "
+          className="border  rounded-2xl pl-3 "
           type="text"
           {...register('username', {
             required: {

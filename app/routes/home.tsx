@@ -1,5 +1,6 @@
 import { useLocalStorage } from '@uidotdev/usehooks';
 import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router';
 import Loader from '~/components/Loader';
 import Footer from '~/layout/footer';
 import Header from '~/layout/header';
@@ -23,7 +24,9 @@ export default function Home() {
       <Header>
         <Navigation isLogin={storedIsLogin} />
       </Header>
-      <Main isLogin={storedIsLogin} />
+      <Main isLogin={storedIsLogin}>
+        <Outlet />
+      </Main>
       <Footer />
     </>
   );
