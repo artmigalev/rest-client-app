@@ -9,10 +9,3 @@ export default defineConfig({
     open: true,
   },
 });
-// const config = {
-//   plugins: [reactRouter()],
-// };
-// console.log(
-//   'Plugins:',
-//   config.plugins.map((p) => p.name)
-// );

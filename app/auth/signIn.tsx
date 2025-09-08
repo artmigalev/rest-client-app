@@ -10,7 +10,6 @@ export type FormInputsLogin = {
 
 const Login = () => {
   const navigate = useNavigate();
-  // const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -31,8 +30,6 @@ const Login = () => {
     if (result.isLogged === true) {
       navigate('/');
       localStorage.setItem('isLogin', JSON.stringify(result.isLogged));
-      // dispatch(changeByValue(result.username));
-      // dispatch(loggedIn());
     } else {
       setError('username', { type: 'value', message: 'invalid' });
     }
