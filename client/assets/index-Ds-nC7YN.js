@@ -1,1 +1,0 @@
-import{j as s}from"./chunk-PVWAREVJ-pGN1tkak.js";const r=()=>s.jsxs("div",{className:"loader",children:[s.jsx("span",{className:"bar"}),s.jsx("span",{className:"bar"}),s.jsx("span",{className:"bar"})]});export{r as L};
