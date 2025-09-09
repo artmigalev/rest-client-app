@@ -21,7 +21,7 @@ const Main = ({
   const location = useLocation();
   if (loading) return <Loader />;
   return (
-    <main className=" text-[2rem] relative w-[95%] border m-auto  h-[100%] flex-1 flex flex-col justify-center  border-t-0 border-b-0">
+    <main className=" text-[2rem] relative w-[95%] border m-auto p-[1rem]  h-[100%] flex-1 flex flex-col justify-center  border-t-0 border-b-0">
       {location.pathname === '/' ? (
         <Welcome username={name} isLogin={isLogin} />
       ) : (

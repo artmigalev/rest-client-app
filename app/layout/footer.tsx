@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 
 const Footer = memo((): React.JSX.Element => {
   return (
-    <footer className="w-[95%] m-auto border rounded-2xl p-[2rem] flex flex-row items-center justify-around text-[250%]">
+    <footer className="w-[95%]  bottom-0 m-auto border rounded-2xl p-[2rem]  flex flex-row items-center justify-around text-[250%]">
       <Link to={'https://github.com/artmigalev'}>
         <FontAwesomeIcon icon={faGithub} />
       </Link>

@@ -11,7 +11,6 @@ export default function Home() {
   const [logged, setLogged] = useState(false);
   const [name, setName] = useState('');
   const [user, loading] = useAuthState(auth);
-  console.log(user);
 
   const fetchUserName = async () => {
     try {
