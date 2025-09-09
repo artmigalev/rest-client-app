@@ -5,7 +5,7 @@ const Welcome = ({
   username,
   isLogin,
 }: {
-  username: string;
+  username?: string;
   isLogin: boolean;
 }) => {
   return (

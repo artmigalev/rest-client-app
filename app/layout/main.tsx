@@ -12,7 +12,7 @@ type User = {
 
 const Main = ({ isLogin }: { isLogin: boolean }) => {
   const [localState] = useLocalStorage<User>('user');
-  const username = useAppSelector(selectUser) || localState.username;
+  const username = useAppSelector(selectUser) || localState?.username;
   const location = useLocation();
   const auth =
     location.pathname === '/login' || location.pathname === '/register';
@@ -20,7 +20,6 @@ const Main = ({ isLogin }: { isLogin: boolean }) => {
   return (
     <main className=" text-[2rem] relative w-[95%] border m-auto  h-[100%] flex-1 flex flex-col justify-center  border-t-0 border-b-0">
       {auth ? <Layout /> : <Welcome username={username} isLogin={isLogin} />}
-      {/* <Outlet /> */}
     </main>
   );
 };
