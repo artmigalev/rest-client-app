@@ -1,9 +1,10 @@
 import { Form, useForm } from 'react-hook-form';
-import type { FormInputsLogin } from './signIn';
+import type { FormInputsLogin } from './Login';
 import { ErrorMessage } from '@hookform/error-message';
 import { useEffect } from 'react';
-import registered from '~/utils/user/sing-up';
 import { useNavigate } from 'react-router';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, registerWithEmailAndPassword } from '~/firebase/firebase';
 
 type FormInputsRegister = {
   firstName: string;
@@ -18,7 +19,7 @@ const Register = () => {
     reset,
     register,
     handleSubmit,
-    formState: { errors, isValid, isSubmitted, isSubmitSuccessful },
+    formState: { errors },
     control,
   } = useForm<FormInputsRegister>({
     defaultValues: {
@@ -29,18 +30,16 @@ const Register = () => {
     },
     criteriaMode: 'all',
   });
-
+  const [user, loading] = useAuthState(auth);
   useEffect(() => {
-    if (isValid) {
-      if (isSubmitted) {
-        reset();
-        navigate('/');
-      }
-    }
-  }, [isSubmitSuccessful, isValid, isSubmitted]);
-  const onSubmit = (data: FormInputsLogin) => {
-    const { username, password } = data;
-    registered(username, password);
+    if (loading) return;
+    if (user) navigate('/');
+    reset();
+  }, [loading, user, reset]);
+
+  const onSubmit = (data: FormInputsRegister) => {
+    const { firstName, username, password } = data;
+    registerWithEmailAndPassword({ firstName, username, password });
   };
   return (
     <Form

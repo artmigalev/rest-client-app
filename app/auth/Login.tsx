@@ -1,8 +1,10 @@
 import { ErrorMessage } from '@hookform/error-message';
-
+import { useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Form, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { login } from '~/utils/user/login';
+import Loader from '~/components/Loader';
+import { auth, logInWithEmailAndPassword } from '~/firebase/firebase';
 export type FormInputsLogin = {
   username: string;
   password: string;
@@ -13,7 +15,6 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
     control,
   } = useForm<FormInputsLogin>({
@@ -23,16 +24,18 @@ const Login = () => {
     },
     criteriaMode: 'all',
   });
+  const [user, loading] = useAuthState(auth);
+
+  useEffect(() => {
+    if (loading) {
+      <Loader />;
+      return;
+    }
+    if (user) navigate('/');
+  }, [user, loading, navigate]);
 
   const onSubmit = (data: FormInputsLogin) => {
-    const result = login(data);
-    console.log(result);
-    if (result.isLogged === true) {
-      navigate('/');
-      localStorage.setItem('isLogin', JSON.stringify(result.isLogged));
-    } else {
-      setError('username', { type: 'value', message: 'invalid' });
-    }
+    logInWithEmailAndPassword(data.username, data.password);
   };
 
   return (

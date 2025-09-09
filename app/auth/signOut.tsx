@@ -1,13 +1,8 @@
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router';
-import { loggedOut } from '~/state-management/userSlice';
-import logout from '~/utils/user/logout';
+import { logout } from '~/firebase/firebase';
 const SignOut = () => {
-  const dispatch = useDispatch();
-
   const exit = () => {
     logout();
-    dispatch(loggedOut());
   };
 
   return (

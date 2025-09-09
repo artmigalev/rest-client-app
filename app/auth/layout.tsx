@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from 'react-router';
-import Login from './signIn';
-import Register from './signUp';
+import Login from './Login';
+import Register from './Registered';
 
 const Layout = () => {
   const location = useLocation();
