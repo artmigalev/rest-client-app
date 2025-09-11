@@ -6,5 +6,9 @@ export default [
       route('login', './auth/Login.tsx'),
       route('register', './auth/Registered.tsx'),
     ]),
+    layout('./components/Rest-Client/Layout.tsx', [
+      route('rest-client', './components/Rest-Client/Client.tsx'),
+      // route('history', './routes/History.tsx'),
+    ]),
   ]),
 ] satisfies RouteConfig;

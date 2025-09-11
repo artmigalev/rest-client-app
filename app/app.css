@@ -8,13 +8,14 @@
 
 html,
 body {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+
   width: 100vw;
-  /* min-height: 100vh; */
+  min-height: 100vh;
   /* height: 100%; */
   font-size: 10px;
   font-family:
@@ -26,11 +27,28 @@ body {
     color-scheme: dark;
   }
 }
+main {
+  width: 100%;
+  flex: 1;
+  padding: 20px;
+  background: transparent;
+  justify-content: center;
+  align-items: center;
+}
+header {
+  position: sticky;
+  top: 0;
+  color: white;
+  padding: 20px;
+  z-index: 10;
+}
 body {
-  position: relative;
-  min-height: 100vh;
   height: 100%;
 }
 * {
   box-sizing: border-box;
+}
+footer {
+  color: white;
+  padding: 20px;
 }

@@ -1,3 +1,4 @@
+import { type ContextType } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import Loader from '~/components/Loader';
 import Welcome from '~/components/welcome';
@@ -19,13 +20,15 @@ const Main = ({
   loading: boolean;
 }) => {
   const location = useLocation();
+  // console.log(isLogin);
+
   if (loading) return <Loader />;
   return (
-    <main className=" text-[2rem] relative w-[95%] border m-auto p-[1rem]  h-[100%] flex-1 flex flex-col justify-center  border-t-0 border-b-0">
+    <main className=" text-[2rem] relative h-[100%] flex-1 flex flex-col">
       {location.pathname === '/' ? (
         <Welcome username={name} isLogin={isLogin} />
       ) : (
-        <Outlet />
+        <Outlet context={{ isLogin } satisfies ContextType} />
       )}
     </main>
   );

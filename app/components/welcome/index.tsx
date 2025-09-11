@@ -8,8 +8,6 @@ const Welcome = ({
   username?: string;
   isLogin: boolean;
 }) => {
-  console.log(username, isLogin);
-
   return (
     <>
       <h1 className="text-center w-[100%]">Welcome!</h1>
