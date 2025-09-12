@@ -11,4 +11,5 @@ export default [
       // route('history', './routes/History.tsx'),
     ]),
   ]),
+  // index('./components/Rest-Client/Client.tsx')
 ] satisfies RouteConfig;

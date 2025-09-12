@@ -1,0 +1,23 @@
+label {
+  border-bottom: 0.1rem solid;
+  padding: 1rem;
+  padding-bottom: 0;
+  text-align: center;
+}
+select {
+  border: 0.1rem solid;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+legend {
+  font-size: large;
+}
+fieldset {
+  border: 0.1rem solid;
+  padding: 1rem;
+  border-radius: 1.6rem;
+}
+.field-options {
+  flex-wrap: wrap;
+}
