@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, type JSX } from 'react';
 
 interface FieldClient {
   props: {
@@ -7,7 +7,7 @@ interface FieldClient {
   };
 }
 
-const FieldClient = ({ fnRemove, id }: FieldClient['props']): FieldClient => {
+const FieldClient = ({ fnRemove, id }: FieldClient['props']): JSX.Element => {
   const [selectMethod, setSelectMethod] = useState('');
   const [inputValue, setInputValue] = useState('');
   const onSelect = (e: React.ChangeEvent<HTMLOptionElement>) => {
