@@ -17,7 +17,8 @@ const Main = ({
   isLogin: boolean;
   name: User['username'];
   loading: boolean;
-}) => {
+  }) => {
+  
   const location = useLocation();
   if (loading) return <Loader />;
   return (

@@ -1,9 +1,12 @@
+import { useTransition } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import SignOut from '~/auth/signOut';
 export type NavProps = {
   isLogin: boolean;
 };
 const Navigation = ({ isLogin }: NavProps) => {
+  const {t,i18n} = useTranslation('header');
   return (
     <nav className=" flex  justify-around items-center  w-[100%]">
       <Link to={'/'}>
