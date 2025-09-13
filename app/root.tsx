@@ -16,6 +16,7 @@ import { Suspense } from 'react';
 import Loader from './components/Loader';
 // eslint-disable-next-line react-refresh/only-export-components
 export { meta, links } from './root.meta';
+import './i18n';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

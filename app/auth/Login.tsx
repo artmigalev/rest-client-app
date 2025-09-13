@@ -2,16 +2,20 @@ import { ErrorMessage } from '@hookform/error-message';
 import { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Form, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import Loader from '~/components/Loader';
 import { auth, logInWithEmailAndPassword } from '~/firebase/firebase';
+import { selectLng } from '~/state-management/langSlice';
+import { useAppSelector } from '~/utils/hooks';
 export type FormInputsLogin = {
   username: string;
   password: string;
 };
-
 const Login = () => {
   const navigate = useNavigate();
+  const lng = useAppSelector(selectLng);
+  const { t, i18n } = useTranslation<'login'>('login');
   const {
     register,
     handleSubmit,
@@ -27,12 +31,13 @@ const Login = () => {
   const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
+    i18n.changeLanguage(lng);
     if (loading) {
       <Loader />;
       return;
     }
     if (user) navigate('/');
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, lng]);
 
   const onSubmit = (data: FormInputsLogin) => {
     logInWithEmailAndPassword(data.username, data.password);
@@ -46,21 +51,25 @@ const Login = () => {
       validateStatus={(status) => status === 200}
     >
       <div className="flex flex-col border-b  p-[1rem] gap-0.5">
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="username">{t('username.label')}:</label>
         <input
           className="border  rounded-2xl pl-3 "
           type="text"
           {...register('username', {
             required: {
               value: true,
-              message: 'must be required',
+              message: t('username.required'),
             },
             minLength: {
-              value: 2,
-              message: 'must contain at least 2 letters',
+              value: 3,
+              message: t('username.minLength'),
+            },
+            maxLength: {
+              value: 20,
+              message: t('username.maxLength'),
             },
           })}
-          placeholder=" username"
+          placeholder={t('username.placeholder')}
           id="username"
         />
         <ErrorMessage
@@ -77,25 +86,25 @@ const Login = () => {
         />
       </div>
       <div className="flex flex-col border-b  p-[1rem] gap-0.5">
-        <label htmlFor="">Password:</label>
+        <label htmlFor="">{t('password.label')}:</label>
         <input
           className="border rounded-2xl pl-3"
           type="text"
           {...register('password', {
             required: {
               value: true,
-              message: 'must be  required',
+              message: t('password.required'),
             },
             minLength: {
               value: 8,
-              message: 'must contain at least 8 letters',
+              message: t('password.minLength'),
             },
             maxLength: {
-              value: 16,
-              message: 'must contain at max 16 letters',
+              value: 20,
+              message: t('password.maxLength'),
             },
           })}
-          placeholder=" password"
+          placeholder={t('password.placeholder')}
         />
 
         <ErrorMessage
@@ -114,7 +123,7 @@ const Login = () => {
       <input
         className="border rounded-2xl mt-[1rem]  p-[.5rem] cursor-pointer "
         type="submit"
-        value="Sing In"
+        value={t('button.label')}
       />
     </Form>
   );
