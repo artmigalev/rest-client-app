@@ -30,7 +30,7 @@ const FieldClient = (): JSX.Element => {
     setInputValue(input.value);
   };
   const onSelectOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const select = e.target;
+    const select = e.target as HTMLSelectElement;
     const newOpt = {
       [select.name]: select.value,
     };

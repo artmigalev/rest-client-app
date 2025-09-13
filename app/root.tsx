@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  type LinksFunction,
 } from 'react-router';
 
 import type { Route } from './+types/root';
@@ -14,12 +15,17 @@ import { store } from './state-management/store';
 import { Suspense } from 'react';
 import Loader from './components/Loader';
 
+export const links: LinksFunction = () => [
+  { rel: 'icon', href: '/postman_128px_6C5DF7.svg', type: 'image/svg+xml' },
+];
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
         <Meta />
         <Links />
       </head>
