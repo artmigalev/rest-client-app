@@ -12,7 +12,8 @@
     "format": "prettier --write .",
     "prepare": "husky",
     "deploy": "vite build && gh-pages -d build",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "i18n:generate": "i18next-resources-for-ts interface -i ./public/locales -o ./app/resources.d.ts"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
@@ -73,6 +74,7 @@
     "eslint-plugin-react-hooks": "^6.0.0-rc.1",
     "eslint-plugin-react-refresh": "^0.4.20",
     "husky": "^9.1.7",
+    "i18next-resources-for-ts": "^1.7.4",
     "lint-staged": "^16.1.6",
     "prettier": "3.6.2",
     "tailwindcss": "^4.1.4",
