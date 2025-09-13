@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from 'app/state-management/userSlice';
+import langReducer from 'app/state-management/langSlice';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    lang: langReducer,
   },
 });
 
