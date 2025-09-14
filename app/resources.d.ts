@@ -55,53 +55,55 @@ declare module 'i18next' {
           required: string;
         };
       };
-      firstName: {
-        label: string;
-        placeholder: string;
-      };
-      lastName: {
-        label: string;
-        placeholder: string;
-      };
-      username: {
-        label: string;
-        placeholder: string;
-      };
-      password: {
-        label: string;
-
-        placeholder: string;
-      };
-      button: {
-        label: string;
-      };
-      error: {
+      register: {
         firstName: {
-          message: {
-            required: string;
-            minLength: string;
-            maxLength: string;
-          };
+          label: string;
+          placeholder: string;
         };
         lastName: {
-          message: {
-            required: string;
-            minLength: string;
-            maxLength: string;
-          };
+          label: string;
+          placeholder: string;
         };
         username: {
-          message: {
-            required: string;
-            minLength: string;
-            maxLength: string;
-          };
+          label: string;
+          placeholder: string;
         };
         password: {
-          message: {
-            required: string;
-            minLength: string;
-            maxLength: string;
+          label: string;
+
+          placeholder: string;
+        };
+        button: {
+          label: string;
+        };
+        error: {
+          firstName: {
+            message: {
+              required: string;
+              minLength: string;
+              maxLength: string;
+            };
+          };
+          lastName: {
+            message: {
+              required: string;
+              minLength: string;
+              maxLength: string;
+            };
+          };
+          username: {
+            message: {
+              required: string;
+              minLength: string;
+              maxLength: string;
+            };
+          };
+          password: {
+            message: {
+              required: string;
+              minLength: string;
+              maxLength: string;
+            };
           };
         };
       };
