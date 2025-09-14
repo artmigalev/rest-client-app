@@ -17,8 +17,8 @@ type FormInputsRegister = {
 };
 
 const Register = () => {
-  const lng = useAppSelector(selectLng)
-  const {}=useTranslation('')
+  const lng = useAppSelector(selectLng);
+  const { t, i18n } = useTranslation<'register'>('register');
 
   const navigate = useNavigate();
   const {
@@ -38,6 +38,7 @@ const Register = () => {
   });
   const [user, loading] = useAuthState(auth);
   useEffect(() => {
+    i18n.changeLanguage(lng);
     if (loading) return;
     if (user) navigate('/');
     reset();
@@ -55,21 +56,25 @@ const Register = () => {
       validateStatus={(status) => status === 200}
     >
       <div className="flex flex-col border-b  p-[1rem] gap-0.5">
-        <label htmlFor="firstName">First name:</label>
+        <label htmlFor="firstName">{t('firstName.label')}:</label>
         <input
           className="border rounded-2xl pl-3 "
           type="text"
           {...register('firstName', {
             required: {
               value: true,
-              message: 'must be required',
+              message: t('error.firstName.message.required'),
             },
             minLength: {
-              value: 2,
-              message: 'must contain at least 2 letters',
+              value: 3,
+              message: t('error.firstName.message.minLength'),
+            },
+            maxLength: {
+              value: 20,
+              message: t('error.firstName.message.maxLength'),
             },
           })}
-          placeholder=" first name"
+          placeholder={t('firstName.placeholder')}
           id="firstName"
         />
         <ErrorMessage
@@ -86,21 +91,25 @@ const Register = () => {
         />
       </div>
       <div className="flex flex-col border-b  p-[1rem] gap-0.5">
-        <label htmlFor="lastName">Last name:</label>
+        <label htmlFor="lastName">{t('lastName.label')}:</label>
         <input
           className="border rounded-2xl pl-3 "
           type="text"
           {...register('lastName', {
             required: {
               value: true,
-              message: 'must be required',
+              message: t('error.lastName.message.required'),
             },
             minLength: {
-              value: 2,
-              message: 'must contain at least 2 letters',
+              value: 3,
+              message: t('error.lastName.message.minLength'),
+            },
+            maxLength: {
+              value: 20,
+              message: t('error.lastName.message.maxLength'),
             },
           })}
-          placeholder=" lastName"
+          placeholder={t('lastName.placeholder')}
           id="lastName"
         />
         <ErrorMessage
@@ -117,18 +126,22 @@ const Register = () => {
         />
       </div>
       <div className="flex flex-col border-b  p-[1rem] gap-0.5">
-        <label htmlFor="username">Username:</label>
+        <label htmlFor="username">{t('username.label')}:</label>
         <input
           className="border rounded-2xl pl-3 "
           type="text"
           {...register('username', {
             required: {
               value: true,
-              message: 'must be required',
+              message: t('error.username.message.required'),
             },
             minLength: {
-              value: 2,
-              message: 'must contain at least 2 letters',
+              value: 3,
+              message: t('error.username.message.minLength'),
+            },
+            maxLength: {
+              value: 20,
+              message: t('error.username.message.maxLength'),
             },
           })}
           placeholder=" username"
@@ -148,25 +161,25 @@ const Register = () => {
         />
       </div>
       <div className="flex flex-col border-b  p-[1rem] gap-0.5">
-        <label htmlFor="">Password:</label>
+        <label htmlFor="">{t('password.label')}:</label>
         <input
           className="border rounded-2xl pl-3"
           type="text"
           {...register('password', {
             required: {
               value: true,
-              message: 'must be  required',
+              message: t('error.password.message.required'),
             },
             minLength: {
               value: 8,
-              message: 'must contain at least 8 letters',
+              message: t('error.password.message.minLength'),
             },
             maxLength: {
               value: 16,
-              message: 'must contain at max 16 letters',
+              message: t('error.password.message.maxLength'),
             },
           })}
-          placeholder=" password"
+          placeholder={t('password.placeholder')}
         />
 
         <ErrorMessage
@@ -186,7 +199,7 @@ const Register = () => {
         className="border rounded-2xl mt-[1rem]  p-[.5rem] cursor-pointer "
         // onClick={() => redirect('/home')}
         type="submit"
-        value="Sing Up"
+        value={t('button.label')}
       />
     </Form>
   );
