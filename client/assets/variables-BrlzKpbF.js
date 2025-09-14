@@ -1,0 +1,1 @@
+const e=["REST Client","History","Variables"],o=["GET","PUT","DELETE"],r=["cors","no-cors","semi-origin"],c=["default","no-cache","reload","force-cache","only-if-cached"],a=["follow","manual","error"],s=["no-referrer","client"];export{a,o as b,c,e as d,r as m,s as r};
