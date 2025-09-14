@@ -5,6 +5,9 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, registerWithEmailAndPassword } from '~/firebase/firebase';
+import { useAppSelector } from '~/utils/hooks';
+import { selectLng } from '~/state-management/langSlice';
+import { useTranslation } from 'react-i18next';
 
 type FormInputsRegister = {
   firstName: string;
@@ -14,6 +17,9 @@ type FormInputsRegister = {
 };
 
 const Register = () => {
+  const lng = useAppSelector(selectLng)
+  const {}=useTranslation('')
+
   const navigate = useNavigate();
   const {
     reset,
