@@ -1,34 +1,5 @@
 import 'i18next';
 
-// interface Resources {
-//   header: {
-//     login: 'Войти';
-//     register: 'Зарегистрироваться';
-//   };
-//   login: {
-//     button: {
-//       label: 'Войти';
-//     };
-//     password: {
-//       label: 'Пароль';
-//       maxLength: 'Имя пользователя должно быть не более 20 букв';
-//       minLength: 'Имя пользователя должно быть не менее 8 букв';
-//       placeholder: 'Введите пароль';
-//       required: 'Пароль обязателен';
-//     };
-//     username: {
-//       label: 'Имя пользователя';
-//       maxLength: 'Имя пользователя должно быть не более 20 символов';
-//       minLength: 'Имя пользователя должно быть не менее 3 символов';
-//       placeholder: 'Введите имя пользователя';
-//       required: 'Имя пользователя обязательно';
-//     };
-//   };
-//   welcome: {
-//     greeting: 'Welcome!';
-//   };
-// }
-
 declare module 'i18next' {
   interface CustomTypeOptions {
     resources: {
@@ -113,4 +84,3 @@ declare module 'i18next' {
     };
   }
 }
-export default Resources;

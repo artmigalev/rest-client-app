@@ -9,7 +9,7 @@ i18n
   .use(initReactI18next)
   .init({
     debug: true,
-    fallbackLng: 'en',
+    fallbackLng: ['en'],
     ns: ['header', 'login', 'register', 'welcome'],
     defaultNS: 'header',
     backend: {
