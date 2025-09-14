@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import Menu from '../Menu/Menu';
+import { useTranslation } from 'react-i18next';
 
 const Welcome = ({
   username,
@@ -8,9 +9,11 @@ const Welcome = ({
   username?: string;
   isLogin: boolean;
 }) => {
+  const { t } = useTranslation(['welcome', 'header']);
+
   return (
     <>
-      <h1 className="text-center w-[100%]">Welcome!</h1>
+      <h1 className="text-center w-[100%]">{t('greeting')}</h1>
 
       <nav className="flex flex-row  justify-center w-[100%] gap-[2rem] p-[1rem]">
         {isLogin ? (
@@ -20,8 +23,8 @@ const Welcome = ({
           </>
         ) : (
           <>
-            <Link to="/login">Sing In</Link>
-            <Link to="/register">Sing Up</Link>
+            <Link to="/login">{t('header:login')}</Link>
+            <Link to="/register">{t('header:register')}</Link>
           </>
         )}
       </nav>
