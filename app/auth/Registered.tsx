@@ -139,10 +139,6 @@ const Register = () => {
               value: 3,
               message: t('error.username.message.minLength'),
             },
-            maxLength: {
-              value: 20,
-              message: t('error.username.message.maxLength'),
-            },
           })}
           placeholder=" username"
           id="username"

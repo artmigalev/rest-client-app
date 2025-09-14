@@ -64,10 +64,6 @@ const Login = () => {
               value: 3,
               message: t('username.minLength'),
             },
-            maxLength: {
-              value: 20,
-              message: t('username.maxLength'),
-            },
           })}
           placeholder={t('username.placeholder')}
           id="username"
