@@ -1,0 +1,1 @@
+import{w as o,j as s,O as a,a as e}from"./chunk-PVWAREVJ-D-IEhZX9.js";import{a as i}from"./hooks-DPIGtN5v.js";import"./react-redux-CsXWtHH9.js";const r=()=>{const{isLogin:t}=i();return s.jsx("div",{className:"w-[100%] h-[100%] flex-1",children:t?s.jsx(a,{}):s.jsx(e,{to:"/login"})})},p=o(r);export{p as default};
