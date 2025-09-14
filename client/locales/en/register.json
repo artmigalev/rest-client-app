@@ -1,0 +1,52 @@
+{
+  "firstName": {
+    "label": "First Name",
+    "placeholder": "Enter your username"
+  },
+  "lastName": {
+    "label": "Last Name",
+    "placeholder": "Enter your Last Name"
+  },
+  "username": {
+    "label": "Username",
+    "placeholder": "Enter your username"
+  },
+  "password": {
+    "label": "Password",
+
+    "placeholder": "Enter your password"
+  },
+  "button": {
+    "label": "Sign Up"
+  },
+  "error": {
+    "firstName": {
+      "message": {
+        "required": "First Name  is required",
+        "minLength": "First Name must be at least 3 characters",
+        "maxLength": "First Name must be at most 20 characters"
+      }
+    },
+    "lastName": {
+      "message": {
+        "required": "Last Name  is required",
+        "minLength": "Last Name must be at least 3 characters",
+        "maxLength": "Last  Name must be at most 20 characters"
+      }
+    },
+    "username": {
+      "message": {
+        "required": "Username  is required",
+        "minLength": "Username must be at least 3 characters",
+        "maxLength": "Username must be at most 20 characters"
+      }
+    },
+    "password": {
+      "message": {
+        "required": "Password is required",
+        "minLength": "Password must be at least 8 letters",
+        "maxLength": "Password must be at max 20 letters"
+      }
+    }
+  }
+}
