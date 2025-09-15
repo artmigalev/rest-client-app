@@ -13,7 +13,7 @@
     "prepare": "husky",
     "deploy": "vite build && gh-pages -d build",
     "lint-staged": "lint-staged",
-    "i18n:generate": "i18next-resources-for-ts interface -i ./public/locales -o ./app/resources.d.ts"
+    "i18n:generate": "i18next-resources-for-ts interface -i ./public/locales -o ./app/@types/resources.d.ts"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [

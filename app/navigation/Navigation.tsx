@@ -13,7 +13,7 @@ const Navigation = ({ isLogin }: NavProps) => {
 
   const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation('header');
-  const handleLangueChange = (event: ChangeEventHandler<HTMLSelectElement>) => {
+  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const select = event.target as HTMLSelectElement;
 
     dispatch(changeByValue(select.value));
@@ -21,7 +21,6 @@ const Navigation = ({ isLogin }: NavProps) => {
   useEffect(() => {
     const selectLanguage = lng;
 
-    console.log(i18n.language);
 
     i18n.changeLanguage(selectLanguage);
   }, [lng]);
@@ -35,7 +34,7 @@ const Navigation = ({ isLogin }: NavProps) => {
         name="language"
         id="pet-select"
         value={lng}
-        onChange={handleLangueChange}
+        onChange={handleLanguageChange}
       >
         <option className="cursor-pointer" value="en">
           English

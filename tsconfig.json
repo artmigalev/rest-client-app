@@ -5,7 +5,10 @@
     "**/.client/**/*",
     ".react-router/types/**/*",
     "vite.config.ts",
-    "app"
+    "app",
+    "**/*.ts",
+    "**/*.tsx",
+    "app/@types/**/*.d.ts"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
