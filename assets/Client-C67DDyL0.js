@@ -1,1 +1,137 @@
-import{j as e,r as m,w as b,F as E}from"./chunk-PVWAREVJ-CRWIe_p6.js";import{a as F}from"./index.esm-qcliokgG.js";function s({register:t,options:l,name:n,...a}){return e.jsx("select",{className:" bg-black cursor-pointer p-[1rem]",...t(n),...a,children:l.map(r=>e.jsx("option",{value:r,children:r},r))})}const N=["GET","PUT","DELETE"],p=["cors","no-cors","semi-origin"],h=["default","no-cache","reload","force-cache","only-if-cached"],x=["follow","manual","error"],u=["no-referrer","client"];function S({register:t,name:l,...n}){return e.jsx("input",{className:" max-w-[70%] w-[100%] border rounded-2xl  placeholder:text-gray-500 placeholder:italic pt-1 pb-1 pl-5",...t(l),...n})}const y=()=>{const[t,l]=m.useState(""),[n,a]=m.useState(""),[r,f]=m.useState({mode:p[0],cache:h[0],redirect:x[0],referrer:u[0]}),{register:o}=F(),j=c=>{l(c.target.value),a(n.replace(t,""))},g=c=>{const d=c.target;a(d.value)},i=c=>{const d=c.target,w={[d.name]:d.value};f(C=>({...C,...w}))};return m.useEffect(()=>{console.log(r)},[r]),e.jsxs("fieldset",{className:"w-[100%] p-[1rem]",children:[e.jsxs("fieldset",{className:"flex justify-normal w-[100%] flex-row items-center  gap-[1rem] p-[1rem] ",children:[e.jsx(s,{register:o,options:N,name:"method",value:t,onChange:j,id:"select-method"}),e.jsx("label",{htmlFor:"endpoint",children:"URL Endpoint"}),e.jsx(S,{register:o,name:"endpoint",placeholder:"Endpoint URL",onChange:g,value:n?`${n.replace(t,"")}${t}`:t})]}),e.jsxs("fieldset",{children:[e.jsx("legend",{children:"Headers"}),e.jsx("label",{htmlFor:"",children:"Content-Type"}),e.jsx(s,{register:o,disabled:!0,name:"content-type",options:["application/json","application/x-www-form-urlencoded"]})]}),e.jsxs("fieldset",{className:"field-options border rounded-2xl p-[1rem] flex flex-row items-center gap-[1rem]",children:[e.jsx("legend",{children:"Options"}),e.jsx("label",{htmlFor:"mode",children:"Mode"}),e.jsx(s,{register:o,name:"mode",options:p,onChange:i}),e.jsx("label",{htmlFor:"cache",children:"Cache"}),e.jsx(s,{register:o,name:"cache",options:h,onChange:i}),e.jsx("label",{htmlFor:"redirect",children:"Redirect"}),e.jsx(s,{register:o,name:"redirect",options:x,onChange:i}),e.jsx("label",{htmlFor:"redirect",children:"Referrer Policy"}),e.jsx(s,{register:o,name:"referrer",options:u,onChange:i})]})]})},R=()=>e.jsxs("div",{className:"flex flex-col",children:[e.jsx("h3",{className:"text-center text-5xl",children:"REST Client"}),e.jsx(E,{className:"pl-0 w-full mt-4 flex flex-col items-start p-4 m-0",children:e.jsx(y,{})})]}),O=b(R);export{O as default};
+import { j as e, r as m, w as b, F as E } from './chunk-PVWAREVJ-CRWIe_p6.js';
+import { a as F } from './index.esm-qcliokgG.js';
+function s({ register: t, options: l, name: n, ...a }) {
+  return e.jsx('select', {
+    className: ' bg-black cursor-pointer p-[1rem]',
+    ...t(n),
+    ...a,
+    children: l.map((r) => e.jsx('option', { value: r, children: r }, r)),
+  });
+}
+const N = ['GET', 'PUT', 'DELETE'],
+  p = ['cors', 'no-cors', 'semi-origin'],
+  h = ['default', 'no-cache', 'reload', 'force-cache', 'only-if-cached'],
+  x = ['follow', 'manual', 'error'],
+  u = ['no-referrer', 'client'];
+function S({ register: t, name: l, ...n }) {
+  return e.jsx('input', {
+    className:
+      ' max-w-[70%] w-[100%] border rounded-2xl  placeholder:text-gray-500 placeholder:italic pt-1 pb-1 pl-5',
+    ...t(l),
+    ...n,
+  });
+}
+const y = () => {
+    const [t, l] = m.useState(''),
+      [n, a] = m.useState(''),
+      [r, f] = m.useState({
+        mode: p[0],
+        cache: h[0],
+        redirect: x[0],
+        referrer: u[0],
+      }),
+      { register: o } = F(),
+      j = (c) => {
+        (l(c.target.value), a(n.replace(t, '')));
+      },
+      g = (c) => {
+        const d = c.target;
+        a(d.value);
+      },
+      i = (c) => {
+        const d = c.target,
+          w = { [d.name]: d.value };
+        f((C) => ({ ...C, ...w }));
+      };
+    return (
+      m.useEffect(() => {
+        console.log(r);
+      }, [r]),
+      e.jsxs('fieldset', {
+        className: 'w-[100%] p-[1rem]',
+        children: [
+          e.jsxs('fieldset', {
+            className:
+              'flex justify-normal w-[100%] flex-row items-center  gap-[1rem] p-[1rem] ',
+            children: [
+              e.jsx(s, {
+                register: o,
+                options: N,
+                name: 'method',
+                value: t,
+                onChange: j,
+                id: 'select-method',
+              }),
+              e.jsx('label', { htmlFor: 'endpoint', children: 'URL Endpoint' }),
+              e.jsx(S, {
+                register: o,
+                name: 'endpoint',
+                placeholder: 'Endpoint URL',
+                onChange: g,
+                value: n ? `${n.replace(t, '')}${t}` : t,
+              }),
+            ],
+          }),
+          e.jsxs('fieldset', {
+            children: [
+              e.jsx('legend', { children: 'Headers' }),
+              e.jsx('label', { htmlFor: '', children: 'Content-Type' }),
+              e.jsx(s, {
+                register: o,
+                disabled: !0,
+                name: 'content-type',
+                options: [
+                  'application/json',
+                  'application/x-www-form-urlencoded',
+                ],
+              }),
+            ],
+          }),
+          e.jsxs('fieldset', {
+            className:
+              'field-options border rounded-2xl p-[1rem] flex flex-row items-center gap-[1rem]',
+            children: [
+              e.jsx('legend', { children: 'Options' }),
+              e.jsx('label', { htmlFor: 'mode', children: 'Mode' }),
+              e.jsx(s, { register: o, name: 'mode', options: p, onChange: i }),
+              e.jsx('label', { htmlFor: 'cache', children: 'Cache' }),
+              e.jsx(s, { register: o, name: 'cache', options: h, onChange: i }),
+              e.jsx('label', { htmlFor: 'redirect', children: 'Redirect' }),
+              e.jsx(s, {
+                register: o,
+                name: 'redirect',
+                options: x,
+                onChange: i,
+              }),
+              e.jsx('label', {
+                htmlFor: 'redirect',
+                children: 'Referrer Policy',
+              }),
+              e.jsx(s, {
+                register: o,
+                name: 'referrer',
+                options: u,
+                onChange: i,
+              }),
+            ],
+          }),
+        ],
+      })
+    );
+  },
+  R = () =>
+    e.jsxs('div', {
+      className: 'flex flex-col',
+      children: [
+        e.jsx('h3', {
+          className: 'text-center text-5xl',
+          children: 'REST Client',
+        }),
+        e.jsx(E, {
+          className: 'pl-0 w-full mt-4 flex flex-col items-start p-4 m-0',
+          children: e.jsx(y, {}),
+        }),
+      ],
+    }),
+  O = b(R);
+export { O as default };
