@@ -23,8 +23,12 @@ const Welcome = ({
           </>
         ) : (
           <>
-            <Link to="/login">{t('header:login')}</Link>
-            <Link to="/register">{t('header:register')}</Link>
+            <Link to="/login" viewTransition>
+              {t('header:login')}
+            </Link>
+            <Link to="/register" viewTransition>
+              {t('header:register')}
+            </Link>
           </>
         )}
       </nav>

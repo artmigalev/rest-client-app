@@ -12,7 +12,10 @@ const Menu = () => {
     <ul className=" flex flex-row justify-between w-[90%] p-4 text-4xl border absolute bottom-5 ">
       {menu.map(({ key, path }) => (
         <li key={t(key)}>
-          <NavLink to={`${path.toLowerCase().replace(' ', '-')}`}>
+          <NavLink
+            to={`${path.toLowerCase().replace(' ', '-')}`}
+            viewTransition
+          >
             {t(key)}
           </NavLink>
         </li>

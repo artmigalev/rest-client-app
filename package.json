@@ -2,6 +2,11 @@
   "name": "rest-client-app",
   "private": true,
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/artmigalev/rest-client-app/"
+  },
+  "homepage": "https://artmigalev.github.io/rest-client-app/",
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
@@ -11,7 +16,7 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "prepare": "husky",
-    "deploy": "vite build && gh-pages -d build",
+    "deploy": "react-router build && gh-pages -d build/client",
     "lint-staged": "lint-staged",
     "i18n:generate": "i18next-resources-for-ts interface -i ./public/locales -o ./app/@types/resources.d.ts"
   },

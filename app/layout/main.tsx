@@ -18,8 +18,7 @@ const Main = ({
   isLogin: boolean;
   name: User['username'];
   loading: boolean;
-  }) => {
-  
+}) => {
   const location = useLocation();
   // console.log(isLogin);
 

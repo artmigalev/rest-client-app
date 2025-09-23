@@ -1,4 +1,4 @@
-import { useEffect, type ChangeEventHandler } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import SignOut from '~/auth/signOut';
@@ -13,7 +13,9 @@ const Navigation = ({ isLogin }: NavProps) => {
 
   const dispatch = useAppDispatch();
   const { t, i18n } = useTranslation('header');
-  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleLanguageChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const select = event.target as HTMLSelectElement;
 
     dispatch(changeByValue(select.value));
@@ -21,12 +23,11 @@ const Navigation = ({ isLogin }: NavProps) => {
   useEffect(() => {
     const selectLanguage = lng;
 
-
     i18n.changeLanguage(selectLanguage);
   }, [lng]);
   return (
     <nav className=" flex  justify-around items-center  w-[100%]">
-      <Link to={'/'}>
+      <Link to={'/'} viewTransition>
         <img src="/postman2csharp.png" alt="logo" className="max-w-[50px]" />
       </Link>
       <select
@@ -47,8 +48,14 @@ const Navigation = ({ isLogin }: NavProps) => {
         <SignOut />
       ) : (
         <>
-          <Link to={'login'}> {t('login')}</Link>
-          <Link to={'register'}> {t('register')}</Link>
+          <Link to={'login'} viewTransition>
+            {' '}
+            {t('login')}
+          </Link>
+          <Link to={'register'} viewTransition>
+            {' '}
+            {t('register')}
+          </Link>
         </>
       )}
     </nav>
