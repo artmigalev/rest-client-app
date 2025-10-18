@@ -6,9 +6,13 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router';
+import 'normalize.css';
 
 import type { Route } from './+types/root';
 import './app.css';
+
+
+
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
