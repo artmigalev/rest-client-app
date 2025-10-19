@@ -11,6 +11,7 @@ import 'normalize.css';
 import type { Route } from './+types/root';
 import './app.css';
 import './i18n'
+import { Suspense } from 'react';
 
 
 
@@ -34,8 +35,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <Suspense fallback={<HydrateFallBack/>}>
+      <Outlet />
+    </Suspense>
+  );
 }
+
+export  function HydrateFallBack(){
+  return <div>Loading...</div>
+};
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = 'Oops!';
