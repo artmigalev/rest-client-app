@@ -7,7 +7,8 @@
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "interface": "i18next-resources-for-ts interface -i ./public/locales/en -o ./app/@types/resources.d.ts"
   },
   "dependencies": {
     "@react-router/node": "^7.9.2",
@@ -15,6 +16,8 @@
     "eslint-plugin-react-hooks": "^7.0.0",
     "eslint-plugin-react-refresh": "^0.4.24",
     "i18next": "^25.6.0",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "i18next-resources-for-ts": "^1.7.4",
     "isbot": "^5.1.31",
     "normalize.css": "^8.0.1",
     "react": "^19.1.1",
