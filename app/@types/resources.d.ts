@@ -1,9 +1,14 @@
 interface Resources {
   "header": {
-    "nav": {
-      "sing-up": "login"
+    "langs": {
+      "en": "English",
+      "ru": "Russian"
     },
-    "navigation": "navigation"
+    "navigation": {
+      "sign-in": "Sign In",
+      "sign-out": "Sign Out",
+      "sign-up": "Sing UP"
+    }
   }
 }
 

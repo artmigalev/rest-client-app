@@ -14,7 +14,6 @@ i18n
     debug: true,
 
     supportedLngs: ['ru', 'en'],
-
   });
 
 export default i18n;
