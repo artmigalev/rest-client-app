@@ -13,8 +13,9 @@ function Index() {
   const data = useLoaderData<typeof clientLoader>();
 
   return (
-    <div className='w-full flex-1 h-full flex flex-col p-4 max-sm:p-0'>
+    <div className='w-full   flex-1 h-full flex flex-col p-4 max-sm:p-0'>
       <Header {...data} />
+      
       <Outlet />
     </div>
   );

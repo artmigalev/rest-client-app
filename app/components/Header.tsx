@@ -35,12 +35,15 @@ function Header(props: IHeader) {
   }, [UserIsLogin]);
 
   return (
-    <header className='p-4 w-full flex items-center justify-between  bg-gray-200 max-md:p-1 shadow-header ' >
+    <header
+      id='sticky-parallax-header'
+      className=' fixed p-4 w-full flex items-center justify-between  bg-gray-200 max-md:p-1 shadow-header '
+    >
       <Link to=''>
         <img className='max-md:w-[30px] p-0.5' src='logo-48px.png' alt='logo' />
       </Link>
       <Select props={Object.entries(langs)} />
-      <nav className='w-1/3'>
+      <nav className='w-2/5'>
         <List items={itemsNav} isLink={true} />
       </nav>
     </header>
