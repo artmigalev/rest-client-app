@@ -2,6 +2,7 @@ import { type RouteConfig, index, layout, route } from '@react-router/dev/routes
 
 const routes = [
   layout('routes/Index.tsx', [
+
     index('routes/Main.tsx'),
     layout('routes/Auth.tsx', [
       route('sign-in', 'components/auth/SignInComponent.tsx'),
@@ -13,7 +14,7 @@ const routes = [
       route('variables', 'routes/Variables.tsx'),
     ]),
   ]),
-  route('not-found', 'routes/NotFound.tsx'),
+  route('not-found', 'routes/NotFound.tsx')
 ] satisfies RouteConfig;
 export default routes;
 
