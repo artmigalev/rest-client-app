@@ -4,6 +4,7 @@
   --font-sans: 'Inter Variable', 'sans-serif';
   --color-main: '#be4b4b';
   --shadow-header: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  --glif: 1vw + 1.2em
 }
 * {
   box-sizing: border-box;
@@ -31,11 +32,12 @@ body {
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
+  font-size: calc(1vw + 1em);
 }
 @keyframes sticky-parallax-header-move-and-size {
   from {
     background-position: 30% 0;
-    height: 7vh;
+    height: 10vh;
     font-size: calc(1vw + 1.2em);
   }
   to {
