@@ -5,7 +5,7 @@ export default [
 
     index('routes/Main.tsx'),
     layout('routes/Auth.tsx', [
-      route('login', 'components/auth/SignInComponent.tsx'),
+      route('sign-in', 'components/auth/SignInComponent.tsx'),
       route('sign-up', 'components/auth/RegisterComponent.tsx'),
     ]),
     route('rest-client', 'routes/RestfulClient.tsx'),
