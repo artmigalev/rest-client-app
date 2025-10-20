@@ -7,6 +7,7 @@ import {
 
 export default [
   layout('routes/Index.tsx', [
+
     index('routes/Main.tsx'),
     layout('routes/Auth.tsx', [
       route('login', 'components/auth/SignInComponent.tsx'),
@@ -17,4 +18,5 @@ export default [
     route('variables', 'routes/Variables.tsx'),
     // route(),
   ]),
+  route('not-found', 'routes/NotFound.tsx')
 ] satisfies RouteConfig;
