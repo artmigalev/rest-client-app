@@ -4,6 +4,7 @@ import type Resources from '~/@types/resources';
 import Select from './Select';
 import List from './List';
 import type { clientLoader } from '~/routes/Index';
+import { useTranslation } from 'react-i18next';
 
 type NavKeys = keyof Resources['header']['navigation'];
 // type LangsKeys = keyof Resources['header']['langs'];
@@ -17,8 +18,9 @@ function Header(props: IHeader) {
   const UserIsLogin = false;
 
   const { navigation, langs } = props;
+  const {t} =useTranslation('header', {keyPrefix:'navigation',useSuspense:true})
 
-  let itemsNav = Object.entries(navigation).filter(([key]) => key !== 'sign-out') as [NavKeys, string][];
+  let itemsNav = Object.entries(navigation).filter(([key]) => key !== 'sign-out' && t(key as keyof Resources['header']['navigation'])) as [NavKeys, string][];
 
   if (UserIsLogin) {
     itemsNav = Object.entries(navigation).filter(([key]) => key === 'sign-out') as [NavKeys, string][];
@@ -37,7 +39,7 @@ function Header(props: IHeader) {
       id='sticky-parallax-header'
       className='  fixed p-4 w-full flex items-center justify-between  bg-gray-200 max-md:p-1 h-[9vh] shadow-header '
     >
-      <Link to='/'>
+      <Link to='/' viewTransition>
         <img className='max-md:w-[30px] p-0.5' src='logo-48px.png' alt='logo' />
       </Link>
       <Select props={Object.entries(langs)} />

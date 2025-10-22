@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 interface IList<T> {
@@ -7,8 +8,17 @@ interface IList<T> {
 }
 
 function List({ items, isLink, styles }: IList<string>) {
+
   const children = items.map(([key, val]) => (
-    <li key={key}>{isLink ? <Link to={key}>{val}</Link> : <span>{val}</span>}</li>
+    <li key={key}>
+      {isLink ? (
+        <Link className='capitalize' to={key} viewTransition>
+          {key}
+        </Link>
+      ) : (
+        <span>{val}</span>
+      )}
+    </li>
   ));
 
   return <ul className={`w-full flex flex-row items-center ${styles}`}>{children}</ul>;
