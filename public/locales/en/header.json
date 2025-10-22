@@ -1,7 +1,7 @@
 {
   "navigation": {
-    "sign-up": "Sing UP",
     "sign-in": "Sign In",
+    "sign-up": "Sing UP",
     "sign-out":"Sign Out"
   },
   "langs":{
