@@ -11,8 +11,8 @@ i18n
 
   .init({
     fallbackLng: 'en',
-    debug: true,
-    lng:'en',
+    // debug: true,
+    lng: 'en',
 
     ns: ['auth', 'header'],
     supportedLngs: ['en', 'ru'],

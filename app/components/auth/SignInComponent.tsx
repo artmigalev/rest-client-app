@@ -1,9 +1,42 @@
-import React from 'react';
+import React, { Activity, useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Form } from 'react-router';
+import { Form, useNavigate } from 'react-router';
+import type { Route } from '../../routes/+types/Auth';
+import { auth, loginWithEmailAndPassword } from '~/firebase';
+import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import type Resources from '~/@types/resources';
 
-function SignInComponent() {
+export async function clientAction({ request }: Route.ClientActionArgs) {
+  console.log(request);
+
+  let formData = await request.formData();
+  let email = formData.get('email');
+  let password = formData.get('password');
+  // let result = loginWithEmailAndPassword(email, password);
+
+  return { email, password };
+}
+
+function SignInComponent({ actionData }: Route.ComponentProps) {
   const { t } = useTranslation('auth', { keyPrefix: 'signInComponent', useSuspense: true });
+
+  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if (actionData) {
+      signInWithEmailAndPassword(...actionData);
+    }
+    if (user) {
+      navigate('/', { viewTransition: true });
+    }
+  }, [actionData]);
+
+
+  if(loading) return <span className='absolute top-2/4 left-2/4'> Loading...</span>;
+
 
   return (
     <>
@@ -30,7 +63,11 @@ function SignInComponent() {
             name='password'
           />
         </div>
-
+        <Activity mode={error ? 'visible' : 'hidden'}>
+          <span>
+            <Trans i18nKey={`errors.${error && (error.code as keyof Resources['auth']['errors'])}`} />
+          </span>
+        </Activity>
         <button
           type='submit'
           className=' bg-main m-auto! text-lg text-amber-50 w-full rounded-[var(--radius-form-b)] py-3.5  font-bold  border-2 capitalize!'

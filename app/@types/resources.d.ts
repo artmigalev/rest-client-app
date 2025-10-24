@@ -2,7 +2,7 @@ interface Resources {
   "auth": {
     "button": "submit",
     "errors": {
-
+      "INVALID_EMAIL": "INVALID EMAIL"
     },
     "navigation": {
       "sign-in": "sign In",
