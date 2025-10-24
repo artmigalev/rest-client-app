@@ -6,6 +6,9 @@ import './app.css';
 import './i18n';
 import { Suspense } from 'react';
 
+import {store} from './store';
+import { Provider } from 'react-redux';
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>
@@ -26,9 +29,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
+    <Provider store={store}>
+
     <Suspense fallback={<HydrateFallBack />}>
       <Outlet />
     </Suspense>
+    </Provider>
   );
 }
 
