@@ -2,11 +2,12 @@ import React, { Activity, useEffect } from 'react';
 import { useAuthState, useCreateUserWithEmailAndPassword, useDeleteUser } from 'react-firebase-hooks/auth';
 import { Trans, useTranslation } from 'react-i18next';
 import { Form, useNavigate } from 'react-router';
-import { auth, db, registerWithEmailAndPassword } from '~/firebase';
+import { auth, db } from '~/firebase';
 import type { Route } from '../../routes/+types/Auth';
 import { addDoc, collection } from 'firebase/firestore';
 import { deleteUser, updateProfile } from 'firebase/auth';
 import type { Resources } from 'i18next';
+import { createUser } from '~/firebase/apicalls';
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   let formData = await request.formData();
@@ -26,8 +27,19 @@ function RegisterComponent({ actionData }: Route.ComponentProps) {
     if (actionData) {
       const { password, email, displayName } = actionData;
       console.log(actionData);
-      
       createUserWithEmailAndPassword(email, password);
+
+      createUser({ email, password, displayName }).then(
+        res => {
+          if (res.success) {
+            console.log(res);
+
+          } else {
+            throw new Error (res.message)
+          }
+        }
+      ).catch(error => console.log(error.message)
+      )
       if (user) {
         updateProfile(user.user, { displayName });
       }
