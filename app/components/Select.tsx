@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { type Dispatch } from 'react';
 
 interface ISelect<T> {
-  props: [T, string][];
+  options: [T, string][];
   styles?: string;
+  value: T
+  dispatcher: Dispatch<React.SetStateAction<T>>
 }
 
-function Select({ props, styles }: ISelect<string>) {
+function Select({ value, dispatcher , options, styles }: ISelect<string>) {
   return (
-    <select className={`${styles}`} name='select-lang '>
-      {props.map(([key, val]) => (
+    <select defaultValue={value} onChange={()=> dispatcher(value)} className={`${styles}`} name='select-lang '>
+      {options.map(([key, val]) => (
         <option key={key} value={key}>
           {val}
         </option>
