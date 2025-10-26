@@ -2,7 +2,7 @@ import React, { Activity, useEffect } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Form, useNavigate } from 'react-router';
 import type { Route } from '../../routes/+types/Auth';
-import { auth, loginWithEmailAndPassword } from '~/firebase';
+import { auth } from '~/firebase';
 import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import type Resources from '~/@types/resources';
 
@@ -12,14 +12,13 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   let formData = await request.formData();
   let email = formData.get('email');
   let password = formData.get('password');
-  // let result = loginWithEmailAndPassword(email, password);
 
   return { email, password };
 }
 
 function SignInComponent({ actionData }: Route.ComponentProps) {
   const { t } = useTranslation('auth', { keyPrefix: 'signInComponent', useSuspense: true });
-
+  
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
 
   const navigate = useNavigate();
@@ -27,7 +26,7 @@ function SignInComponent({ actionData }: Route.ComponentProps) {
 
   useEffect(() => {
     if (actionData) {
-      signInWithEmailAndPassword(...actionData);
+      signInWithEmailAndPassword(actionData.email, actionData.password);
     }
     if (user) {
       navigate('/', { viewTransition: true });
@@ -64,7 +63,7 @@ function SignInComponent({ actionData }: Route.ComponentProps) {
           />
         </div>
         <Activity mode={error ? 'visible' : 'hidden'}>
-          <span>
+          <span className='text-xl text-main '>
             <Trans i18nKey={`errors.${error && (error.code as keyof Resources['auth']['errors'])}`} />
           </span>
         </Activity>
