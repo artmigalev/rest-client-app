@@ -3,26 +3,25 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Form, useNavigate } from 'react-router';
 import type { Route } from '../../routes/+types/Auth';
 import { auth } from '~/firebase';
-import { useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import type Resources from '~/@types/resources';
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   console.log(request);
 
-  let formData = await request.formData();
-  let email = formData.get('email');
-  let password = formData.get('password');
+  const formData = await request.formData();
+  const email = formData.get('email');
+  const password = formData.get('password');
 
   return { email, password };
 }
 
 function SignInComponent({ actionData }: Route.ComponentProps) {
   const { t } = useTranslation('auth', { keyPrefix: 'signInComponent', useSuspense: true });
-  
+
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     if (actionData) {
@@ -33,9 +32,7 @@ function SignInComponent({ actionData }: Route.ComponentProps) {
     }
   }, [actionData]);
 
-
-  if(loading) return <span className='absolute top-2/4 left-2/4'> Loading...</span>;
-
+  if (loading) return <span className='absolute top-2/4 left-2/4'> Loading...</span>;
 
   return (
     <>

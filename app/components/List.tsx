@@ -1,22 +1,26 @@
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router';
+import { Link, type Path } from 'react-router';
 
 interface IList<T> {
-  items: [T, string][];
+  items: [key: T, string][];
   isLink: boolean;
   styles?: string;
+  callbackFn?: () => void | undefined;
 }
 
-function List({ items, isLink, styles }: IList<string>) {
-
+function List<T>({ items, isLink, styles, callbackFn }: IList<T>) {
   const children = items.map(([key, val]) => (
-    <li key={key}>
+    <li key={key as string}>
       {isLink ? (
-        <Link className='capitalize' to={key} viewTransition>
-          {key}
+        <Link
+          className='capitalize'
+          to={key as Partial<Path>}
+          onClick={key === 'sign-out' ? callbackFn : undefined}
+          viewTransition
+        >
+          {val}
         </Link>
       ) : (
-        <span>{val}</span>
+        <span>{val as string}</span>
       )}
     </li>
   ));

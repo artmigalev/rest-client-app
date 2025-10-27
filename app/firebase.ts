@@ -1,8 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import {
-  debugErrorMap,
-  initializeAuth,
-} from 'firebase/auth';
+import { debugErrorMap, initializeAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 const firebaseConfig = {
   apiKey: 'AIzaSyA0YriaxC_aAKMFqAhChtSTLEhzlFtJVcM',
@@ -18,5 +15,3 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = initializeAuth(app, { errorMap: debugErrorMap });
 export const db = getFirestore(app);
-
-

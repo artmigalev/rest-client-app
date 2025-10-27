@@ -1,41 +1,37 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import type Resources from '~/@types/resources';
 import Select from './Select';
-import List from './List';
-import type { clientLoader } from '~/routes/Index';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '~/hooks';
-import { selectLang } from '~/reducers/langSlice';
+import { useAppDispatch } from '~/hooks';
+import { setByLang, type lang } from '~/reducers/langSlice';
+import { type User } from '~/reducers/userSlice';
+import Navigation from './Navigation';
 
 type NavKeys = keyof Resources['header']['navigation'];
 // type LangsKeys = keyof Resources['header']['langs'];
 
 interface IHeader {
-  navigation: typeof clientLoader extends Promise<infer R> ? R : never;
-  langs: typeof clientLoader extends Promise<infer R> ? R : never;
+  displayName: User['displayName'];
+  language: lang;
 }
 
-function Header(props: IHeader) {
-  const UserIsLogin = false;
-  const lang = useAppSelector(selectLang);
+function Header({ displayName, language }: IHeader) {
+  const dispatch = useAppDispatch();
+  const { t, i18n } = useTranslation('header', { useSuspense: true });
+  const [selectValue, setSelectValue] = useState<IHeader['language']>(language);
 
-  const [selectValue, setSelectValue] = useState<typeof lang>(lang);
-  const dispatch = useAppDispatch()
+  const navItems = t('navigation', { returnObjects: true });
+  const langs = Object.entries(t('langs', { returnObjects: true }));
 
-  const { navigation, langs } = props;
-  const { t } = useTranslation('header', { keyPrefix: 'navigation', useSuspense: true });
-
-  let itemsNav = Object.entries(navigation).filter(
-    ([key]) => key !== 'sign-out' && t(key as keyof Resources['header']['navigation'])
-  ) as [NavKeys, string][];
-
-  if (UserIsLogin) {
-    itemsNav = Object.entries(navigation).filter(([key]) => key === 'sign-out') as [NavKeys, string][];
-  }
-  useState(() => {
-    dispatch(selectValue)
+  useEffect(() => {
+    dispatch(setByLang(selectValue));
   }, [selectValue]);
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+    console.log(language);
+  }, [language]);
 
   return (
     <header
@@ -45,10 +41,8 @@ function Header(props: IHeader) {
       <Link to='/' viewTransition>
         <img className='max-md:w-[30px] p-0.5' src='logo-48px.png' alt='logo' />
       </Link>
-      <Select value={selectValue} dispatcher={setSelectValue} options={Object.entries(langs)} />
-      <nav className='w-2/5'>
-        <List styles='justify-around' items={itemsNav} isLink={true} />
-      </nav>
+      <Select value={selectValue} dispatcher={setSelectValue} options={langs} />
+      <Navigation items={navItems} displayName={displayName} />
     </header>
   );
 }

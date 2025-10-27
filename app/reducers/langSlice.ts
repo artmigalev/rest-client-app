@@ -1,11 +1,11 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '~/store';
 
-type lang = string;
+export type lang = string;
 
 const initialState = {
-  val: 'en' as lang
-}
+  val: 'en' as lang,
+};
 
 const langSlice = createSlice({
   name: 'language',
