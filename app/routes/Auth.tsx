@@ -1,8 +1,9 @@
-import React from 'react';
 import type { Route } from './+types/Auth';
-import { NavLink, Outlet, useLoaderData } from 'react-router';
+import { Navigate, NavLink, Outlet, useLoaderData, useLocation, useOutletContext } from 'react-router';
 import type Resources from '~/@types/resources';
 import { useTranslation } from 'react-i18next';
+import type { IndexContext } from './Index';
+import { type ProtectedLayoutProps } from '~/components/ProtectedLayout';
 
 export async function clientLoader(params: Route.ClientLoaderArgs): Promise<IAuth['dataLoader']> {
   const resData = await fetch('locales/en/auth.json');
@@ -18,10 +19,18 @@ interface IAuth {
   };
 }
 
-function Auth() {
+function Auth({ forbidAuth = true, redirectPath = '/' }: ProtectedLayoutProps) {
+  const { lang, user } = useOutletContext<IndexContext>();
   const data = useLoaderData<IAuth['dataLoader']>();
   const { navigation, signInComponent, registerComponent } = data;
   const { t } = useTranslation('auth', { keyPrefix: 'navigation', useSuspense: true });
+  const location = useLocation();
+
+  const isAuth = Boolean(user.uid);
+
+  if (isAuth && forbidAuth) {
+    return <Navigate to={redirectPath} state={{ from: location }} replace />;
+  }
 
   const isActive = ({ isActive }) => isActive && 'text-main capitalize';
   return (
@@ -34,7 +43,6 @@ function Auth() {
             </NavLink>
           ))}
         </div>
-
         <Outlet />
       </div>
     </div>
