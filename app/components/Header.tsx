@@ -36,7 +36,7 @@ function Header({ displayName, language }: IHeader) {
   return (
     <header
       id='sticky-parallax-header'
-      className='  fixed p-4 w-full flex items-center justify-between  bg-gray-200 max-md:p-1 h-[9vh] shadow-header '
+      className=' p-4 w-full flex items-center justify-between bg-background max-md:p-1 h-[9vh] shadow-header '
     >
       <Link to='/' viewTransition>
         <img className='max-md:w-[30px] p-0.5' src='logo-48px.png' alt='logo' />

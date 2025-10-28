@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 function Footer() {
   return (
-    <div className='p-4 w-full fixed bottom-0 flex flex-row  items-center justify-around'>
+    <footer className= 'bg-background p-4 w-full fixed bottom-0 flex flex-row  items-center justify-around'>
       <Link to={'https://rs.school/courses/reactjs'} viewTransition>
         <img className='max-w-12 w-full' src='rss-logo.svg' alt='rss-logo' />
       </Link>
@@ -11,7 +11,7 @@ function Footer() {
       <Link className='max-w-12 w-full' to={'http//: example.com'}>
         <img src='git.svg' alt='git' />
       </Link>
-    </div>
+    </footer>
   );
 }
 
