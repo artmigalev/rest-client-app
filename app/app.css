@@ -3,7 +3,7 @@
 @theme {
   --font-sans: Inter Variable, sans-serif;
   --color-main: #be4b4b;
-
+  --color-background:  oklch(92.8% 0.006 264.531);
   --shadow-header: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
   --glif: 1vw + 1.2em;
   --radius-form-b: 20px;
@@ -50,8 +50,8 @@ body {
 }
 
 #sticky-parallax-header {
-  position: fixed;
-  top: 0;
+  /* position: fixed; */
+  /* top: 0; */
 
   animation: sticky-parallax-header-move-and-size linear forwards;
   animation-timeline: scroll();
