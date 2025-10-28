@@ -4,9 +4,11 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Form, useNavigate } from 'react-router';
 import { auth } from '~/firebase';
 import type { Route } from '../../routes/+types/Auth';
-import { updateProfile } from 'firebase/auth';
+import { updateProfile, } from 'firebase/auth';
 import type { Resources } from 'i18next';
 import { createUser } from '~/firebase/apicalls';
+import { useAppDispatch } from '~/hooks';
+import { setUser, type User } from '~/reducers/userSlice';
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
@@ -20,34 +22,37 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 function RegisterComponent({ actionData }: Route.ComponentProps) {
   const { t } = useTranslation('auth', { keyPrefix: 'registerComponent', useSuspense: true });
 
+  const dispatch = useAppDispatch()
+
   const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+
+
   const navigate = useNavigate();
+
+  let success
+
   useEffect(() => {
     if (actionData) {
       const { password, email, displayName } = actionData;
       console.log(actionData);
       createUserWithEmailAndPassword(email, password);
 
-      createUser({ email, password, displayName })
-        .then((res) => {
-          if (res.success) {
-            console.log(res);
-          } else {
-            throw new Error(res.message);
-          }
-        })
-        .catch((error) => console.log(error.message));
-      if (user) {
-        updateProfile(user.user, { displayName });
-      }
+
     }
   }, [actionData]);
 
   if (loading) {
     return <span className='absolute top-2/4 left-2/4'> Loading...</span>;
   }
-  if (user) {
-    navigate('/', { viewTransition: true });
+  if (user?.user && actionData ) {
+    const userInfo: User  = {
+      uid: user.user['uid'],
+      displayName: actionData['displayName']
+
+    }
+    console.log(actionData['displayName']);
+    dispatch(setUser(userInfo))
+    setTimeout(() => navigate('/', { viewTransition: true }), 13000);
   }
 
   return (
@@ -89,6 +94,7 @@ function RegisterComponent({ actionData }: Route.ComponentProps) {
 
         <Activity mode={error ? 'visible' : 'hidden'}>
           <span>
+            {success && success}
             <Trans i18nKey={`errors.${error && (error.code as keyof Resources['auth']['errors'])}`} />
           </span>
         </Activity>
