@@ -14,7 +14,7 @@ i18n
     // debug: true,
     lng: 'en',
 
-    ns: ['auth', 'header'],
+    ns: ['auth', 'header', 'welcome'],
     supportedLngs: ['en', 'ru'],
     backend: {
       loadPath: '/locales/{{lng}}/{{ns}}.json',
