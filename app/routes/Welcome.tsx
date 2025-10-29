@@ -1,6 +1,8 @@
 import React from 'react';
-import { Link, Links } from 'react-router';
+import { Link, Links, useOutlet, useOutletContext } from 'react-router';
 import type { User } from '~/reducers/userSlice';
+import type { IndexContext } from './Index';
+import { useTranslation } from 'react-i18next';
 
 interface IWelcome {
   props: {
@@ -8,7 +10,12 @@ interface IWelcome {
   };
 }
 
-function Welcome({ username }: IWelcome['props']) {
+function Welcome() {
+  const { user, lang } = useOutletContext<IndexContext>();
+  const username = user.displayName;
+
+  const { t, i18n } = useTranslation();
+
   return (
     <div className='flex-1  w-full p-[5%]  flex flex-col content-center items-center '>
       <h2 role='heading' className='text-3xl capitalize'>
