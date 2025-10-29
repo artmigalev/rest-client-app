@@ -25,7 +25,7 @@ function Navigation({ items, displayName }: INavigation['props']) {
   }, [displayName]);
 
   return (
-    <nav className='w-2/5'>
+    <nav  >
       <List callbackFn={logout} styles='justify-around' items={authItems} isLink={true} />
     </nav>
   );

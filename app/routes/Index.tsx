@@ -19,9 +19,9 @@ function Index() {
   const lang = useAppSelector(selectLang);
 
   return (
-    <div className='w-full   flex-1 h-full flex  flex-col items-center content-center p-4 pt-0  max-sm:p-0'>
+    <div className='flex flex-col  justify-between w-full relative  '>
       <Header language={lang} displayName={user.displayName} />
-      <div className='w-full h-full flex-1'>
+      <div className='w-full h-[84vh]  overflow-y-auto bg-amber-700'>
         <Outlet context={{ user, lang } satisfies IndexContext} />
       </div>
       <Footer />

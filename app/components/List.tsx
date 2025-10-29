@@ -12,7 +12,7 @@ function List<T>({ items, isLink, styles, callbackFn }: IList<T>) {
     <li key={key as string}>
       {isLink ? (
         <Link
-          className='capitalize'
+          className='capitalize w-max p-1'
           to={key as Partial<Path>}
           onClick={key === 'sign-out' ? callbackFn : undefined}
           viewTransition
