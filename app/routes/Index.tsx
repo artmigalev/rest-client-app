@@ -21,7 +21,7 @@ function Index() {
   return (
     <div className='flex flex-col  justify-between w-full relative  '>
       <Header language={lang} displayName={user.displayName} />
-      <div className='w-full h-[84vh]  overflow-y-auto bg-amber-700'>
+      <div className='w-full h-[84vh]  overflow-y-auto'>
         <Outlet context={{ user, lang } satisfies IndexContext} />
       </div>
       <Footer />

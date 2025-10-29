@@ -1,12 +1,18 @@
 import React from 'react';
 import { Link, Links } from 'react-router';
+import type { User } from '~/reducers/userSlice';
 
-function Welcome() {
+interface IWelcome {
+  props: {
+    username: User['displayName'];
+  };
+}
+
+function Welcome({ username }: IWelcome['props']) {
   return (
     <div className='flex-1  w-full p-[5%]  flex flex-col content-center items-center '>
-      <h2 role='heading' className='text-2xl capitalize'>
-        {' '}
-        welcome user!
+      <h2 role='heading' className='text-3xl capitalize'>
+        {!username ? 'welcome user!' : `Welcome back ${username}`}
       </h2>
 
       <div className='flex flex-col '>
@@ -148,15 +154,6 @@ function Welcome() {
               </em>
               )
             </span>
-          </li>
-          <li role='listitem'>
-            <span>не более трех шрифтов на странице</span>
-          </li>
-          <li role='listitem'>
-            <span>не более трех шрифтов на странице</span>
-          </li>
-          <li role='listitem'>
-            <span>не более трех шрифтов на странице</span>
           </li>
         </ul>
       </section>
