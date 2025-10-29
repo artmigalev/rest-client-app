@@ -9,16 +9,10 @@ import reactCompiler from 'eslint-plugin-react-compiler';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import unusedImports from 'eslint-plugin-unused-imports';
 
-// import { fixupPluginRules } from '@eslint/compat';
-
 export default defineConfig([
   globalIgnores(['dist', 'node_modules', '.git', '.react-router']),
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.strict,
-      eslintPluginPrettier,
-    ],
+    extends: [js.configs.recommended, ...tseslint.configs.strict, eslintPluginPrettier],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
@@ -46,10 +40,7 @@ export default defineConfig([
       'react/jsx-uses-react': 'error',
       'react/jsx-uses-vars': 'error',
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'react-compiler/react-compiler': 'error',
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
