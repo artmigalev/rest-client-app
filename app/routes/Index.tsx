@@ -19,11 +19,11 @@ function Index() {
   const lang = useAppSelector(selectLang);
 
   return (
-    <div className='flex flex-col  justify-between w-full relative  '>
+    <div className='flex flex-col   w-full   '>
       <Header language={lang} displayName={user.displayName} />
-      <div className='w-full h-[84vh]  overflow-y-auto'>
+      <main className='w-full flex-[1_1_auto] flex flex-col items-center  overflow-y-auto mb-[calc(1em+40px)]!'>
         <Outlet context={{ user, lang } satisfies IndexContext} />
-      </div>
+      </main>
       <Footer />
     </div>
   );
