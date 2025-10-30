@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import List from './List';
 import type Resources from '~/@types/resources';
 import { signOut } from 'firebase/auth';
 import { auth } from '~/firebase';
+import { useAppDispatch } from '~/hooks';
+import { setUser } from '~/reducers/userSlice';
+import { useNavigate } from 'react-router';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 interface INavigation {
   props: {
@@ -13,19 +17,30 @@ interface INavigation {
   logOut: () => void;
 }
 
+
+
+
+
 function Navigation({ items, displayName }: INavigation['props']) {
-  let authItems = Object.entries(items).filter(([key, val]) => key !== 'sign-out');
+
+  const [user, loading, error] = useAuthState(auth);
+  const dispatch = useAppDispatch()
+  const navigate =useNavigate()
+
   const logout: INavigation['logOut'] = () => {
     signOut(auth);
+    dispatch(setUser({ displayName: null, uid: null }))
+    navigate('/',{viewTransition:true})
   };
-  useEffect(() => {
-    if (displayName) {
-      authItems = Object.entries(items).filter(([key, _]) => key === 'sign-out');
+  const authItems = useMemo(() => {
+    if (displayName || user) {
+      return Object.entries(items).filter(([key, _]) => key === 'sign-out');
     }
-  }, [displayName]);
+    return Object.entries(items).filter(([key, val]) => key !== 'sign-out');
+  }, [displayName, user]);
 
   return (
-    <nav  >
+    <nav>
       <List callbackFn={logout} styles='justify-around' items={authItems} isLink={true} />
     </nav>
   );

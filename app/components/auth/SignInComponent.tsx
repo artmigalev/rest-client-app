@@ -1,4 +1,4 @@
-import React, { Activity, useEffect } from 'react';
+import React, { Activity, useEffect, useEffectEvent } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Form, useNavigate } from 'react-router';
 import type { Route } from '../../routes/+types/Auth';
@@ -27,10 +27,15 @@ function SignInComponent({ actionData }: Route.ComponentProps) {
     if (actionData) {
       signInWithEmailAndPassword(actionData.email, actionData.password);
     }
+
+  }, [actionData]);
+
+
+  useEffect(() => {
     if (user) {
       navigate('/', { viewTransition: true });
     }
-  }, [actionData]);
+  },[user])
 
   if (loading) return <span className='absolute top-2/4 left-2/4'> Loading...</span>;
 
