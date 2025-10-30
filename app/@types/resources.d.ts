@@ -35,6 +35,13 @@ interface Resources {
       "sign-out": "Sign Out",
       "sign-up": "Sing UP"
     }
+  },
+  "menu": {
+    "menu": {
+      "history": "history",
+      "rest-client": "RestClientApp",
+      "variables": "variables"
+    }
   }
 }
 
