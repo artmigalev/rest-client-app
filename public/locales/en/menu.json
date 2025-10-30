@@ -1,0 +1,7 @@
+{
+  "menu": {
+    "rest-client": "RestClientApp",
+    "history": "history",
+    "variables": "variables"
+  }
+}
