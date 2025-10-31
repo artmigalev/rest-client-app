@@ -23,7 +23,7 @@ interface INavigation {
 
 function Navigation({ items, displayName }: INavigation['props']) {
 
-  const [user, loading, error] = useAuthState(auth);
+  const [user, ] = useAuthState(auth);
   const dispatch = useAppDispatch()
   const navigate =useNavigate()
 
@@ -32,6 +32,8 @@ function Navigation({ items, displayName }: INavigation['props']) {
     dispatch(setUser({ displayName: null, uid: null }))
     navigate('/',{viewTransition:true})
   };
+
+
   const authItems = useMemo(() => {
     if (displayName || user) {
       return Object.entries(items).filter(([key, _]) => key === 'sign-out');

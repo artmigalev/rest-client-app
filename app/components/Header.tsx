@@ -30,7 +30,6 @@ function Header({ displayName, language }: IHeader) {
 
   useEffect(() => {
     i18n.changeLanguage(language);
-    console.log(language);
   }, [language]);
 
   return (
