@@ -1,10 +1,10 @@
 import React, { Activity, useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Trans, useTranslation } from 'react-i18next';
-import { Form, useNavigate } from 'react-router';
+import { data, redirect, useFetcher, useNavigate } from 'react-router';
 import { auth } from '~/firebase';
 import type { Route } from '../../routes/+types/Auth';
-import { updateProfile, } from 'firebase/auth';
+import { updateProfile } from 'firebase/auth';
 import type { Resources } from 'i18next';
 import { createUser } from '~/firebase/apicalls';
 import { useAppDispatch } from '~/hooks';
@@ -12,99 +12,122 @@ import { setUser, type User } from '~/reducers/userSlice';
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
-  const email = formData.get('email');
-  const password = formData.get('password');
-  const displayName = formData.get('username') as string;
+  const email = String(formData.get('email'));
+  const password = String(formData.get('password'));
+  const displayName = String(formData.get('username'));
 
-  return { email, displayName, password };
+  const errors = {};
+
+  if (!email.includes('@')) {
+    Object.defineProperty(errors, 'email', { value: 'auth/invalid-email', writable: true, enumerable: true });
+  }
+  if (password.length < 12) {
+    Object.defineProperty(errors, 'password', { value: 'auth/wrong-password', writable: true, enumerable: true });
+  }
+  if (Object.keys(errors).length > 0) {
+    return data({ errors }, { status: 400 });
+  }
+  return redirect('/');
 }
 
-function RegisterComponent({ actionData }: Route.ComponentProps) {
+function RegisterComponent(_: Route.ComponentProps) {
+  let fetcher = useFetcher();
+  let errors = fetcher.data?.errors;
+
   const { t } = useTranslation('auth', { keyPrefix: 'registerComponent', useSuspense: true });
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
   const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
 
-
   const navigate = useNavigate();
 
-  let success
+  let success;
 
-  useEffect(() => {
-    if (actionData) {
-      const { password, email, displayName } = actionData;
-      console.log(actionData);
-      createUserWithEmailAndPassword(email, password);
+  // useEffect(() => {
+  //   if (actionData) {
+  //     const { password, email, displayName } = actionData;
+  //     console.log(actionData);
+  //     createUserWithEmailAndPassword(email, password);
+  //   }
+  // }, [actionData]);
 
-
-    }
-  }, [actionData]);
-
-  if (loading) {
-    return <span className='absolute top-2/4 left-2/4'> Loading...</span>;
-  }
-  if (user?.user && actionData ) {
-    const userInfo: User  = {
-      uid: user.user['uid'],
-      displayName: actionData['displayName']
-
-    }
-    console.log(actionData['displayName']);
-    dispatch(setUser(userInfo))
-    setTimeout(() => navigate('/', { viewTransition: true }), 13000);
-  }
+  // if (loading) {
+  //   return <span className='absolute top-2/4 left-2/4'> Loading...</span>;
+  // }
+  // if (user?.user && actionData) {
+  //   const userInfo: User = {
+  //     uid: user.user['uid'],
+  //     displayName: actionData['displayName'],
+  //   };
+  //   console.log(actionData['displayName']);
+  //   dispatch(setUser(userInfo));
+  //   setTimeout(() => navigate('/', { viewTransition: true }), 13000);
+  // }
 
   return (
     <>
-      <Form method='PUT' className='w-2/3  flex flex-col  gap-8 p-6 pt-10 rounded-md shadow-lg max-sm:w-3/4 '>
-        <div className=' flex flex-col w-full'>
+      <fetcher.Form method='POST' className='w-2/3  flex flex-col  gap-2 p-2  pt-2 rounded-md form-shadow max-sm:w-3/4  '>
+        <div className='field-form'>
           <label className='capitalize block text-gray-800 font-semibold text-xm' htmlFor='username'>
             {t('username')}
           </label>
           <input
+            required
             placeholder={t('username')}
-            className=' w-full  px-6 py-2.5  block rounded-[var(--radius-form-b)]  ring-1 ring-inset ring-gray-400 focus:text-gray-800 mt-3! '
+            className=' py-1 px-2 w-full text-base  block rounded-[var(--radius-form-b)]  ring-1 ring-inset ring-gray-400 focus:text-gray-800  '
             type='text'
             name='username'
           />
         </div>
-        <div className=' flex flex-col w-full'>
+        <div className='field-form'>
           <label className='capitalize block text-gray-800 font-semibold text-xm' htmlFor='email'>
             {t('email')}
           </label>
           <input
+            required
             placeholder={t('email')}
-            className=' w-full  px-6 py-2.5  block rounded-[var(--radius-form-b)]  ring-1 ring-inset ring-gray-400 focus:text-gray-800 mt-3! '
+            className='py-1 px-2 w-full  text-base   block rounded-[var(--radius-form-b)]  ring-1 ring-inset ring-gray-400 focus:text-gray-800  '
             type='text'
             name='email'
           />
+          <Activity mode={errors && errors?.email ? 'visible' : 'hidden'}>
+            <em className='text-main'>
+              <Trans i18nKey={`errors.${errors && (errors.email as keyof Resources['auth']['errors'])}`} />
+            </em>
+          </Activity>
         </div>
-        <div className=' flex flex-col'>
+        <div className='field-form'>
           <label className='capitalize block text-gray-800 font-semibold text-xm' htmlFor='password'>
             {t('password')}
           </label>
           <input
+            required
             placeholder={t('password')}
-            className=' w-full  px-6 py-2.5  block  rounded-[var(--radius-form-b)] ring-1 ring-inset ring-gray-400 focus:text-gray-800 mt-3! '
+            className=' py-1 px-2 text-base  w-full block  rounded-[var(--radius-form-b)] ring-1 ring-inset ring-gray-400 focus:text-gray-800  '
             type='password'
             name='password'
           />
+          <Activity mode={errors && errors?.password ? 'visible' : 'hidden'}>
+            <em className='text-main'>
+              <Trans i18nKey={`errors.${errors && (errors.password as keyof Resources['auth']['errors'])}`} />
+            </em>
+          </Activity>
         </div>
 
-        <Activity mode={error ? 'visible' : 'hidden'}>
+        {/* <Activity mode={error ? 'visible' : 'hidden'}>
           <span>
             {success && success}
             <Trans i18nKey={`errors.${error && (error.code as keyof Resources['auth']['errors'])}`} />
           </span>
-        </Activity>
+        </Activity> */}
         <button
           type='submit'
-          className=' bg-main m-auto! text-lg  text-amber-50 w-full rounded-[var(--radius-form-b)] py-3.5  font-bold  border-2 capitalize!'
+          className='p-2 bg-main m-auto! text-base  text-amber-50 w-full rounded-[var(--radius-form-b)]   font-bold  border-2 capitalize!'
         >
           <Trans i18nKey='auth:button' />
         </button>
-      </Form>
+      </fetcher.Form>
     </>
   );
 }

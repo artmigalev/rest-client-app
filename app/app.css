@@ -57,3 +57,11 @@ body {
   animation-timeline: scroll();
   animation-range: 0vh 90vh;
 }
+.field-form{
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+.form-shadow{
+  box-shadow: 0 15px 10px 0 rgba(0,0,0,0.2);
+}
