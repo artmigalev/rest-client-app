@@ -10,7 +10,7 @@ const routes = [
       route('/logout', 'routes/auth/LogoutRoute.tsx')
     ]),
     layout('./components/ProtectedLayout.tsx', [
-      route('/rest-client', 'routes/RestfulClient.tsx'),
+      route('/rest-client', 'routes/RestFullClient.tsx'),
       route('/history', 'routes/History.tsx'),
       route('/variables', 'routes/Variables.tsx'),
     ]),
