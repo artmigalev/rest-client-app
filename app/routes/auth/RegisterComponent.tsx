@@ -1,42 +1,32 @@
 import React, { Activity, useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Trans, useTranslation } from 'react-i18next';
-import { data, redirect, useFetcher, useNavigate } from 'react-router';
+import { data, Form, redirect, useFetcher, useNavigate } from 'react-router';
 import { auth } from '~/firebase';
-import type { Route } from '../+types/Auth';
-import { updateProfile } from 'firebase/auth';
+
+import { AuthErrorCodes, updateProfile } from 'firebase/auth';
 import type { Resources } from 'i18next';
 import { createUser } from '~/firebase/apicalls';
 import { useAppDispatch } from '~/hooks';
 import { setUser, type User } from '~/reducers/userSlice';
-import { commitSession, getSession } from '~/sessions.server';
 import { error } from 'console';
+import type { Route } from './+types/RegisterComponent';
+import { FirebaseError } from 'firebase/app';
+import { HydrateFallBack } from '~/root';
 
-export async function clientLoader({ request }: Route.ClientLoaderArgs) {
-  const session = await getSession(request.headers.get('Cookie'));
-
-  if (session.has('userId')) {
-    return redirect('/');
-  }
-  return data(
-    { error: session.get('error') },
-    {
-      headers: {
-        'Set-Cookie': await commitSession(session),
-      },
-    }
-  );
-}
+type ReturnTypeDataForm = {
+  email: string;
+  password: string;
+  displayName: string;
+};
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
-  const session = await getSession(request.headers.get('Cookie'));
-
   const formData = await request.formData();
   const email = String(formData.get('email'));
   const password = String(formData.get('password'));
   const displayName = String(formData.get('username'));
 
-  const errors = {};
+  let errors = {};
 
   if (!email.includes('@')) {
     Object.defineProperty(errors, 'email', { value: 'auth/invalid-email', writable: true, enumerable: true });
@@ -46,50 +36,44 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   }
   if (Object.keys(errors).length > 0) {
     // Если пользователь не  прошел валидацию
-    session.flash('error', 'Invalid cridantional');
 
-    return data({ errors }, { status: 400 });
+    return data({ errors });
   }
+  console.log({ email, password, displayName });
 
-  // Если  пользователь прошел валидацию  и зарегистрировался
-  session.set('userId', displayName);
-  return redirect('/', { headers: { 'Set-Cookie': await commitSession(session) } });
+  return data({ email, password, displayName });
 }
 
 function RegisterComponent(_: Route.ComponentProps) {
-  let fetcher = useFetcher();
-  let errors = fetcher.data?.errors;
+  const fetcher = useFetcher();
 
   const { t } = useTranslation('auth', { keyPrefix: 'registerComponent', useSuspense: true });
 
-  const dispatch = useAppDispatch();
 
   const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
 
   const navigate = useNavigate();
 
-  let success;
+  let errors = fetcher.data?.errors;
+  let userData = fetcher.data as ReturnTypeDataForm;
 
-  // useEffect(() => {
-  //   if (actionData) {
-  //     const { password, email, displayName } = actionData;
-  //     console.log(actionData);
-  //     createUserWithEmailAndPassword(email, password);
-  //   }
-  // }, [actionData]);
+  useEffect(() => {
+    async function createWithUserDt(params: ReturnTypeDataForm) {
+      const { email, password, displayName } = params;
+      await createUserWithEmailAndPassword(email, password);
+      if (user?.user) {
+        await updateProfile(user.user, { displayName });
+        navigate('/', {viewTransition:true})
+      }
 
-  // if (loading) {
-  //   return <span className='absolute top-2/4 left-2/4'> Loading...</span>;
-  // }
-  // if (user?.user && actionData) {
-  //   const userInfo: User = {
-  //     uid: user.user['uid'],
-  //     displayName: actionData['displayName'],
-  //   };
-  //   console.log(actionData['displayName']);
-  //   dispatch(setUser(userInfo));
-  //   setTimeout(() => navigate('/', { viewTransition: true }), 13000);
-  // }
+    }
+    if (userData) {
+      createWithUserDt(userData);
+    }
+  }, [userData, errors]);
+
+
+  if(loading) return <HydrateFallBack/>
 
   return (
     <>
@@ -144,12 +128,11 @@ function RegisterComponent(_: Route.ComponentProps) {
           </Activity>
         </div>
 
-        {/* <Activity mode={error ? 'visible' : 'hidden'}>
-          <span>
-            {success && success}
+        <Activity mode={error ? 'visible' : 'hidden'}>
+          <em className='text-main'>
             <Trans i18nKey={`errors.${error && (error.code as keyof Resources['auth']['errors'])}`} />
-          </span>
-        </Activity> */}
+          </em>
+        </Activity>
         <button
           type='submit'
           className='p-2 bg-main m-auto! text-base  text-amber-50 w-full rounded-[var(--radius-form-b)]   font-bold  border-2 capitalize!'

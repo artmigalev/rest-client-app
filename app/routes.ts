@@ -5,8 +5,9 @@ const routes = [
 
     index('routes/Welcome.tsx'),
     layout('routes/Auth.tsx', [
-      route('/sign-in', 'components/auth/SignInComponent.tsx'),
-      route('/sign-up', 'components/auth/RegisterComponent.tsx'),
+      route('/sign-in', 'routes/auth/SignInComponent.tsx'),
+      route('/sign-up', 'routes/auth/RegisterComponent.tsx'),
+      route('/logout', 'routes/auth/LogoutRoute.tsx')
     ]),
     layout('./components/ProtectedLayout.tsx', [
       route('/rest-client', 'routes/RestfulClient.tsx'),
