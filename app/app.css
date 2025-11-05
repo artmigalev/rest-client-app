@@ -1,11 +1,11 @@
 @import 'tailwindcss';
 
 @theme {
-
-  --: 8vh;
+  --color-input-bg: #fff;
+  --color-input-prefix: #666;
   --font-sans: Inter Variable, sans-serif;
   --color-main: #be4b4b;
-  --color-background:  oklch(92.8% 0.006 264.531);
+  --color-background: oklch(92.8% 0.006 264.531);
   --shadow-header: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
   --glif: 1vw + 1.2em;
   --radius-form-b: 20px;
@@ -31,7 +31,7 @@ html {
 
 body {
   min-height: 100vh;
-  width:100vw;
+  width: 100vw;
   max-width: 1440px;
 
   margin: 0 auto;
@@ -57,11 +57,11 @@ body {
   animation-timeline: scroll();
   animation-range: 0vh 90vh;
 }
-.field-form{
+.field-form {
   display: flex;
   flex-direction: column;
-  gap: .3rem;
+  gap: 0.3rem;
 }
-.form-shadow{
-  box-shadow: 0 15px 10px 0 rgba(0,0,0,0.2);
+.form-shadow {
+  box-shadow: 0 15px 10px 0 rgba(0, 0, 0, 0.2);
 }
