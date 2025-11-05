@@ -10,7 +10,7 @@ interface IFooter {
   username?: string | null;
 }
 
-function Footer({ lang }) {
+function Footer({ lang }: IFooter) {
   const [user] = useAuthState(auth);
 
   const menu = (
@@ -20,10 +20,10 @@ function Footer({ lang }) {
   );
 
   return (
-    <footer className='flex flex-col p-3 w-full fixed left-0 bottom-0 bg-background'>
+    <footer className='flex flex-col p-3 w-full fixed left-0 bottom-0 bg-background '>
       <Activity mode={user ? 'visible' : 'hidden'}>{menu}</Activity>
 
-      <div className='flex flex-row justify-around items-center  '>
+      <div className='grid items-center justify-items-center grid-rows-1 grid-cols-3 '>
         <Link to={'https://rs.school/courses/reactjs'} viewTransition>
           <img className='w-10' src='rss-logo.svg' alt='rss-logo' />
         </Link>

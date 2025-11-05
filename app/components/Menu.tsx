@@ -19,7 +19,11 @@ function Menu({ lang }: IMenu['props']) {
 
   return (
     <>
-      <List items={menuItems} styles='justify-around p-3' isLink={true} />
+      <List
+        items={menuItems}
+        styles='grid items-center justify-items-center grid-rows-1 grid-cols-3  p-3'
+        isLink={true}
+      />
     </>
   );
 }
