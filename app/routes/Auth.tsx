@@ -32,13 +32,14 @@ function Auth({ forbidAuth = true, redirectPath = '/' }: ProtectedLayoutProps) {
     return <Navigate to={redirectPath} state={{ from: location }} replace />;
   }
 
-  const isActive = ({ isActive }) => isActive && 'text-main capitalize';
+  const ifActive = ({ isActive }) =>
+    isActive?   'text-main capitalize' : ''
   return (
     <div className='flex-1 w-full h-[100%]   flex justify-evenly  items-center'>
       <div className='container w-[80%] max-w-[450px] flex flex-col gap-3 items-center  max-h-[650px] h-[400px] '>
         <div className=' font-bold  flex gap-[1rem] py-[1rem] '>
           {Object.keys(navigation).map((key) => (
-            <NavLink key={key} style={{ textTransform: 'capitalize' }} className={isActive} to={key} viewTransition>
+            <NavLink key={key} style={{ textTransform: 'capitalize' }} className={ifActive} to={key} viewTransition>
               {t(key as keyof Resources['auth']['navigation'])}
             </NavLink>
           ))}
