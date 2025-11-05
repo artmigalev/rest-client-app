@@ -1,5 +1,7 @@
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate, Outlet, useLocation } from 'react-router';
+import { auth } from '~/firebase';
 import { useAppSelector } from '~/hooks';
 import { selectUser, type User } from '~/reducers/userSlice';
 interface IProtectedRoute {
@@ -17,10 +19,10 @@ export type ProtectedLayoutProps = {
 };
 
 function ProtectedLayout({ requireAuth = true, redirectPath = '/sign-in' }: ProtectedLayoutProps) {
-  const user = useAppSelector(selectUser);
+  const [user, loading, error] = useAuthState(auth)
   const location = useLocation();
 
-  const isAuth = Boolean(user?.uid);
+  const isAuth = Boolean(user?.displayName);
 
   if (requireAuth && !isAuth) {
     return <Navigate to={redirectPath} state={{ from: location }} replace />;
