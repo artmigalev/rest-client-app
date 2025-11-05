@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import List from './List';
 import type Resources from '~/@types/resources';
 import { signOut } from 'firebase/auth';
@@ -17,22 +17,16 @@ interface INavigation {
   logOut: () => void;
 }
 
-
-
-
-
 function Navigation({ items, displayName }: INavigation['props']) {
-
-  const [user, ] = useAuthState(auth);
-  const dispatch = useAppDispatch()
-  const navigate =useNavigate()
+  const [user] = useAuthState(auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const logout: INavigation['logOut'] = () => {
     signOut(auth);
-    dispatch(setUser({ displayName: null, uid: null }))
-    navigate('/',{viewTransition:true})
+    dispatch(setUser({ displayName: null, uid: null }));
+    navigate('/', { viewTransition: true });
   };
-
 
   const authItems = useMemo(() => {
     if (displayName || user) {

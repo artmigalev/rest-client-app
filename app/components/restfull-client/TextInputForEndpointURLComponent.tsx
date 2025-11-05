@@ -10,7 +10,7 @@ function TextInputForEndpointURLComponent({ defaultValue, dispatcher }: ITextInp
   const prefix = 'http://';
 
   const onHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let inputValue = event.target.value;
+    const inputValue = event.target.value;
 
     dispatcher((state) => ({ ...state, textInput: inputValue }));
   };

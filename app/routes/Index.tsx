@@ -3,7 +3,7 @@ import Header from '~/components/Header';
 import { Outlet } from 'react-router';
 import Footer from '~/components/Footer';
 import { useAppSelector } from '~/hooks';
-import { selectUser, type User } from '~/reducers/userSlice';
+import { type User } from '~/reducers/userSlice';
 import { selectLang, type lang } from '~/reducers/langSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '~/firebase';
