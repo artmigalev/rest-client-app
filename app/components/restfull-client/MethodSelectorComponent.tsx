@@ -17,7 +17,7 @@ const MethodSelectorComponent = ({ defaultMethod, provider }: IMethodSelectorCom
   };
 
   useEffect(() => {
-    provider((state)=> ({...state, methodSelector: method }));
+    provider((state) => ({ ...state, methodSelector: method }));
   }, [method]);
 
   return (

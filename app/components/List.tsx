@@ -8,7 +8,6 @@ interface IList<T> {
 }
 
 function List<T>({ items, isLink, styles, callbackFn }: IList<T>) {
-
   const children = items.map(([key, val]) => (
     <li key={key as string}>
       {isLink ? (

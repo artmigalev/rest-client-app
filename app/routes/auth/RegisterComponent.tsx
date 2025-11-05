@@ -1,20 +1,15 @@
 import React, { Activity, useEffect } from 'react';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Trans, useTranslation } from 'react-i18next';
-import { data, Form, redirect, useFetcher, useNavigate } from 'react-router';
+import { data, useFetcher, useNavigate } from 'react-router';
 import { auth } from '~/firebase';
 
-import { AuthErrorCodes, updateProfile } from 'firebase/auth';
+import { updateProfile } from 'firebase/auth';
 import type { Resources } from 'i18next';
-import { createUser } from '~/firebase/apicalls';
-import { useAppDispatch } from '~/hooks';
-import { setUser, type User } from '~/reducers/userSlice';
-import { error } from 'console';
 import type { Route } from './+types/RegisterComponent';
 import { FirebaseError } from 'firebase/app';
 import { HydrateFallBack } from '~/root';
 import { AuthUserError } from '~/components/errors/erros-auth';
-import { userInfo } from 'os';
 
 type ReturnTypeDataForm = {
   email: string;
@@ -28,7 +23,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   const password = String(formData.get('password'));
   const displayName = String(formData.get('username'));
 
-  let errors = {};
+  const errors = {};
 
   if (!email.includes('@')) {
     Object.defineProperty(errors, 'email', { value: 'auth/invalid-email', writable: true, enumerable: true });
@@ -55,8 +50,8 @@ function RegisterComponent(_: Route.ComponentProps) {
 
   const navigate = useNavigate();
 
-  let errors = fetcher.data?.errors;
-  let userData = fetcher.data as ReturnTypeDataForm;
+  const errors = fetcher.data?.errors;
+  const userData = fetcher.data as ReturnTypeDataForm;
 
   useEffect(() => {
     async function createWithUserDt(params: ReturnTypeDataForm) {

@@ -2,8 +2,7 @@ import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate, Outlet, useLocation } from 'react-router';
 import { auth } from '~/firebase';
-import { useAppSelector } from '~/hooks';
-import { selectUser, type User } from '~/reducers/userSlice';
+import { type User } from '~/reducers/userSlice';
 interface IProtectedRoute {
   props: {
     user: User;

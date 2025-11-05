@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Links, useOutlet, useOutletContext } from 'react-router';
+import { Link, useOutletContext } from 'react-router';
 import type { User } from '~/reducers/userSlice';
 import type { IndexContext } from './Index';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,6 @@ interface IWelcome {
 
 function Welcome() {
   const { username, lang } = useOutletContext<IndexContext>();
-  
 
   const { t, i18n } = useTranslation();
 
