@@ -11,8 +11,8 @@ interface IWelcome {
 }
 
 function Welcome() {
-  const { user, lang } = useOutletContext<IndexContext>();
-  const username = user.displayName;
+  const { username, lang } = useOutletContext<IndexContext>();
+  
 
   const { t, i18n } = useTranslation();
 

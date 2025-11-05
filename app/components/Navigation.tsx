@@ -36,9 +36,9 @@ function Navigation({ items, displayName }: INavigation['props']) {
 
   const authItems = useMemo(() => {
     if (displayName || user) {
-      return Object.entries(items).filter(([key, _]) => key === 'sign-out');
+      return Object.entries(items).filter(([key, _]) => key === 'logout');
     }
-    return Object.entries(items).filter(([key, val]) => key !== 'sign-out');
+    return Object.entries(items).filter(([key, val]) => key !== 'logout');
   }, [displayName, user]);
 
   return (
