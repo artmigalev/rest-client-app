@@ -20,13 +20,13 @@ interface IAuth {
 }
 
 function Auth({ forbidAuth = true, redirectPath = '/' }: ProtectedLayoutProps) {
-  const { lang, user } = useOutletContext<IndexContext>();
+  const { lang, username } = useOutletContext<IndexContext>();
   const data = useLoaderData<IAuth['dataLoader']>();
   const { navigation, signInComponent, registerComponent } = data;
   const { t } = useTranslation('auth', { keyPrefix: 'navigation', useSuspense: true });
   const location = useLocation();
 
-  const isAuth = Boolean(user.uid);
+  const isAuth = Boolean(username);
 
   if (isAuth && forbidAuth) {
     return <Navigate to={redirectPath} state={{ from: location }} replace />;

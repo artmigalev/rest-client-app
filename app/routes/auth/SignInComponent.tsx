@@ -1,10 +1,12 @@
 import React, { Activity, useEffect, useEffectEvent } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { data, Form, redirect, useFetcher, useNavigate } from 'react-router';
-import type { Route } from '../+types/Auth';
+import type { Route } from './+types/SignInComponent';
 import { auth } from '~/firebase';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import type Resources from '~/@types/resources';
+
+
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
@@ -21,12 +23,13 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     return data({ errors }, { status: 400 });
   }
 
-  return redirect('/');
+  return data({email,password})
 }
 
-function SignInComponent({ actionData }: Route.ComponentProps) {
+function SignInComponent(_: Route.ComponentProps) {
   const fetcher = useFetcher();
   let errors = fetcher.data?.errors;
+  let data = fetcher.data as Resources['auth']['signInComponent']
   const { t } = useTranslation('auth', { keyPrefix: 'signInComponent', useSuspense: true });
 
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
@@ -34,10 +37,11 @@ function SignInComponent({ actionData }: Route.ComponentProps) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (actionData) {
-      signInWithEmailAndPassword(actionData.email, actionData.password);
+    if (data) {
+      const {email,password} =data
+      signInWithEmailAndPassword(email,password);
     }
-  }, [actionData]);
+  }, [data]);
 
   useEffect(() => {
     if (user) {
