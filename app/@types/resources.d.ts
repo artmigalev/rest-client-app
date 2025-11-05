@@ -31,8 +31,8 @@ interface Resources {
       "ru": "Russian"
     },
     "navigation": {
+      "logout": "Sign Out",
       "sign-in": "Sign In",
-      "sign-out": "Sign Out",
       "sign-up": "Sing UP"
     }
   },
