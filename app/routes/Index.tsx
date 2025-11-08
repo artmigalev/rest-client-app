@@ -7,6 +7,7 @@ import { type User } from '~/reducers/userSlice';
 import { selectLang, type lang } from '~/reducers/langSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '~/firebase';
+import { HydrateFallBack } from '~/root';
 
 export type IndexContext = { username: User['displayName']; lang: lang };
 
