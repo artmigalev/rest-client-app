@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { debugErrorMap, initializeAuth } from 'firebase/auth';
+import { browserLocalPersistence, debugErrorMap, initializeAuth, setPersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 const firebaseConfig = {
   apiKey: 'AIzaSyA0YriaxC_aAKMFqAhChtSTLEhzlFtJVcM',
@@ -13,5 +13,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-export const auth = initializeAuth(app, { errorMap: debugErrorMap });
+export const auth = initializeAuth(app, { errorMap: debugErrorMap, persistence: browserLocalPersistence });
 export const db = getFirestore(app);
+
+setPersistence(auth, browserLocalPersistence).then(()=>console.log('localStorage Persistence')
+).catch(()=>console.log('persistence error'));
