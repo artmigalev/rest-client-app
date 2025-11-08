@@ -16,7 +16,7 @@ function TextInputForEndpointURLComponent({ defaultValue, dispatcher }: ITextInp
   };
 
   return (
-    <div className='flex justify-between items-center w-[270px] h-12 rounded-xl relative border-gray-400 border-2'>
+    <div className='flex justify-between items-center w-full h-12 rounded-xl relative border-gray-400 border-2'>
       <span className='flex items-center justify-center text-input-prefix text-lg h-full w-[70px] font-semibold p-2.5 bg-background rounded-bl-xl rounded-tl-xl'>
         {prefix}
       </span>

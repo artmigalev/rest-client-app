@@ -6,18 +6,17 @@ const HeadersEditorComponent = () => {
   const [children, addChildren] = React.useState<React.ReactNode[]>([]);
 
   const onHandleClick = () => {
-    console.log('add');
-
     addChildren((children) => [...children, headersButtons]);
   };
+  const onDeleteBtnClick = () => {
+    addChildren((children) => children.slice(0, -1));
+  };
   useEffect(() => {
-    // onHandleClick()
-    addChildren(() => ([ headersButtons]));
+    addChildren(() => [headersButtons]);
   }, []);
 
-
   const headersButtons = (
-    <div key={children.length} className='flex w-full'>
+    <div key={children.length} className='flex w-full items-center'>
       <div className='flex items-center justify-center mr-4 gap-5'>
         <label htmlFor=''>Header</label>
         <input
@@ -25,7 +24,7 @@ const HeadersEditorComponent = () => {
           type='text'
           name='header-key'
           placeholder='Key'
-          />
+        />
       </div>
       <div className='flex items-center justify-center mr-4 gap-5'>
         <label htmlFor=''>Header</label>
@@ -34,14 +33,12 @@ const HeadersEditorComponent = () => {
           type='text'
           name='header-value'
           placeholder='Value'
-          />
+        />
       </div>
+      <img onClick={ onDeleteBtnClick} src='delete-icon.svg' className='size-6.5' alt='delete-icon' />
     </div>
   );
 
-  if (children.length) {
-
-  }
   return (
     <div className='w-full flex flex-col gap-4 p-4 border-2 border-gray-400 rounded-xl' ref={ref}>
       <div className='flex items-center justify-between'>

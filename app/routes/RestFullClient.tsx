@@ -21,7 +21,7 @@ function RestFullClient() {
   return (
     <div className='flex flex-col  p-3 pt-5'>
       <Form className='flex flex-col gap-4 items-center justify-between'>
-        <div className='flex flex-row'>
+        <div className='flex flex-row w-full'>
           <MethodSelectorComponent defaultMethod={options.methodSelector} provider={setOptions} />
           <TextInputForEndpointURLComponent dispatcher={setOptions} defaultValue={options.textInput} />
         </div>
