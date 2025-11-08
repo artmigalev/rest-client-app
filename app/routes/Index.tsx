@@ -1,12 +1,13 @@
-import React from 'react';
 import Header from '~/components/Header';
 import { Outlet } from 'react-router';
 import Footer from '~/components/Footer';
 import { useAppSelector } from '~/hooks';
-import { selectUser, type User } from '~/reducers/userSlice';
+import { type User } from '~/reducers/userSlice';
 import { selectLang, type lang } from '~/reducers/langSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '~/firebase';
+import { HydrateFallBack } from '~/root';
+import { useEffect } from 'react';
 
 export type IndexContext = { username: User['displayName']; lang: lang };
 
@@ -21,6 +22,17 @@ function Index() {
   const lang = useAppSelector(selectLang);
   const [user, loading, error] = useAuthState(auth);
 
+
+  
+
+
+  if (loading) {
+
+    return <HydrateFallBack/>
+  }
+
+  if(error) {console.log(error);
+  }
   return (
     <div className='flex flex-col   w-full   '>
       <Header language={lang} displayName={user?.displayName || null} />

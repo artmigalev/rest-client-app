@@ -14,8 +14,8 @@ function List<T>({ items, isLink, styles, callbackFn }: IList<T>) {
       {isLink ? (
         <Link
           className='capitalize w-max p-1'
-          to={ key === "sign-out" ? '/': key as Partial<Path>}
-          onClick={key === 'sign-out' ? callbackFn : undefined}
+          to={key === 'logout' ? '/' : (key as Partial<Path>)}
+          onClick={key === 'logout' ? callbackFn : undefined}
           viewTransition
         >
           {val}
