@@ -1,54 +1,59 @@
-import { before } from 'node:test';
-import React, { use, useEffect, useRef } from 'react';
+import React, { useState, type ChangeEvent } from 'react';
 
 const HeadersEditorComponent = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [children, addChildren] = React.useState<React.ReactNode[]>([]);
+  const [headers, setHeaders] = useState<{ id: number; key: string; value: string }[]>([]);
 
-  const onHandleClick = () => {
-    addChildren((children) => [...children, headersButtons]);
+  const onAddHeader = () => {
+    setHeaders((prev) => [...prev, { id: Date.now(), key: '', value: '' }]);
   };
-  const onDeleteBtnClick = () => {
-    addChildren((children) => children.slice(0, -1));
-  };
-  useEffect(() => {
-    addChildren(() => [headersButtons]);
-  }, []);
 
-  const headersButtons = (
-    <div key={children.length} className='flex w-full items-center'>
-      <div className='flex items-center justify-center mr-4 gap-5'>
-        <label htmlFor=''>Header</label>
-        <input
-          className='border-b-2 border-border-default w-2/5 padding-headers-input '
-          type='text'
-          name='header-key'
-          placeholder='Key'
-        />
-      </div>
-      <div className='flex items-center justify-center mr-4 gap-5'>
-        <label htmlFor=''>Header</label>
-        <input
-          className='border-b-2 border-border-default w-2/5 padding-headers-input'
-          type='text'
-          name='header-value'
-          placeholder='Value'
-        />
-      </div>
-      <img onClick={ onDeleteBtnClick} src='delete-icon.svg' className='size-6.5' alt='delete-icon' />
-    </div>
-  );
+  const onDeleteHeader = (id: number) => {
+    setHeaders((prev) => prev.filter((header) => header.id !== id));
+  };
+
+  const onChangeHeader = (id: number, field: 'key' | 'value', value: string) => {
+    setHeaders((prev) => prev.map((header) => (header.id === id ? { ...header, [field]: value } : header)));
+  };
 
   return (
-    <div className='w-full flex flex-col gap-4 p-4 border-2 border-gray-400 rounded-xl' ref={ref}>
+    <div className='w-full flex flex-col gap-4 p-4 border-2 border-gray-400 rounded-xl'>
       <div className='flex items-center justify-between'>
-        <h4 className='font-bold'>Headers: </h4>
-        <button onClick={onHandleClick} className='border-main border-2 rounded-xl p-2.5 '>
-          Add headers button
+        <h4 className='font-bold'>Headers:</h4>
+        <button onClick={onAddHeader} className='border-main border-2 rounded-xl p-2.5'>
+          Add header
         </button>
       </div>
-      {/* {headersButtons} */}
-      {children}
+
+      {headers.map((header) => (
+        <div key={header.id} className='flex w-full items-center'>
+          <div className='flex items-center justify-center mr-4 gap-5'>
+            <label>Header</label>
+            <input
+              className='border-b-2 border-border-default w-2/5 padding-headers-input'
+              type='text'
+              placeholder='Key'
+              value={header.key}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeHeader(header.id, 'key', e.target.value)}
+            />
+          </div>
+          <div className='flex items-center justify-center mr-4 gap-5'>
+            <label>Value</label>
+            <input
+              className='border-b-2 border-border-default w-2/5 padding-headers-input'
+              type='text'
+              placeholder='Value'
+              value={header.value}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeHeader(header.id, 'value', e.target.value)}
+            />
+          </div>
+          <img
+            onClick={() => onDeleteHeader(header.id)}
+            src='delete-icon.svg'
+            className='size-6.5 cursor-pointer'
+            alt='delete'
+          />
+        </div>
+      ))}
     </div>
   );
 };
