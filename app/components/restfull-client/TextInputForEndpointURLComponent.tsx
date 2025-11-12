@@ -21,14 +21,15 @@ function TextInputForEndpointURLComponent({ defaultValue, dispatcher }: ITextInp
         {prefix}
       </span>
       <input
+        aria-label='url'
+        name='base-url'
+        type='text'
         defaultValue={defaultValue}
         onChange={onHandleChange}
-        className='flex items-center justify-center outline-0 font-medium border-0  bg-input-bg py-2.5 w-40 text-sm'
+        className='flex items-center justify-center outline-0 font-medium border-0  bg-input-bg py-2.5 w-full text-sm'
         placeholder='Endpoint'
       />
-      <span className='text-4xl bg-input-bg h-full w-10 flex items-center justify-center pr-2.5 rounded-t-xl rounded-b-xl cursor-pointer relative pb-3'>
-        📨
-      </span>
+
     </div>
   );
 }

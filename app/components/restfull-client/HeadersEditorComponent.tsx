@@ -1,6 +1,13 @@
-import React, { useState, type ChangeEvent } from 'react';
+import React, { useState, type ChangeEvent, type Dispatch, type SetStateAction } from 'react';
+import type { IRestFullClient } from '~/routes/RestFullClient';
 
-const HeadersEditorComponent = () => {
+interface IHeadersEditorComponent {
+  props: {
+    setOptions: Dispatch<React.SetStateAction<IRestFullClient['options']>>;
+  };
+}
+
+const HeadersEditorComponent = ({ setOptions }: IHeadersEditorComponent['props']) => {
   const [headers, setHeaders] = useState<{ id: number; key: string; value: string }[]>([]);
 
   const onAddHeader = () => {
@@ -13,6 +20,11 @@ const HeadersEditorComponent = () => {
 
   const onChangeHeader = (id: number, field: 'key' | 'value', value: string) => {
     setHeaders((prev) => prev.map((header) => (header.id === id ? { ...header, [field]: value } : header)));
+
+    setOptions((state) => ({
+      ...state,
+      headers: headers,
+    }));
   };
 
   return (

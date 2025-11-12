@@ -13,7 +13,7 @@ function Select({ value, dispatcher, options, styles }: ISelect<string>) {
   };
 
   return (
-    <select defaultValue={value} onChange={handleChange} className='gap-0' name='select-lang '>
+    <select defaultValue={value} onChange={handleChange} className='gap-0' name='select-lang'>
       {options.map(([key, val]) => (
         <option key={key} value={key}>
           {val}
