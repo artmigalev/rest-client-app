@@ -1,13 +1,17 @@
 {
   "greeting": "Welcome !",
-  "app-description": "A lightweight and easy-to-use client for consuming (and developing) the API.",
-  "notes": [
-    "Authorization and authentication capabilities ensure that access to the tool is limited to authorized users.",
-    "A history section that will redirect the user to a specific section for previously performed queries."
-  ],
-  "structure": {
-    "text": "Application structure:",
+  "app-description": "- a lightweight and easy-to-use client for consuming (and developing) the API.",
 
+  "about": {
+    "title-section": "This application includes:",
+    "list": [
+      "Authorization and authentication capabilities ensure that access to the tool is limited to authorized users.",
+      "A history section that will redirect the user to a specific section for previously performed queries."
+    ]
+  },
+
+  "structure": {
+    "title-section": "Application structure:",
     "list": [
       "Main Page",
       "User Registration/Authentication Pages.",
@@ -26,7 +30,7 @@
     "Section generate code"
   ],
   "technical-requirements": {
-    "text": "When developing this application, the following technical requirements were met:: ",
+    "title-section": "When developing this application, the following technical requirements were met:: ",
     "list": [
       "Semantic markup ",
       "The application runs in the latest version of the Google Chrome",

@@ -44,17 +44,20 @@ interface Resources {
     }
   },
   "welcome": {
-    "app-description": "A lightweight and easy-to-use client for consuming (and developing) the API.",
+    "about": {
+      "list": ["Authorization and authentication capabilities ensure that access to the tool is limited to authorized users.", "A history section that will redirect the user to a specific section for previously performed queries."],
+      "title-section": "This application includes:"
+    },
+    "app-description": "- a lightweight and easy-to-use client for consuming (and developing) the API.",
     "greeting": "Welcome !",
-    "notes": ["Authorization and authentication capabilities ensure that access to the tool is limited to authorized users.", "A history section that will redirect the user to a specific section for previously performed queries."],
     "rest-full-structure": ["Method selector", "Input method for URL endpoint", "Request editor", "Headers editor", "Response Section", "Section generate code"],
     "structure": {
       "list": ["Main Page", "User Registration/Authentication Pages.", "REST client, which includes:", "Variables", "History"],
-      "text": "Application structure:"
+      "title-section": "Application structure:"
     },
     "technical-requirements": {
       "list": ["Semantic markup ", "The application runs in the latest version of the Google Chrome", "Private routes, a 404 page, and error boundaries are implemented", "React v 19 was used in development", "React Router 7(framework mode)", "TypeScript", "No more the three fonts per page", "Interactivity of elements all application pages (identical fonts, button styles, indents, and identical elements on all application pages have the same appearance and placement)"],
-      "text": "When developing this application, the following technical requirements were met:: "
+      "title-section": "When developing this application, the following technical requirements were met:: "
     }
   }
 }
