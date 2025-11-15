@@ -38,7 +38,12 @@ export default function App() {
 }
 
 export function HydrateFallBack() {
-  return <div>Loading...</div>;
+  return (
+    <div className='loader'>
+      <div className='justify-content-center jimu-primary-loading'></div>
+    </div>
+  );
+
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

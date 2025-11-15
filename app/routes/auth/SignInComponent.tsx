@@ -5,6 +5,7 @@ import type { Route } from './+types/SignInComponent';
 import { auth } from '~/firebase';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import type Resources from '~/@types/resources';
+import { HydrateFallBack } from '~/root';
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   const formData = await request.formData();
@@ -47,7 +48,7 @@ function SignInComponent(_: Route.ComponentProps) {
     }
   }, [user]);
 
-  if (loading) return <span className='absolute top-2/4 left-2/4'> Loading...</span>;
+  if (loading) return <HydrateFallBack/>;
 
   return (
     <>
