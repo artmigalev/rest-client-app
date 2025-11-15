@@ -18,7 +18,7 @@ export type ProtectedLayoutProps = {
 };
 
 function ProtectedLayout({ requireAuth = true, redirectPath = '/sign-in' }: ProtectedLayoutProps) {
-  const [user] = useAuthState(auth)
+  const [user] = useAuthState(auth);
   const location = useLocation();
 
   const isAuth = Boolean(user?.displayName);

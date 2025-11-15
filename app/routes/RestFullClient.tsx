@@ -4,7 +4,6 @@ import HeadersEditorComponent from '~/components/restfull-client/HeadersEditorCo
 import MethodSelectorComponent from '~/components/restfull-client/MethodSelectorComponent';
 import TextInputForEndpointURLComponent from '~/components/restfull-client/TextInputForEndpointURLComponent';
 import type { Route } from './+types/RestFullClient';
-import type { AppRoutes } from '~/routes';
 // import GenerateCodeSectionComponent from '~/components/restfull-client/GenerateCodeSectionComponent';
 
 export interface IRestFullClient {
@@ -14,9 +13,9 @@ export interface IRestFullClient {
     headers: ({ key: string; value: string } | null)[];
   };
   contextType: {
-    url: string
-    method: string
-  }
+    url: string;
+    method: string;
+  };
 }
 
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {
@@ -106,14 +105,20 @@ function RestFullClient({ loaderData, params }: Route.ComponentProps) {
           </li>
         </ul>
       </nav>
-      <Outlet context={{ url: data?.url || 'https://example.com', method: data?.method || 'GET'} satisfies IRestFullClient['contextType'] }  />
+      <Outlet
+        context={
+          {
+            url: data?.url || 'https://example.com',
+            method: data?.method || 'GET',
+          } satisfies IRestFullClient['contextType']
+        }
+      />
     </div>
   );
 }
 
-
-export const  usePropsRestClient = () =>  {
-  return useOutletContext<IRestFullClient['contextType']>()
-}
+export const usePropsRestClient = () => {
+  return useOutletContext<IRestFullClient['contextType']>();
+};
 
 export default RestFullClient;

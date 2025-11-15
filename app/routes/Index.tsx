@@ -22,16 +22,12 @@ function Index() {
   const lang = useAppSelector(selectLang);
   const [user, loading, error] = useAuthState(auth);
 
-
-
-
-
   if (loading) {
-
-    return <HydrateFallBack/>
+    return <HydrateFallBack />;
   }
 
-  if(error) {console.log(error);
+  if (error) {
+    console.log(error);
   }
   return (
     <div className='flex flex-col w-full'>

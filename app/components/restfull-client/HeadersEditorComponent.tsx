@@ -1,4 +1,4 @@
-import React, { useState, type ChangeEvent, type Dispatch, type SetStateAction } from 'react';
+import React, { useState, type ChangeEvent, type Dispatch } from 'react';
 import type { IRestFullClient } from '~/routes/RestFullClient';
 
 interface IHeadersEditorComponent {

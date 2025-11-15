@@ -29,7 +29,6 @@ function TextInputForEndpointURLComponent({ defaultValue, dispatcher }: ITextInp
         className='flex items-center justify-center outline-0 font-medium border-0  bg-input-bg py-2.5 w-full text-sm'
         placeholder='Endpoint'
       />
-
     </div>
   );
 }

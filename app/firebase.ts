@@ -16,5 +16,6 @@ export const app = initializeApp(firebaseConfig);
 export const auth = initializeAuth(app, { errorMap: debugErrorMap, persistence: browserLocalPersistence });
 export const db = getFirestore(app);
 
-setPersistence(auth, browserLocalPersistence).then(()=>console.log('localStorage Persistence')
-).catch(()=>console.log('persistence error'));
+setPersistence(auth, browserLocalPersistence)
+  .then(() => console.log('localStorage Persistence'))
+  .catch(() => console.log('persistence error'));

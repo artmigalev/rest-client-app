@@ -1,7 +1,4 @@
-import React, { use, useEffect } from 'react';
-import type { Route } from './+types/LogoutRoute';
-import { redirect } from 'react-router';
-import { sign } from 'crypto';
+import React, { useEffect } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '~/firebase';
 
@@ -10,7 +7,7 @@ const LogoutRoute = () => {
 
   useEffect(() => {
     signOut(auth);
-   }, [])
+  }, []);
 
   return <div>LogoutRoute</div>;
 };

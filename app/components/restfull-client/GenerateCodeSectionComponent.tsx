@@ -2,8 +2,7 @@ import { HTTPSnippet, type ClientId, type TargetId } from 'httpsnippet-lite';
 import { targets } from '/node_modules/httpsnippet-lite/dist/esm/targets/targets.mjs';
 import { Activity, useEffect, useState, type ChangeEvent } from 'react';
 // import type { Itargets } from '~/@types/target';
-import type { Client, ClientInfo, Target, TargetInfo } from 'node_modules/httpsnippet-lite/dist/types/targets/targets';
-import type { Route } from '../../routes/+types/RestFullClient';
+import type { ClientInfo, Target, TargetInfo } from 'node_modules/httpsnippet-lite/dist/types/targets/targets';
 import { usePropsRestClient } from '~/routes/RestFullClient';
 import { useLocation } from 'react-router';
 
@@ -26,7 +25,7 @@ const GenerateCodeSectionComponent = () => {
 
   const onHandleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    if (Object.hasOwn(targets,value)) {
+    if (Object.hasOwn(targets, value)) {
       setName(value as TargetId);
     } else {
       console.log(value);
@@ -60,10 +59,7 @@ const GenerateCodeSectionComponent = () => {
     }
   }, [name, clientById]);
 
-
-
   const targetKeys = Object.keys(targets);
-
 
   return (
     <section className='padding-headers-input'>
