@@ -10,6 +10,7 @@
   --glif: 1vw + 1.2em;
   --radius-form-b: xl;
   --color-border-default: gray;
+  --color-generate-code-bg: gray
 
 }
 * {
@@ -69,4 +70,13 @@ body {
 }
 .padding-headers-input{
   padding-block: calc(var(--spacing) * 2.5)
+}
+.padding-tabs {
+  padding-block: calc(var(--spacing) * 2.5)
+
+}
+
+.active-link{
+  color: var(--color-main);
+  font-weight: 600;
 }

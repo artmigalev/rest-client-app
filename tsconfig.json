@@ -3,7 +3,8 @@
     "**/*",
     "**/.server/**/*",
     "**/.client/**/*",
-    ".react-router/types/**/*"
+    ".react-router/types/**/*",
+    "./app/@types/httpsnippets-lite.d.ts"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
@@ -18,8 +19,7 @@
       "~/*": ["./app/*"],
       "@components": ["./app/components/*"],
       "@auth": ["./app/components/auth/*"],
-      "@restfull-client": ["./app/components/restfull-client/*"],
-
+      "@restfull-client": ["app/components/restfull-client/*"]
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,

@@ -1,4 +1,4 @@
-import { type RouteConfig, index, layout, route } from '@react-router/dev/routes';
+import { type RouteConfig, index, layout, prefix, route } from '@react-router/dev/routes';
 
 const routes = [
   layout('routes/Index.tsx', [
@@ -9,7 +9,9 @@ const routes = [
       route('/logout', 'routes/auth/LogoutRoute.tsx'),
     ]),
     layout('./components/ProtectedLayout.tsx', [
-      route('rest-client/:method?/:encodedUrl?/', 'routes/RestFullClient.tsx'),
+      route('rest-client/:method?/:encodedUrl?/', 'routes/RestFullClient.tsx', [
+        route('code-generate', './components/restfull-client/GenerateCodeSectionComponent.tsx'),
+      ]),
 
       route('/history', 'routes/History.tsx'),
       route('/variables', 'routes/Variables.tsx'),
