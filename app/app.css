@@ -84,7 +84,12 @@ body {
   font-weight: 600;
 }
 
-
+.section-welcome{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  ;
+}
 /* Loader */
 /* From Uiverse.io by Donewenfu */
 .loader {
