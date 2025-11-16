@@ -11,6 +11,7 @@ const routes = [
     layout('./components/ProtectedLayout.tsx', [
       route('rest-client/:method?/:encodedUrl?/', 'routes/RestFullClient.tsx', [
         route('code-generate', './components/restfull-client/GenerateCodeSectionComponent.tsx'),
+        route('response', './components/restfull-client/ResponseSectionComponent.tsx'),
       ]),
 
       route('/history', 'routes/History.tsx'),

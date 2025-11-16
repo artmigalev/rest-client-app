@@ -99,20 +99,22 @@ function RestFullClient({ loaderData, params }: Route.ComponentProps) {
             </NavLink>
           </li>
           <li className='text-center padding-tabs w-full '>
-            <NavLink className={({ isActive }) => (isActive ? 'active-link' : '')} to={'/code-generate'} end>
-              Generate Code
+            <NavLink className={({ isActive }) => (isActive ? 'active-link' : '')} to={'response'} end>
+              Response
             </NavLink>
           </li>
         </ul>
       </nav>
-      <Outlet
-        context={
-          {
-            url: data?.url || 'https://example.com',
-            method: data?.method || 'GET',
-          } satisfies IRestFullClient['contextType']
-        }
-      />
+      <div className='child-container w-full overflow-x-scroll h-[46vh]  bg-gray-400 rounded-2xl px-4 padding-tabs'>
+        <Outlet
+          context={
+            {
+              url: data?.url || 'https://example.com',
+              method: data?.method || 'GET',
+            } satisfies IRestFullClient['contextType']
+          }
+        />
+      </div>
     </div>
   );
 }
