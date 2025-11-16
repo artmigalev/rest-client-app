@@ -1,0 +1,1 @@
+import{b as m,c as p,R as c}from"./RestFullClient-BPzRSbFB.js";import"./chunk-WY5IRSCW-BF5hxUFE.js";import"./chunk-OIYGIGL5-DmXLqvAn.js";import"./compiler-runtime-BWBo7wCX.js";import"./Select-80yqVX3E.js";export{m as clientAction,p as clientLoader,c as default};

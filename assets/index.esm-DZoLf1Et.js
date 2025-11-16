@@ -1,0 +1,27 @@
+import{o as p,c as k,b as U}from"./firebase-5bTFoSDj.js";import{r as f}from"./chunk-OIYGIGL5-DmXLqvAn.js";/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */function m(t,s,r,a){function u(e){return e instanceof r?e:new r(function(o){o(e)})}return new(r||(r=Promise))(function(e,o){function c(i){try{n(a.next(i))}catch(d){o(d)}}function l(i){try{n(a.throw(i))}catch(d){o(d)}}function n(i){i.done?e(i.value):u(i.value).then(c,l)}n((a=a.apply(t,[])).next())})}function E(t,s){var r={label:0,sent:function(){if(e[0]&1)throw e[1];return e[1]},trys:[],ops:[]},a,u,e,o;return o={next:c(0),throw:c(1),return:c(2)},typeof Symbol=="function"&&(o[Symbol.iterator]=function(){return this}),o;function c(n){return function(i){return l([n,i])}}function l(n){if(a)throw new TypeError("Generator is already executing.");for(;r;)try{if(a=1,u&&(e=n[0]&2?u.return:n[0]?u.throw||((e=u.return)&&e.call(u),0):u.next)&&!(e=e.call(u,n[1])).done)return e;switch(u=0,e&&(n=[n[0]&2,e.value]),n[0]){case 0:case 1:e=n;break;case 4:return r.label++,{value:n[1],done:!1};case 5:r.label++,u=n[1],n=[0];continue;case 7:n=r.ops.pop(),r.trys.pop();continue;default:if(e=r.trys,!(e=e.length>0&&e[e.length-1])&&(n[0]===6||n[0]===2)){r=0;continue}if(n[0]===3&&(!e||n[1]>e[0]&&n[1]<e[3])){r.label=n[1];break}if(n[0]===6&&r.label<e[1]){r.label=e[1],e=n;break}if(e&&r.label<e[2]){r.label=e[2],r.ops.push(n);break}e[2]&&r.ops.pop(),r.trys.pop();continue}n=s.call(t,r)}catch(i){n=[6,i],u=0}finally{a=e=0}if(n[0]&5)throw n[1];return{value:n[0]?n[1]:void 0,done:!0}}}/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */var g=function(){return g=Object.assign||function(s){for(var r,a=1,u=arguments.length;a<u;a++){r=arguments[a];for(var e in r)Object.prototype.hasOwnProperty.call(r,e)&&(s[e]=r[e])}return s},g.apply(this,arguments)},S=function(t){return{loading:t==null,value:t}},A=function(){return function(t,s){switch(s.type){case"error":return g(g({},t),{error:s.error,loading:!1,value:void 0});case"reset":return S(s.defaultValue);case"value":return g(g({},t),{error:void 0,loading:!1,value:s.value});default:return t}}},C=function(t){var s=t?t():void 0,r=f.useReducer(A(),S(s)),a=r[0],u=r[1],e=f.useCallback(function(){var l=t?t():void 0;u({type:"reset",defaultValue:l})},[t]),o=f.useCallback(function(l){u({type:"error",error:l})},[]),c=f.useCallback(function(l){u({type:"value",value:l})},[]);return f.useMemo(function(){return{error:a.error,loading:a.loading,reset:e,setError:o,setValue:c,value:a.value}},[a.error,a.loading,e,o,c,a.value])},W=function(t,s){var r=C(function(){return t.currentUser}),a=r.error,u=r.loading,e=r.setError,o=r.setValue,c=r.value;return f.useEffect(function(){var l=p(t,function(n){return m(void 0,void 0,void 0,function(){var i;return E(this,function(d){switch(d.label){case 0:return[3,4];case 1:return d.trys.push([1,3,,4]),[4,s.onUserChanged(n)];case 2:return d.sent(),[3,4];case 3:return i=d.sent(),e(i),[3,4];case 4:return o(n),[2]}})})},e);return function(){l()}},[t]),[c,u,a]},I=function(t,s){var r=f.useState(),a=r[0],u=r[1],e=f.useState(),o=e[0],c=e[1],l=f.useState(!1),n=l[0],i=l[1],d=f.useCallback(function(w,y){return m(void 0,void 0,void 0,function(){var b,v;return E(this,function(h){switch(h.label){case 0:i(!0),u(void 0),h.label=1;case 1:return h.trys.push([1,5,6,7]),[4,k(t,w,y)];case 2:return b=h.sent(),[3,4];case 3:h.sent(),h.label=4;case 4:return c(b),[2,b];case 5:return v=h.sent(),u(v),[3,7];case 6:return i(!1),[7];case 7:return[2]}})})},[t,s]);return[d,o,n,a]},P=function(t){var s=f.useState(),r=s[0],a=s[1],u=f.useState(),e=u[0],o=u[1],c=f.useState(!1),l=c[0],n=c[1],i=f.useCallback(function(d,w){return m(void 0,void 0,void 0,function(){var y,b;return E(this,function(v){switch(v.label){case 0:n(!0),a(void 0),v.label=1;case 1:return v.trys.push([1,3,4,5]),[4,U(t,d,w)];case 2:return y=v.sent(),o(y),[2,y];case 3:return b=v.sent(),a(b),[3,5];case 4:return n(!1),[7];case 5:return[2]}})})},[t]);return[i,e,l,r]};export{W as a,I as b,P as u};

@@ -1,0 +1,1 @@
+import{w as o,j as s}from"./chunk-OIYGIGL5-DmXLqvAn.js";import{c as r}from"./compiler-runtime-BWBo7wCX.js";function a(){const t=r.c(1);let e;return t[0]===Symbol.for("react.memo_cache_sentinel")?(e=s.jsx("div",{className:"absolute top-2/4",children:"Variables"}),t[0]=e):e=t[0],e}const m=o(a);export{m as default};

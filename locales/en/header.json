@@ -1,0 +1,11 @@
+{
+  "navigation": {
+    "sign-in": "Sign In",
+    "sign-up": "Sing UP",
+    "logout":"Sign Out"
+  },
+  "langs":{
+    "en":"English",
+    "ru":"Russian"
+  }
+}
