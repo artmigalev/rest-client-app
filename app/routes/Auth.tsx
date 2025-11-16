@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import type { IndexContext } from './Index';
 import { type ProtectedLayoutProps } from '~/components/ProtectedLayout';
 
-export async function clientLoader(params: Route.ClientLoaderArgs): Promise<IAuth['dataLoader']> {
+export async function clientLoader(): Promise<IAuth['dataLoader']> {
   const resData = await fetch('locales/en/auth.json');
   return await resData.json();
 }

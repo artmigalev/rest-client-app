@@ -28,7 +28,6 @@ const GenerateCodeSectionComponent = () => {
     if (Object.hasOwn(targets, value)) {
       setName(value as TargetId);
     } else {
-
       setClientById(value);
     }
   };
@@ -50,7 +49,6 @@ const GenerateCodeSectionComponent = () => {
       const { clientsById } = targets[name];
 
       setClients(clientsById);
-      
     }
   }, [name, clientById]);
 

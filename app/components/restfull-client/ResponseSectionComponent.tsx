@@ -6,11 +6,7 @@ const ResponseSectionComponent = () => {
   // console.log(message);
   // console.log(data);
 
-
-  if (message.length) return (
-
-      <i className='w-max text-center top-[50%] font-bold m-auto! text-main'>{message}</i>
-  );
+  if (message.length) return <i className='w-max text-center top-[50%] font-bold m-auto! text-main'>{message}</i>;
   return (
     <section className='h-full w-full block'>
       {data ? (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, href, NavLink, Outlet, redirect, useLocation, useOutletContext, type ClientLoaderFunction } from 'react-router';
+import { Form, href, NavLink, Outlet, redirect, useOutletContext } from 'react-router';
 import HeadersEditorComponent from '~/components/restfull-client/HeadersEditorComponent';
 import MethodSelectorComponent from '~/components/restfull-client/MethodSelectorComponent';
 import TextInputForEndpointURLComponent from '~/components/restfull-client/TextInputForEndpointURLComponent';
@@ -15,38 +15,35 @@ export interface IRestFullClient {
   contextType: {
     url: string;
     method: string;
-    data: Promise<Response['json']>
-    message: string
+    data: Promise<Response['json']>;
+    message: string;
   };
 }
 
 export async function clientLoader({ params, request }: Route.ClientLoaderArgs) {
   try {
     const { method, encodedUrl } = params;
-    const url = new URL(request.url)
-    const headersParams = url.searchParams.get('headers')
-     const headers = headersParams ? JSON.parse(headersParams) : [];
-
+    const url = new URL(request.url);
+    const headersParams = url.searchParams.get('headers');
+    const headers = headersParams ? JSON.parse(headersParams) : [];
 
     const decodeUrl = decodeURIComponent(atob(encodedUrl || '')).trim();
     const fullUrl = 'https://' + decodeUrl;
 
-
-    const headersObj: HeadersInit = {}
-    headers.forEach((header:{key:string, value:string}) => {
+    const headersObj: HeadersInit = {};
+    headers.forEach((header: { key: string; value: string }) => {
       if (header.key && header.value) {
-        headersObj[header.key] = header.value
+        headersObj[header.key] = header.value;
       }
     });
 
     const response = await fetch(fullUrl, {
       method: method || 'GET',
-      headers:headersObj
+      headers: headersObj,
     });
 
-
     if (!response.ok) {
-      throw new Error( 'not valid endpoint');
+      throw new Error('not valid endpoint');
     }
     const data = await response.json();
     // console.log(response);
@@ -64,7 +61,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     const formdata = await request.formData();
     const baseUrl = String(formdata.get('base-url'));
     const methodSelect = String(formdata.get('select-lang'));
-    const headers = String(formdata.get('headers'))
+    const headers = String(formdata.get('headers'));
 
     // if (!baseUrl) {
     //   throw new Error('URL не может быть пустым');
@@ -75,13 +72,13 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
       encodedUrl: encodeURIComponent(btoa(baseUrl.replace('https://', ''))),
     });
 
-    const url = new URL(path, location.origin)
+    const url = new URL(path, location.origin);
     console.log(url);
 
     if (headers.length) {
       console.log(headers);
 
-      url.searchParams.set('headers', headers)
+      url.searchParams.set('headers', headers);
     }
     return redirect(url.toString());
   } catch (error) {
@@ -153,11 +150,11 @@ function RestFullClient({ loaderData, params }: Route.ComponentProps) {
 }
 
 export const usePropsRestClient = () => {
-  return useOutletContext<Pick<IRestFullClient['contextType'],'method' | 'url'>>();
+  return useOutletContext<Pick<IRestFullClient['contextType'], 'method' | 'url'>>();
 };
 
 export const useDataResponse = () => {
-  return useOutletContext<Pick<IRestFullClient['contextType'],'data' | 'message'>>();
-}
+  return useOutletContext<Pick<IRestFullClient['contextType'], 'data' | 'message'>>();
+};
 
 export default RestFullClient;

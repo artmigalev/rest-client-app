@@ -3,7 +3,6 @@ import { signOut } from 'firebase/auth';
 import { auth } from '~/firebase';
 
 const LogoutRoute = () => {
-
   useEffect(() => {
     signOut(auth);
   }, []);
