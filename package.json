@@ -2,13 +2,16 @@
   "name": "",
   "private": true,
   "type": "module",
+  "homepage": "https://artmigalev.github.io/react/",
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
     "lint:fix": "eslint . --fix",
-    "interface": "i18next-resources-for-ts interface -i ./public/locales/en -o ./app/@types/resources.d.ts"
+    "interface": "i18next-resources-for-ts interface -i ./public/locales/en -o ./app/@types/resources.d.ts",
+    "predeploy": "npm run build && cp ./build/index.html ./build/404.html",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@react-router/node": "^7.9.2",
@@ -47,6 +50,7 @@
     "eslint-plugin-react-compiler": "^19.0.0-beta-af1b7da-20250417",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-unused-imports": "^4.2.0",
+    "gh-pages": "^6.3.0",
     "prettier": "3.6.2",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2",

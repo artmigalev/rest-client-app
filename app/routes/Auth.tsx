@@ -1,4 +1,3 @@
-import type { Route } from './+types/Auth';
 import { Navigate, NavLink, Outlet, useLoaderData, useLocation, useOutletContext } from 'react-router';
 import type Resources from '~/@types/resources';
 import { useTranslation } from 'react-i18next';

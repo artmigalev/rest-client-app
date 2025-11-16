@@ -48,7 +48,7 @@ function SignInComponent(_: Route.ComponentProps) {
     }
   }, [user]);
 
-  if (loading) return <HydrateFallBack/>;
+  if (loading) return <HydrateFallBack />;
 
   return (
     <>

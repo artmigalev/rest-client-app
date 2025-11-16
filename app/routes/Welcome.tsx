@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import { Link, useOutletContext } from 'react-router';
+import { useOutletContext } from 'react-router';
 import type { User } from '~/reducers/userSlice';
 import type { IndexContext } from './Index';
-import { Trans, useTranslation } from 'react-i18next';
-import i18next from 'i18next';
-import type Resources from '~/@types/resources';
+import { useTranslation } from 'react-i18next';
 interface IWelcome {
   props: {
     username: User['displayName'];
