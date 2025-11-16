@@ -60,7 +60,6 @@ function RegisterComponent(_: Route.ComponentProps) {
         const resp = await createUserWithEmailAndPassword(email, password);
         if (resp) {
           await updateProfile(resp.user, { displayName });
-          console.log(resp.user);
 
           navigate('/', { viewTransition: true });
         }

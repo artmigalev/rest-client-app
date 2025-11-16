@@ -28,7 +28,6 @@ const GenerateCodeSectionComponent = () => {
     if (Object.hasOwn(targets, value)) {
       setName(value as TargetId);
     } else {
-      console.log(value);
 
       setClientById(value);
     }
@@ -49,13 +48,9 @@ const GenerateCodeSectionComponent = () => {
   useEffect(() => {
     if (name) {
       const { clientsById } = targets[name];
-      console.log(clientsById);
 
       setClients(clientsById);
-      // if (clientById) {
-
-      //   generateCode(name, clientById);
-      // }
+      
     }
   }, [name, clientById]);
 

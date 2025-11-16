@@ -12,6 +12,7 @@ const HeadersEditorComponent = ({ setOptions }: IHeadersEditorComponent['props']
 
   const onAddHeader = () => {
     setHeaders((prev) => [...prev, { id: Date.now(), key: '', value: '' }]);
+
   };
 
   const onDeleteHeader = (id: number) => {
