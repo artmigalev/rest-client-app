@@ -1,0 +1,1 @@
+import{E as p,L as i,r as s}from"./root-dYSGt3eW.js";import"./chunk-OIYGIGL5-DmXLqvAn.js";import"./compiler-runtime-BWBo7wCX.js";import"./i18nInstance-DBIXdvxg.js";export{p as ErrorBoundary,i as Layout,s as default};
