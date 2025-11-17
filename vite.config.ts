@@ -5,6 +5,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import babel from 'vite-plugin-babel';
 
 export default defineConfig({
+  base:'/rest-client-app/',
   plugins: [
     tailwindcss(),
     reactRouter(),

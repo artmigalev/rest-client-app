@@ -17,7 +17,7 @@ i18n
     ns: ['auth', 'header', 'welcome'],
     supportedLngs: ['en', 'ru'],
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+      loadPath: `/rest-client-app/locales/{{lng}}/{{ns}}.json`,
     },
   });
 

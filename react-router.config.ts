@@ -4,5 +4,6 @@ export default {
   // Config options...
   // Server-side render by default, to enable SPA mode set this to `false`
   // prerender: true,
+  basename: '/rest-client-app/',
   ssr: false,
 } satisfies Config;

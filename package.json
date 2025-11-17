@@ -1,17 +1,17 @@
 {
-  "name": "",
+  "name": "rest-client-app",
   "private": true,
   "type": "module",
-  "homepage": "https://artmigalev.github.io/react/",
+  "homepage": "https://artmigalev.github.io/rest-client-app/",
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
+    "start": "vite preview",
     "typecheck": "react-router typegen && tsc",
     "lint:fix": "eslint . --fix",
     "interface": "i18next-resources-for-ts interface -i ./public/locales/en -o ./app/@types/resources.d.ts",
-    "predeploy": "npm run build && cp ./build/index.html ./build/404.html",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "npm run build && cp ./build/client/index.html ./build/client/404.html",
+    "deploy": "npm run build &&  gh-pages -d build/client"
   },
   "dependencies": {
     "@react-router/node": "^7.9.2",
