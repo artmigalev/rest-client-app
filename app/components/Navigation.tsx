@@ -12,12 +12,13 @@ interface INavigation {
   props: {
     items: Resources['header']['navigation'];
     displayName: string | null;
+    classStyles?: string;
   };
   authItems: [key: keyof Resources['header']['navigation'], string][];
   logOut: () => void;
 }
 
-function Navigation({ items, displayName }: INavigation['props']) {
+function Navigation({ items, displayName, classStyles }: INavigation['props']) {
   const [user] = useAuthState(auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ function Navigation({ items, displayName }: INavigation['props']) {
 
   return (
     <nav>
-      <List callbackFn={logout} styles='justify-around' items={authItems} isLink={true} />
+      <List callbackFn={logout} styles={classStyles ? classStyles : 'justify-around'} items={authItems} isLink={true} />
     </nav>
   );
 }

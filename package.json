@@ -14,6 +14,7 @@
     "deploy": "npm run build &&  gh-pages -d build/client"
   },
   "dependencies": {
+    "@react-hook/media-query": "^1.1.1",
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
     "@reduxjs/toolkit": "^2.9.2",
