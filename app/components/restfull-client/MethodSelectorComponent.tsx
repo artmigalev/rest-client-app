@@ -1,28 +1,25 @@
 import React, { useEffect, useState, type Dispatch } from 'react';
-import Select from '../Select';
+import Select, { type ISelect } from '../Select';
 import type { IRestFullClient } from '~/routes/RestFullClient';
 
 interface IMethodSelectorComponent {
   defaultMethod: string;
-  provider: Dispatch<React.SetStateAction<IRestFullClient['options']>>;
+  dispatcher?: Dispatch<React.SetStateAction<IRestFullClient['options']>>;
+}
+const styles: ISelect<string>['styles'] ={
+  stylesSelect: "h-12 text-base text-center p-2.5 rounded-xl relative border-gray-400 border-2"
 }
 
-const MethodSelectorComponent = ({ defaultMethod, provider }: IMethodSelectorComponent) => {
-  const [method, setMethod] = useState<string>(defaultMethod);
-
+const MethodSelectorComponent = () => {
   const methods = {
     get: 'GET',
     put: 'PUT',
-    delete: 'DELETE',
-  };
-
-  useEffect(() => {
-    provider((state) => ({ ...state, methodSelector: method }));
-  }, [method]);
+    patch: 'PATCH'
+  }
 
   return (
-    <div className='h-12 text-base text-center p-2.5 rounded-xl relative border-gray-400 border-2'>
-      <Select value={defaultMethod} dispatcher={setMethod} options={Object.entries(methods)} />
+    <div >
+      <Select name= {'method-select'} value={methods.get}  styles={  styles.stylesSelect } options={Object.entries(methods)} />
     </div>
   );
 };

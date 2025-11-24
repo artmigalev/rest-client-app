@@ -4,7 +4,8 @@ import Menu from './Menu';
 import type { lang } from '~/reducers/langSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '~/firebase';
-
+import gitLogo from 'public/rss-logo.svg'
+import rssLogo from 'public/rss-logo.svg'
 interface IFooter {
   lang: lang;
   username?: string | null;
@@ -25,11 +26,11 @@ function Footer({ lang }: IFooter) {
 
       <div className='grid items-center justify-items-center grid-rows-1 grid-cols-3 '>
         <Link to={'https://rs.school/courses/reactjs'} viewTransition>
-          <img className='w-10' src='rss-logo.svg' alt='rss-logo' />
+          <img className='w-10' src={rssLogo} alt='rss-logo' />
         </Link>
         <span className='text-xl'>2025</span>
         <Link className='w-10' to={'http//: example.com'}>
-          <img src='git.svg' alt='git' />
+          <img src={gitLogo} alt='git' />
         </Link>
       </div>
     </footer>

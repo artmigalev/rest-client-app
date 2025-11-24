@@ -7,7 +7,7 @@ interface IHeadersEditorComponent {
   };
 }
 
-const HeadersEditorComponent = ({ setOptions }: IHeadersEditorComponent['props']) => {
+const HeadersEditorComponent = () => {
   const [headers, setHeaders] = useState<{ id: number; key: string; value: string }[]>([]);
 
   const onAddHeader = () => {
@@ -21,10 +21,7 @@ const HeadersEditorComponent = ({ setOptions }: IHeadersEditorComponent['props']
   const onChangeHeader = (id: number, field: 'key' | 'value', value: string) => {
     setHeaders((prev) => prev.map((header) => (header.id === id ? { ...header, [field]: value } : header)));
 
-    setOptions((state) => ({
-      ...state,
-      headers: headers,
-    }));
+
   };
 
   return (
@@ -66,6 +63,7 @@ const HeadersEditorComponent = ({ setOptions }: IHeadersEditorComponent['props']
           />
         </div>
       ))}
+      <input type="hidden" name="headers" value={JSON.stringify(headers)} />
     </div>
   );
 };

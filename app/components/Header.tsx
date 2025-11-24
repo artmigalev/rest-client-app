@@ -7,7 +7,7 @@ import { useAppDispatch } from '~/hooks';
 import { setByLang, type lang } from '~/reducers/langSlice';
 import { type User } from '~/reducers/userSlice';
 import Navigation from './Navigation';
-
+import logo from '../../public/logo-48px.png'
 type NavKeys = keyof Resources['header']['navigation'];
 // type LangsKeys = keyof Resources['header']['langs'];
 
@@ -38,7 +38,7 @@ function Header({ displayName, language }: IHeader) {
       className='w-full sticky top-0 flex flex-row justify-between items-center p-3 bg-background shadow-header h-auto  '
     >
       <Link to='/' viewTransition>
-        <img className='max-md:w-[30px] p-0.5' src='logo-48px.png' alt='logo' />
+        <img className='max-md:w-[30px] p-0.5' src={logo} alt='logo' />
       </Link>
       <Select value={selectValue} dispatcher={setSelectValue} options={langs} />
       <Navigation items={navItems} displayName={displayName} />

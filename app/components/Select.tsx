@@ -1,6 +1,6 @@
 import React, { type Dispatch, type SetStateAction } from 'react';
 
-interface ISelect<T> {
+export interface ISelect<T> {
   options: [T | string, string][];
   styles?: Partial<{
     stylesSelect: string;
@@ -8,14 +8,14 @@ interface ISelect<T> {
   }>;
   name: string;
   value: T;
-  dispatcher: Dispatch<SetStateAction<T>> | ((value: T) => void);
+  dispatcher?: Dispatch<SetStateAction<T>> | ((value: T) => void);
 }
 
 function SelectComponent<T>({ name, value, dispatcher, options, styles }: ISelect<T>) {
   return (
     <select
       defaultValue={value as string}
-      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => dispatcher(e.target.value as T)}
+      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => dispatcher && dispatcher(e.target.value as T)}
       className={`${styles?.stylesSelect ? styles.stylesSelect : 'gap-0'}`}
       name={name}
     >

@@ -1,19 +1,19 @@
 import React, { type ChangeEvent, type Dispatch } from 'react';
 import type { IRestFullClient } from '~/routes/RestFullClient';
 
-interface ITextInputForEndpointURLComponent {
-  defaultValue: string;
-  dispatcher: Dispatch<React.SetStateAction<IRestFullClient['options']>>;
-}
+// interface ITextInputForEndpointURLComponent {
+//   defaultValue: string;
+//   dispatcher: Dispatch<React.SetStateAction<IRestFullClient['options']>>;
+// }
 
-function TextInputForEndpointURLComponent({ defaultValue, dispatcher }: ITextInputForEndpointURLComponent) {
+function TextInputForEndpointURLComponent() {
   const prefix = 'http://';
 
-  const onHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
+  // const onHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const inputValue = event.target.value;
 
-    dispatcher((state) => ({ ...state, textInput: inputValue }));
-  };
+  //   dispatcher((state) => ({ ...state, textInput: inputValue }));
+  // };
 
   return (
     <div className='flex justify-between items-center w-full h-12 rounded-xl relative border-gray-400 border-2'>
@@ -24,8 +24,7 @@ function TextInputForEndpointURLComponent({ defaultValue, dispatcher }: ITextInp
         aria-label='url'
         name='base-url'
         type='text'
-        defaultValue={defaultValue}
-        onChange={onHandleChange}
+        defaultValue=''
         className='flex items-center justify-center outline-0 font-medium border-0  bg-input-bg py-2.5 w-full text-sm'
         placeholder='Endpoint'
       />

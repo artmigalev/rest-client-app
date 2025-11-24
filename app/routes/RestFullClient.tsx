@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Form, href, NavLink, Outlet, redirect, useOutletContext } from 'react-router';
+import { useEffect, useState } from 'react';
+import { Form, href, NavLink, Outlet, redirect, replace, useNavigate, useOutletContext } from 'react-router';
 import HeadersEditorComponent from '~/components/restfull-client/HeadersEditorComponent';
 import MethodSelectorComponent from '~/components/restfull-client/MethodSelectorComponent';
 import TextInputForEndpointURLComponent from '~/components/restfull-client/TextInputForEndpointURLComponent';
@@ -13,74 +13,48 @@ export interface IRestFullClient {
     headers: ({ key: string; value: string } | null)[];
   };
   contextType: {
-    url: string;
+    url: string | URL;
     method: string;
     data: Promise<Response['json']>;
     message: string;
+    headers: ({ key: string; value: string } | null)[];
   };
 }
 
-export async function clientLoader({ params, request }: Route.ClientLoaderArgs) {
-  try {
-    const { method, encodedUrl } = params;
-    const url = new URL(request.url);
-    const headersParams = url.searchParams.get('headers');
-    const headers = headersParams ? JSON.parse(headersParams) : [];
 
-    const decodeUrl = decodeURIComponent(atob(encodedUrl || '')).trim();
-    const fullUrl = 'https://' + decodeUrl;
-
-    const headersObj: HeadersInit = {};
-    headers.forEach((header: { key: string; value: string }) => {
-      if (header.key && header.value) {
-        headersObj[header.key] = header.value;
-      }
-    });
-
-    const response = await fetch(fullUrl, {
-      method: method || 'GET',
-      headers: headersObj,
-    });
-
-    if (!response.ok) {
-      throw new Error('not valid endpoint');
-    }
-    const data = await response.json();
-    // console.log(response);
-    // console.log(data);
-    return { data, url, method };
-  } catch (error) {
-    if (error instanceof Error) {
-      return { message: error.message };
-    }
-  }
-}
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
   try {
     const formdata = await request.formData();
+
     const baseUrl = String(formdata.get('base-url'));
-    const methodSelect = String(formdata.get('select-lang'));
+    const methodSelect = String(formdata.get('method-select'));
     const headers = String(formdata.get('headers'));
 
-    // if (!baseUrl) {
-    //   throw new Error('URL не может быть пустым');
-    // }
 
-    const path = href('/rest-client/:method?/:encodedUrl?', {
+
+    if (!baseUrl) {
+      throw new Error('URL не может быть пустым');
+    }
+
+    const path = href('/:method?/:encodedUrl?', {
+
       method: methodSelect.toUpperCase(),
       encodedUrl: encodeURIComponent(btoa(baseUrl.replace('https://', ''))),
+
     });
 
-    const url = new URL(path, location.origin);
-    console.log(url);
+    const url = new URL( path, location.origin);
 
-    if (headers.length) {
-      console.log(headers);
+
+    if (headers) {
+
 
       url.searchParams.set('headers', headers);
     }
-    return redirect(url.toString());
+    return {
+      newUrl: url.pathname + url.search
+    }
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
@@ -88,22 +62,26 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   }
 }
 
-function RestFullClient({ loaderData, params }: Route.ComponentProps) {
-  const [options, setOptions] = useState<IRestFullClient['options']>({
-    methodSelector: 'GET',
-    textInput: '',
-    headers: [],
-  });
+function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps) {
 
+
+  const navigate = useNavigate()
   const data = loaderData;
-  // console.log(location);
+
+
+  useEffect(() => {
+
+    if(actionData?.newUrl) navigate(actionData.newUrl, {replace:true})
+
+
+  },[actionData?.newUrl])
 
   return (
     <div className='flex flex-col  p-3 pt-5 h-full'>
-      <Form method='post' className='flex flex-col gap-4 items-center justify-between'>
+      <Form method='post' action='/rest-client' className='flex flex-col gap-4 items-center justify-between'>
         <div className='flex flex-row w-full'>
-          <MethodSelectorComponent defaultMethod={options.methodSelector} provider={setOptions} />
-          <TextInputForEndpointURLComponent dispatcher={setOptions} defaultValue={options.textInput} />
+          <MethodSelectorComponent  />
+          <TextInputForEndpointURLComponent  />
           <button
             type='submit'
             className='text-4xl! bg-input-bg h-full   flex items-center justify-center pr-2.5 rounded-t-xl rounded-b-xl cursor-pointer relative pb-3'
@@ -111,8 +89,7 @@ function RestFullClient({ loaderData, params }: Route.ComponentProps) {
             📨
           </button>
         </div>
-        <HeadersEditorComponent setOptions={setOptions} />
-        <input type='hidden' name='headers' value={JSON.stringify(options.headers)} />
+        <HeadersEditorComponent  />
       </Form>
       <nav className='w-full py-2'>
         <ul className='flex  bg-gray-400 rounded-2xl w-full '>
@@ -141,6 +118,7 @@ function RestFullClient({ loaderData, params }: Route.ComponentProps) {
               method: data?.method || 'GET',
               data: data?.data,
               message: data?.message || '',
+              headers: data?.headers
             } satisfies IRestFullClient['contextType']
           }
         />

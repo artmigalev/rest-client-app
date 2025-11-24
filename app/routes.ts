@@ -9,7 +9,7 @@ const routes = [
       route('/logout', 'routes/auth/LogoutRoute.tsx'),
     ]),
     layout('./components/ProtectedLayout.tsx', [
-      route('rest-client/:method?/:encodedUrl?/', 'routes/RestFullClient.tsx', [
+      route('/:method?/:encodedUrl?/', 'routes/RestFullClient.tsx', [
         route('code-generate', './components/restfull-client/GenerateCodeSectionComponent.tsx'),
         route('response', './components/restfull-client/ResponseSectionComponent.tsx'),
       ]),
