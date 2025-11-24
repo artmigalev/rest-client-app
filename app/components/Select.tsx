@@ -1,21 +1,26 @@
-import React, { type Dispatch } from 'react';
+import React, { type Dispatch, type SetStateAction } from 'react';
 
 interface ISelect<T> {
-  options: [T, string][];
-  styles?: string;
+  options: [T | string, string][];
+  styles?: Partial<{
+    stylesSelect: string;
+    stylesOption: string;
+  }>;
+  name: string;
   value: T;
-  dispatcher: Dispatch<React.SetStateAction<T>>;
+  dispatcher: Dispatch<SetStateAction<T>> | ((value: T) => void);
 }
 
-function Select({ value, dispatcher, options, styles }: ISelect<string>) {
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatcher(event.currentTarget.value);
-  };
-
+function SelectComponent<T>({ name, value, dispatcher, options, styles }: ISelect<T>) {
   return (
-    <select defaultValue={value} onChange={handleChange} className='gap-0' name='select-lang'>
+    <select
+      defaultValue={value as string}
+      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => dispatcher(e.target.value as T)}
+      className={`${styles?.stylesSelect ? styles.stylesSelect : 'gap-0'}`}
+      name={name}
+    >
       {options.map(([key, val]) => (
-        <option key={key} value={key}>
+        <option key={key as string} value={key as string}>
           {val}
         </option>
       ))}
@@ -23,4 +28,4 @@ function Select({ value, dispatcher, options, styles }: ISelect<string>) {
   );
 }
 
-export default Select;
+export default SelectComponent;
