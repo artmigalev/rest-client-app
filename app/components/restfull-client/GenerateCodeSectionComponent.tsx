@@ -7,6 +7,7 @@ import type { TargetInfo } from 'node_modules/httpsnippet-lite/dist/types/target
 import { usePropsRestClient } from '~/routes/RestFullClient';
 import SelectComponent from '../Select';
 import type { AvailableTarget } from 'node_modules/httpsnippet-lite/dist/types/helpers/utils';
+import type { Header } from '~/@types';
 
 export interface IGenerateCodeSectionComponent {
   baseUrl: string;
@@ -24,7 +25,7 @@ const GenerateCodeSectionComponent = () => {
 
   const [clientById, setClientById] = useState<ClientId>(clients[0].key);
   const [code, setCode] = useState<string | string[] | null>('');
-  const { url, method } = usePropsRestClient();
+  const { url, method, headers } = usePropsRestClient();
 
   const onHandleChange = (value: string) => {
     if (targets.some((target) => target.key === value)) {
@@ -37,6 +38,7 @@ const GenerateCodeSectionComponent = () => {
     const snippet = new HTTPSnippet({
       method: method,
       url: url,
+
     });
     const options = { indent: '\t' };
     const output = await snippet.convert(name, clientById, options);

@@ -4,7 +4,6 @@ import HeadersEditorComponent from '~/components/restfull-client/HeadersEditorCo
 import MethodSelectorComponent from '~/components/restfull-client/MethodSelectorComponent';
 import TextInputForEndpointURLComponent from '~/components/restfull-client/TextInputForEndpointURLComponent';
 import type { Route } from './+types/RestFullClient';
-// import GenerateCodeSectionComponent from '~/components/restfull-client/GenerateCodeSectionComponent';
 
 export interface IRestFullClient {
   options: {
@@ -13,13 +12,70 @@ export interface IRestFullClient {
     headers: ({ key: string; value: string } | null)[];
   };
   contextType: {
-    url: string | URL;
+    url: string ;
     method: string;
-    data: Promise<Response['json']>;
-    message: string;
-    headers: ({ key: string; value: string } | null)[];
+    responseData: Promise<Response['json']>;
+    error: string;
+    headers: HeadersInit | null
   };
 }
+export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) => {
+  try {
+    const { encodedUrl, method } = params;
+    if (!encodedUrl) {
+      throw new Error('Please input endpoint');
+    }
+    const url = new URL(request.url);
+
+    const headerParams = url.searchParams.get('headers');
+
+    const decoderURL = decodeURIComponent(atob(encodedUrl || '')).trim();
+    const fullUrl = ''.concat(...['https://', decoderURL]);
+    const headerObj: HeadersInit = {};
+    if (headerParams) {
+      const headers = JSON.parse(headerParams) as [];
+      headers.forEach((header: { key: string; value: string }) => {
+        if (header.key && header.value) {
+          headerObj[header.key] = header.value;
+        }
+      });
+    }
+    const response = await fetch(fullUrl, {
+      method: method,
+      headers: headerObj,
+    });
+    if (!response.ok) {
+      throw new Error('not valid endpoint');
+    }
+
+    const data = await response.json();
+    return { responseData: data, methodSelect: method, urlEndpoint: fullUrl, headers: JSON.parse(headerParams) as  };
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      return { error: error.message };
+    }
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -66,7 +122,7 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
 
 
   const navigate = useNavigate()
-  const data = loaderData;
+
 
 
   useEffect(() => {
@@ -114,11 +170,11 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
         <Outlet
           context={
             {
-              url: data?.url || 'https://example.com',
-              method: data?.method || 'GET',
-              data: data?.data,
-              message: data?.message || '',
-              headers: data?.headers
+              url: loaderData?.urlEndpoint || 'https://example.com',
+              method: loaderData?.methodSelect || 'GET',
+              responseData:loaderData?.responseData,
+              error: loaderData?.error || '',
+              headers: loaderData?.headers || null
             } satisfies IRestFullClient['contextType']
           }
         />
@@ -128,11 +184,11 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
 }
 
 export const usePropsRestClient = () => {
-  return useOutletContext<Pick<IRestFullClient['contextType'], 'method' | 'url'>>();
+  return useOutletContext<Pick<IRestFullClient['contextType'], 'method' | 'url' | 'headers'>>();
 };
 
 export const useDataResponse = () => {
-  return useOutletContext<Pick<IRestFullClient['contextType'], 'data' | 'message'>>();
+  return useOutletContext<Pick<IRestFullClient['contextType'], 'responseData' | 'error'>>();
 };
 
 export default RestFullClient;
