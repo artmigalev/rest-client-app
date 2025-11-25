@@ -7,7 +7,7 @@ interface IMethodSelectorComponent {
   dispatcher?: Dispatch<React.SetStateAction<IRestFullClient['options']>>;
 }
 const styles: ISelect<string>['styles'] ={
-  stylesSelect: "h-12 text-base text-center p-2.5 rounded-xl relative border-gray-400 border-2"
+  stylesSelect: "h-12 text-base text-center p-2.5 rounded-xl relative border-gray-500 border-2"
 }
 
 const MethodSelectorComponent = () => {
@@ -19,7 +19,7 @@ const MethodSelectorComponent = () => {
 
   return (
     <div >
-      <Select name= {'method-select'} value={methods.get}  styles={  styles.stylesSelect } options={Object.entries(methods)} />
+      <Select name= {'method-select'} value={methods.get}  styles={ styles.stylesSelect } options={Object.entries(methods)} />
     </div>
   );
 };

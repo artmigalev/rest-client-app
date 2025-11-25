@@ -49,7 +49,7 @@ export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) 
     }
 
     const data = await response.json();
-    return { responseData: data, methodSelect: method, urlEndpoint: fullUrl, headers: JSON.parse(headerParams) as  };
+    return { responseData: data, methodSelect: method, urlEndpoint: fullUrl, headers: JSON.parse(headerParams)  };
   } catch (error) {
     console.log(error);
     if (error instanceof Error) {
@@ -135,7 +135,7 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
   return (
     <div className='flex flex-col  p-3 pt-5 h-full'>
       <Form method='post' action='/rest-client' className='flex flex-col gap-4 items-center justify-between'>
-        <div className='flex flex-row w-full'>
+        <div className='flex flex-row w-full items-center'>
           <MethodSelectorComponent  />
           <TextInputForEndpointURLComponent  />
           <button

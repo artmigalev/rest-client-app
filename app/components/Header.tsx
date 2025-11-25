@@ -40,7 +40,7 @@ function Header({ displayName, language }: IHeader) {
       <Link to='/' viewTransition>
         <img className='max-md:w-[30px] p-0.5' src={logo} alt='logo' />
       </Link>
-      <Select value={selectValue} dispatcher={setSelectValue} options={langs} />
+      <Select name='select-lang' value={selectValue} dispatcher={setSelectValue} options={langs} />
       <Navigation items={navItems} displayName={displayName} />
     </header>
   );
