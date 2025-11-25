@@ -49,7 +49,7 @@ export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) 
     }
 
     const data = await response.json();
-    return { responseData: data, methodSelect: method, urlEndpoint: fullUrl, headers: JSON.parse(headerParams) as  };
+    return { responseData: data, methodSelect: method, urlEndpoint: fullUrl, headers: JSON.parse(headerParams)  };
   } catch (error) {
     console.log(error);
     if (error instanceof Error) {
