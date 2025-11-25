@@ -3,6 +3,8 @@
   --main-color: #be4b4b;
   --main-color-link: #243137;;
   --shadow-header: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  --main-color-link: #243137;
+  --padding-section: 1rem;
 }
 
 @theme {
@@ -15,6 +17,7 @@
   --radius-form-b: xl;
   --color-border-default: gray;
   --color-generate-code-bg: gray;
+  --container-padding: 1rem;
 }
 * {
   box-sizing: border-box;
@@ -240,4 +243,33 @@ body {
   width: max-content;
   font-size: x-large;
   border-bottom: 1px solid var(--main-color);
+}
+.history-page {
+  overflow: hidden;
+  border-radius: 12px;
+  .metric-list {
+    background-color: lightgrey;
+    overflow-y: auto;
+    flex: 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    .metric-item {
+      width: max-content;
+      border-radius: 12px;
+      padding: 1rem;
+      background-color: whitesmoke;
+      .item-field {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        .key {
+          font-weight: bold;
+        }
+      }
+    }
+  }
 }
