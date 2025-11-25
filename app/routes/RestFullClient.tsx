@@ -135,7 +135,7 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
   return (
     <div className='flex flex-col overflow-y-auto  p-3 pt-5 h-full'>
       <Form method='post' action='/rest-client' className='flex flex-col gap-4 items-center justify-between'>
-        <div className='flex flex-row w-full'>
+        <div className='flex flex-row w-full items-center'>
           <MethodSelectorComponent  />
           <TextInputForEndpointURLComponent  />
           <button
