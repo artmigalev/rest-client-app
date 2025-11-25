@@ -21,8 +21,8 @@ function Menu({ lang }: IMenu['props']) {
     <>
       <List
         items={menuItems}
-        styles='grid items-center justify-items-center grid-rows-1 grid-cols-3  p-3'
-        isLink={true}
+        styles={{ classList: 'grid items-center justify-items-center grid-rows-1 grid-cols-3  p-3' }}
+        returnedTypeItems='links'
       />
     </>
   );
