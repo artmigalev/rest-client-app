@@ -1,22 +1,37 @@
 import { useEffect, useState } from 'react';
-import { Form, href, NavLink, Outlet, redirect, replace, useNavigate, useOutletContext } from 'react-router';
+import {
+  Form,
+  href,
+  NavLink,
+  Outlet,
+  redirect,
+  replace,
+  useFetcher,
+  useNavigate,
+  useOutletContext,
+} from 'react-router';
 import HeadersEditorComponent from '~/components/restfull-client/HeadersEditorComponent';
 import MethodSelectorComponent from '~/components/restfull-client/MethodSelectorComponent';
 import TextInputForEndpointURLComponent from '~/components/restfull-client/TextInputForEndpointURLComponent';
 import type { Route } from './+types/RestFullClient';
+import { createdPayloadHistory } from '~/utils/createdPayloadHistory';
+import fetchWithSizes from '~/utils/fetchWrapper';
+import { updateUserHistory } from '~/firebase/apicalls';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '~/firebase';
 
 export interface IRestFullClient {
   options: {
-    methodSelector: string;
+    methodSelector: 'GET' | 'POST' | 'PUT';
     textInput: string;
     headers: ({ key: string; value: string } | null)[];
   };
   contextType: {
-    url: string ;
+    url: string;
     method: string;
     responseData: Promise<Response['json']>;
     error: string;
-    headers: HeadersInit | null
+    headers: HeadersInit | null;
   };
 }
 export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) => {
@@ -40,16 +55,21 @@ export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) 
         }
       });
     }
-    const response = await fetch(fullUrl, {
-      method: method,
+
+    const { response, metrics } = await fetchWithSizes(fullUrl, {
+      method,
       headers: headerObj,
     });
+    const payload = await createdPayloadHistory(response,metrics,method)
+    console.log(payload);
+
+
     if (!response.ok) {
       throw new Error('not valid endpoint');
     }
 
     const data = await response.json();
-    return { responseData: data, methodSelect: method, urlEndpoint: fullUrl, headers: JSON.parse(headerParams)  };
+    return { responseData: data, methodSelect: method, urlEndpoint: fullUrl, headers: JSON.parse(headerParams), payload };
   } catch (error) {
     console.log(error);
     if (error instanceof Error) {
@@ -58,59 +78,31 @@ export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) 
   }
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export async function clientAction({ request }: Route.ClientActionArgs) {
   try {
     const formdata = await request.formData();
 
     const baseUrl = String(formdata.get('base-url'));
-    const methodSelect = String(formdata.get('method-select'));
+    const methodSelect = String(formdata.get('method-select')) as IRestFullClient['options']['methodSelector'];
     const headers = String(formdata.get('headers'));
-
-
 
     if (!baseUrl) {
       throw new Error('URL не может быть пустым');
     }
 
     const path = href('/:method?/:encodedUrl?', {
-
       method: methodSelect.toUpperCase(),
       encodedUrl: encodeURIComponent(btoa(baseUrl.replace('https://', ''))),
-
     });
 
-    const url = new URL( path, location.origin);
-
+    const url = new URL(path, location.origin);
 
     if (headers) {
-
-
       url.searchParams.set('headers', headers);
     }
     return {
-      newUrl: url.pathname + url.search
-    }
+      newUrl: url.pathname + url.search,
+    };
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
@@ -119,25 +111,33 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 }
 
 function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps) {
-
-
-  const navigate = useNavigate()
-
-
+  const navigate = useNavigate();
+     const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {
+    if (actionData?.newUrl) navigate(actionData.newUrl, { replace: true });
+  }, [actionData?.newUrl]);
 
-    if(actionData?.newUrl) navigate(actionData.newUrl, {replace:true})
+  useEffect(() => {
+    if (user?.email || loaderData?.payload) {
+      console.log('payload');
+
+         updateUserHistory(user?.email!, loaderData?.payload);
+    }
 
 
-  },[actionData?.newUrl])
+  },[loaderData?.payload ,user])
+
+
+
+
 
   return (
     <div className='flex flex-col  p-3 pt-5 h-full'>
       <Form method='post' action='/rest-client' className='flex flex-col gap-4 items-center justify-between'>
         <div className='flex flex-row w-full items-center'>
-          <MethodSelectorComponent  />
-          <TextInputForEndpointURLComponent  />
+          <MethodSelectorComponent />
+          <TextInputForEndpointURLComponent url={loaderData?.urlEndpoint} />
           <button
             type='submit'
             className='text-4xl! bg-input-bg h-full   flex items-center justify-center pr-2.5 rounded-t-xl rounded-b-xl cursor-pointer relative pb-3'
@@ -145,7 +145,7 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
             📨
           </button>
         </div>
-        <HeadersEditorComponent  />
+        <HeadersEditorComponent />
       </Form>
       <nav className='w-full py-2'>
         <ul className='flex  bg-gray-400 rounded-2xl w-full '>
@@ -172,9 +172,9 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
             {
               url: loaderData?.urlEndpoint || 'https://example.com',
               method: loaderData?.methodSelect || 'GET',
-              responseData:loaderData?.responseData,
+              responseData: loaderData?.responseData,
               error: loaderData?.error || '',
-              headers: loaderData?.headers || null
+              headers: loaderData?.headers || null,
             } satisfies IRestFullClient['contextType']
           }
         />

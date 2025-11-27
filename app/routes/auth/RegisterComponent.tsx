@@ -10,6 +10,7 @@ import type { Route } from './+types/RegisterComponent';
 import { FirebaseError } from 'firebase/app';
 import { HydrateFallBack } from '~/root';
 import { AuthUserError } from '~/components/errors/erros-auth';
+import { createUser } from '~/firebase/apicalls';
 
 type ReturnTypeDataForm = {
   email: string;
@@ -60,6 +61,8 @@ function RegisterComponent(_: Route.ComponentProps) {
         const resp = await createUserWithEmailAndPassword(email, password);
         if (resp) {
           await updateProfile(resp.user, { displayName });
+
+          await createUser({email:email})
 
           navigate('/', { viewTransition: true });
         }

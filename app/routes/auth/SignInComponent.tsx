@@ -39,14 +39,10 @@ function SignInComponent(_: Route.ComponentProps) {
     if (data) {
       const { email, password } = data;
       signInWithEmailAndPassword(email, password);
+
     }
   }, [data]);
 
-  useEffect(() => {
-    if (user) {
-      navigate('/', { viewTransition: true });
-    }
-  }, [user]);
 
   if (loading) return <HydrateFallBack />;
 
