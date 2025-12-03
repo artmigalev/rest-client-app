@@ -1,10 +1,12 @@
 @import 'tailwindcss';
 :root {
   --main-color: #be4b4b;
-  --main-color-link: #243137;;
+  --main-color-link: #243137;
   --shadow-header: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
   --main-color-link: #243137;
   --padding-section: 1rem;
+  --main-color: #be4b4b;
+  --shadow-header: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 
 @theme {
@@ -48,7 +50,7 @@ body {
   /* overflow: hidden; */
 }
 
-.index-layout{
+.index-layout {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: max-content 1fr max-content;
@@ -56,7 +58,7 @@ body {
   height: 100vh;
   overflow: hidden;
 
-  .header{
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,55 +66,43 @@ body {
     background-color: lightgray;
     box-shadow: var(--shadow-header);
   }
-  .main{
+  .main {
     overflow: hidden;
   }
-  .footer{
+  .footer {
     width: 100%;
     height: max-content;
     position: relative;
     bottom: 0;
     background-color: lightgray;
-    padding-bottom:1rem;
-    padding-top:1rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
   }
 }
-.metric-list{
+/* .metric-list {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   overflow-y: auto;
   gap: 1rem;
 
-  .metric-item{
+  .metric-item {
     display: flex;
     background-color: lightgrey;
-    width: max-content ;
+    width: max-content;
     border-radius: 12px;
     padding: 1rem;
     font-size: small;
-
   }
 }
 
-
-
-
-
-.item-remove{
+.item-remove {
   transform: translate(-100vh);
   transition: 3s;
-}
-
-
-
-
-
-
-
+} */
 
 /* @keyframes sticky-parallax-header-move-and-size {
   from {
@@ -135,7 +125,7 @@ body {
   animation-timeline: scroll();
   animation-range: 0vh 90vh;
 } */
- .field-form {
+.field-form {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -161,7 +151,7 @@ body {
   flex-direction: column;
 }
 /* Loader */
- .loader {
+.loader {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -262,12 +252,16 @@ body {
       border-radius: 12px;
       padding: 1rem;
       background-color: whitesmoke;
-      .item-field {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        .key {
-          font-weight: bold;
+      display: flex;
+      
+      .content-container{
+        .item-field {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          .key {
+            font-weight: bold;
+          }
         }
       }
     }

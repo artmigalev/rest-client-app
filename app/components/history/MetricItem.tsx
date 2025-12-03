@@ -68,7 +68,7 @@ const MetricItem = ({ dispatcher, ...item}: IMetricItem) => {
       </div>
       <img
         onClick={() => remove(item)}
-        className='w-5 h-max  cursor-pointer'
+        className='w-5 h-max m-1.5! cursor-pointer'
         src='delete-icon.svg'
         alt=''
       />
