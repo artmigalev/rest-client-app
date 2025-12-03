@@ -1,6 +1,6 @@
 {
   "menu": {
-    "rest-client": "Client",
+    "client": "Client",
     "history": "History",
     "variables": "Variables"
   }

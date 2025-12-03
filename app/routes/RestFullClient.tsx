@@ -93,7 +93,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
       throw new Error('URL не может быть пустым');
     }
 
-    const path = href('/:method?/:encodedUrl?', {
+    const path = href('/client/:method?/:encodedUrl?', {
 
       method: methodSelect.toUpperCase(),
       encodedUrl: encodeURIComponent(btoa(baseUrl.replace('https://', ''))),
@@ -134,7 +134,7 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
 
   return (
     <div className='flex flex-col overflow-y-auto  p-3 pt-5 h-full'>
-      <Form method='post' action='/rest-client' className='flex flex-col gap-4 items-center justify-between'>
+      <Form method='post' action='/client' className='flex flex-col gap-4 items-center justify-between'>
         <div className='flex flex-row w-full items-center'>
           <MethodSelectorComponent  />
           <TextInputForEndpointURLComponent  />
