@@ -247,13 +247,14 @@ body {
     padding-left: 1rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
+
     .metric-item {
       width: max-content;
       border-radius: 12px;
       padding: 1rem;
       background-color: whitesmoke;
       display: flex;
-      
+
       .content-container{
         .item-field {
           display: flex;
@@ -266,4 +267,9 @@ body {
       }
     }
   }
+}
+
+.item-remove{
+  transform:  translate(-100vh);
+  transition: 3s ;
 }

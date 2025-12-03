@@ -103,9 +103,9 @@ export const getHistory = async (email: string) => {
   const historyDoc = doc(db, 'users', email)
 
   const qrSnapshot = await getDoc(historyDoc);
-  let arrayPAyload =[]
 
-  const {history} = qrSnapshot.data() as newUserCollection['history']
+
+  const {history} = qrSnapshot.data() as newUserCollection
 
   console.log(history);
 
