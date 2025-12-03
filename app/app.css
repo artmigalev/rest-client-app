@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 :root {
-  --main-color:#be4b4b
+  --main-color:#be4b4b;
+  --shadow-header: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 
 @theme {
@@ -9,7 +10,6 @@
   --font-sans: Inter Variable, sans-serif;
   --color-main: #be4b4b;
   --color-background: oklch(92.8% 0.006 264.531);
-  --shadow-header: 0px 4px 8px 0px rgba(34, 60, 80, 0.2);
   --glif: 1vw + 1.2em;
   --radius-form-b: xl;
   --color-border-default: gray;
@@ -39,10 +39,57 @@ body {
   min-height: 100vh;
   width: 100vw;
   max-width: 1440px;
-
+  height: 100%;
   margin: 0 auto;
+  display: grid;
+  /* overflow: hidden; */
 }
-@keyframes sticky-parallax-header-move-and-size {
+
+.index-layout{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr max-content;
+  grid-row-gap: 1rem;
+  height: 100vh;
+  overflow: hidden;
+
+  .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: lightgray;
+    box-shadow: var(--shadow-header);
+  }
+  .main{
+    overflow-y: hidden;
+  }
+  .footer{
+    width: 100%;
+    height: max-content;
+    position: relative;
+    bottom: 0;
+    background-color: lightgray;
+    padding-bottom:1rem;
+    padding-top:1rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* @keyframes sticky-parallax-header-move-and-size {
   from {
     background-position: 30% 0;
     height: 10vh;
@@ -53,17 +100,17 @@ body {
     height: 10vh;
     font-size: 1.8em;
   }
-}
+} */
 
-#sticky-parallax-header {
+/* #sticky-parallax-header {
   position: fixed;
   top: 0;
 
   animation: sticky-parallax-header-move-and-size linear forwards;
   animation-timeline: scroll();
   animation-range: 0vh 90vh;
-}
-.field-form {
+} */
+ .field-form {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -94,8 +141,7 @@ body {
   ;
 }
 /* Loader */
-/* From Uiverse.io by Donewenfu */
-.loader {
+ .loader {
   position: absolute;
   top: 0;
   bottom: 0;

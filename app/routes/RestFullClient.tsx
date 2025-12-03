@@ -133,7 +133,7 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
   },[actionData?.newUrl])
 
   return (
-    <div className='flex flex-col  p-3 pt-5 h-full'>
+    <div className='flex flex-col overflow-y-auto  p-3 pt-5 h-full'>
       <Form method='post' action='/rest-client' className='flex flex-col gap-4 items-center justify-between'>
         <div className='flex flex-row w-full'>
           <MethodSelectorComponent  />
@@ -166,7 +166,7 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
           </li>
         </ul>
       </nav>
-      <div className='child-container w-full overflow-x-scroll h-[60vh] bg-gray-400 rounded-2xl px-4 padding-tabs'>
+      <div className=' w-full min-h-72 h-full   bg-gray-400 rounded-2xl px-4 padding-tabs'>
         <Outlet
           context={
             {

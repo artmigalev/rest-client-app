@@ -30,9 +30,9 @@ function Index() {
     console.log(error);
   }
   return (
-    <div className='flex flex-col h-[100%] w-full'>
+    <div className='index-layout'>
       <Header language={lang} displayName={user?.displayName || null} />
-      <main className='w-full grow flex-[1_1_auto] flex flex-col items-center  overflow-y-auto mb-[calc(1em+40px)]!'>
+      <main className='main'>
         <Outlet context={{ username: user?.displayName || null, lang } satisfies IndexContext} />
       </main>
 
