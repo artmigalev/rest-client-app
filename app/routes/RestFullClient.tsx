@@ -170,6 +170,7 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
         </ul>
       </nav>
       <div className=' w-full min-h-72 h-full   bg-gray-400 rounded-2xl px-4 padding-tabs'>
+      <div className=' w-full min-h-72 h-full   bg-gray-400 rounded-2xl px-4 padding-tabs'>
         <Outlet
           context={
             {
