@@ -19,7 +19,7 @@ function Welcome() {
   }, [lang]);
 
   return (
-    <div className='flex-1  gap-[2em] w-full p-[5%]  flex flex-col content-center items-center '>
+    <div className='w-full welcome p-4 h-full overflow-y-auto '>
       <h2 role='heading' className='text-3xl capitalize'>
         {!username ? t('greeting') : `Welcome back ${username}`}
       </h2>

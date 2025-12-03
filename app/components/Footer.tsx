@@ -4,8 +4,8 @@ import Menu from './Menu';
 import type { lang } from '~/reducers/langSlice';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '~/firebase';
-import gitLogo from 'public/rss-logo.svg'
-import rssLogo from 'public/rss-logo.svg'
+import gitLogo from 'public/git.svg';
+import rssLogo from 'public/rss-logo.svg';
 interface IFooter {
   lang: lang;
   username?: string | null;
@@ -21,7 +21,7 @@ function Footer({ lang }: IFooter) {
   );
 
   return (
-    <footer className='flex flex-col p-3 w-full fixed left-0 bottom-0 bg-background '>
+    <footer className='footer'>
       <Activity mode={user ? 'visible' : 'hidden'}>{menu}</Activity>
 
       <div className='grid items-center justify-items-center grid-rows-1 grid-cols-3 '>

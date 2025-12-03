@@ -11,7 +11,7 @@ const ResponseSectionComponent = () => {
   if (error)
     return <i className='w-max text-center top-[50%] font-bold m-auto! text-main'>{error}</i>;
   return (
-    <section className='h-full w-full block'>
+    <section className='h-full overflow-y-auto w-full block'>
       <pre>
         <code className='text-green-950'>{JSON.stringify(responseData, null, 2)}</code>
       </pre>
