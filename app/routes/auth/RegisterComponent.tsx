@@ -62,7 +62,7 @@ function RegisterComponent(_: Route.ComponentProps) {
         if (resp) {
           await updateProfile(resp.user, { displayName });
 
-          await createUser({email:email})
+          await createUser({ email: email });
 
           navigate('/', { viewTransition: true });
         }

@@ -1,30 +1,30 @@
-import React, { Activity, Suspense, use, useRef, type Dispatch, type SetStateAction } from 'react';
+import React, { Activity, useRef } from 'react';
 import { href, Link } from 'react-router';
 import type { PayloadHistory } from '~/firebase/apicalls';
 type metrica = PayloadHistory;
 
 export interface IMetricItem extends metrica {
-  dispatcher: (key: metrica['requestTimestamp'] ) => void;
+  dispatcher: (key: metrica['requestTimestamp']) => void;
 }
 
-const MetricItem = ({ dispatcher, ...item}: IMetricItem) => {
+const MetricItem = ({ dispatcher, item }: IMetricItem) => {
   const itemref = useRef(null);
-
-  const remove = (item:metrica) => {
+  console.log(item);
+  
+  const remove = (item: metrica) => {
     if (itemref.current && 'remove' in itemref.current) {
-
-      const card = itemref.current as HTMLDivElement
+      const card = itemref.current as HTMLDivElement;
 
       card.classList.add('item-remove');
       setTimeout(() => {
-        dispatcher(item.requestTimestamp)
+        dispatcher(item.requestTimestamp);
         console.log('item remove');
       }, 1000);
     }
   };
 
   return (
-    <div ref={itemref}  className='metric-item relative'>
+    <div ref={itemref} className='metric-item relative'>
       <div className='content-container'>
         <div className='item-field'>
           <span className='key'>Endpoint:</span>
@@ -59,19 +59,14 @@ const MetricItem = ({ dispatcher, ...item}: IMetricItem) => {
           <span className='key'>Response Size:</span>
           <span className='value'>{item.responseSize}</span>
         </div>
-        <Activity mode={item.errorDetails? 'visible' : 'hidden'}>
+        <Activity mode={item.errorDetails ? 'visible' : 'hidden'}>
           <div className='item-field'>
             <span className='key'>Error Details:</span>
             <span className='value'>{item.errorDetails}</span>
           </div>
         </Activity>
       </div>
-      <img
-        onClick={() => remove(item)}
-        className='w-5 h-max m-1.5! cursor-pointer'
-        src='delete-icon.svg'
-        alt=''
-      />
+      <img onClick={() => remove(item)} className='w-5 h-max m-1.5! cursor-pointer' src='delete-icon.svg' alt='' />
     </div>
   );
 };

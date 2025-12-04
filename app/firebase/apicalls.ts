@@ -1,20 +1,5 @@
-import {
-  addDoc,
-  arrayUnion,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-  setDoc,
-  startAt,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
-import { data } from 'react-router';
+import { addDoc, arrayUnion, collection, doc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { db } from '~/firebase';
-import Variables from '~/routes/Variables';
 
 type PayloadRegister = {
   email: string;
@@ -33,7 +18,7 @@ export type PayloadHistory = {
 export type newUserCollection = {
   email: PayloadRegister['email'];
   history: { [key: string]: PayloadHistory };
-  variables: {[key:string]:string};
+  variables: { [key: string]: string };
 };
 
 export const createUser = async (payload: PayloadRegister) => {
@@ -48,7 +33,7 @@ export const createUser = async (payload: PayloadRegister) => {
     const collectionUser: newUserCollection = {
       email: payload.email,
       history: {},
-      variables: {}
+      variables: {},
     };
 
     const refDoc = doc(db, 'users', payload.email);
@@ -65,11 +50,9 @@ export const createUser = async (payload: PayloadRegister) => {
 
 export const updateUserHistory = async (email: string, payload: PayloadHistory) => {
   try {
-    const userHistoryRef = doc(db, 'users', email);
+    const userHistoryRef = collection(db, 'users', email, "history");
 
-    await updateDoc(userHistoryRef, {
-      history: arrayUnion(payload),
-    });
+    await addDoc(userHistoryRef, payload)
 
     console.log('update history');
   } catch (error) {
@@ -77,47 +60,19 @@ export const updateUserHistory = async (email: string, payload: PayloadHistory) 
   }
 };
 
-const fakePayload: PayloadHistory = {
-  responseStatusCode: 0,
-  requestTimestamp: '',
-  requestMethod: 'GET',
-  endpointURL: '',
-};
 
 export const getHistory = async (email: string) => {
 
 
-  // const userWithEmailDoc = doc(db, 'users', email);
-  // try {
-  //   const docSnap = await getDoc(userWithEmailDoc);
-  //   console.log(docSnap.data());
-  //   if (!docSnap.exists()) {
-  //     throw new Error('Incorrect email User undefined');
-  //   }
+  const userCollection = collection(db, 'users', email, 'history')
 
+  const snapShotUserHistory = await getDocs(userCollection)
+  const snapshotItems =[]
+  snapShotUserHistory.forEach(doc => {
+    snapshotItems.push(doc.data())
 
+  })
 
-  // } catch (error) {
-  //   if (error instanceof Error) {
-  //     return { error: error.message };
-  //   }
-  // }
-  const q = query( collection(db, `users${email}`))
-  const querySnapshot = await getDocs(q);
-
-  console.log(querySnapshot.size)
- querySnapshot.forEach((doc) => {
-   // doc.data() is never undefined for query doc snapshots
-   console.log(doc.id, ' => ', doc.data());
- });
-
-
-
-  // return history
+  return snapshotItems
 };
 
-// updateUserHistory("example@yahoo.com",fakePayload)
-
-// async function updateHistory(params) {
-
-// }

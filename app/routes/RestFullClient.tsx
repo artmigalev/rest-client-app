@@ -1,15 +1,5 @@
-import { useEffect, useState } from 'react';
-import {
-  Form,
-  href,
-  NavLink,
-  Outlet,
-  redirect,
-  replace,
-  useFetcher,
-  useNavigate,
-  useOutletContext,
-} from 'react-router';
+import { useEffect } from 'react';
+import { Form, href, NavLink, Outlet, useNavigate } from 'react-router';
 import HeadersEditorComponent from '~/components/restfull-client/HeadersEditorComponent';
 import MethodSelectorComponent from '~/components/restfull-client/MethodSelectorComponent';
 import TextInputForEndpointURLComponent from '~/components/restfull-client/TextInputForEndpointURLComponent';
@@ -62,16 +52,21 @@ export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) 
       method,
       headers: headerObj,
     });
-    const payload = await createdPayloadHistory(response,metrics,method)
-    console.log(payload);
-
+    const payload = await createdPayloadHistory(response, metrics, method);
+    console.log(payload, 'payload history');
 
     if (!response.ok) {
       throw new Error('not valid endpoint');
     }
 
     const data = await response.json();
-    return { responseData: data, methodSelect: method, urlEndpoint: fullUrl, headers: JSON.parse(headerParams), payload };
+    return {
+      responseData: data,
+      methodSelect: method,
+      urlEndpoint: fullUrl,
+      headers: JSON.parse(headerParams),
+      payload,
+    };
   } catch (error) {
     console.log(error);
     if (error instanceof Error) {
@@ -93,7 +88,6 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     }
 
     const path = href('/client/:method?/:encodedUrl?', {
-
       method: methodSelect.toUpperCase(),
       encodedUrl: encodeURIComponent(btoa(baseUrl.replace('https://', ''))),
     });
@@ -115,7 +109,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 
 function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps) {
   const navigate = useNavigate();
-     const [user, loading, error] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {
     if (actionData?.newUrl) navigate(actionData.newUrl, { replace: true });
@@ -125,15 +119,9 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
     if (user?.email || loaderData?.payload) {
       console.log('payload');
 
-         updateUserHistory(user?.email!, loaderData?.payload);
+      updateUserHistory(user?.email!, loaderData?.payload);
     }
-
-
-  },[loaderData?.payload ,user])
-
-
-
-
+  }, [loaderData?.payload, user]);
 
   return (
     <div className='flex flex-col overflow-y-auto  p-3 pt-5 h-full'>
@@ -185,7 +173,5 @@ function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps
     </div>
   );
 }
-
-
 
 export default RestFullClient;

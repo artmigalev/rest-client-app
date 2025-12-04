@@ -7,7 +7,6 @@ import type { TargetInfo } from 'node_modules/httpsnippet-lite/dist/types/target
 import { usePropsRestClient } from '~/routes/RestFullClient';
 import SelectComponent from '../Select';
 import type { AvailableTarget } from 'node_modules/httpsnippet-lite/dist/types/helpers/utils';
-import type { Header } from '~/@types';
 
 export interface IGenerateCodeSectionComponent {
   baseUrl: string;
@@ -38,7 +37,6 @@ const GenerateCodeSectionComponent = () => {
     const snippet = new HTTPSnippet({
       method: method,
       url: url,
-
     });
     const options = { indent: '\t' };
     const output = await snippet.convert(name, clientById, options);
@@ -71,7 +69,7 @@ const GenerateCodeSectionComponent = () => {
   }, [clients]);
   return (
     <section className='padding-headers-input w-full h-full flex flex-col gap-4 '>
-      <div className='flex flex-row gap-4 w-max' >
+      <div className='flex flex-row gap-4 w-max'>
         <SelectComponent
           options={targetTitles}
           styles={styles}

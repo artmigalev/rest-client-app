@@ -1,4 +1,3 @@
-
 export interface IFetchWithSizesResult {
   response: Response;
   metrics: {
@@ -8,21 +7,15 @@ export interface IFetchWithSizesResult {
     status: number;
     ok: boolean;
     url: string;
-
-  }
+  };
 }
 
-
-
-
-export  const fetchWithSizes = async (input: string, init: RequestInit = {}) : Promise<IFetchWithSizesResult> => {
+export const fetchWithSizes = async (input: string, init: RequestInit = {}): Promise<IFetchWithSizesResult> => {
   const performanceNow = Date.now();
 
-   let requestSize = 0;
-
+  let requestSize = 0;
 
   if (init.method === 'POST' || init.method === 'PUT') {
-
     if (init.body) {
       if (typeof init.body === 'string') {
         requestSize = new TextEncoder().encode(init.body).length;
@@ -40,12 +33,8 @@ export  const fetchWithSizes = async (input: string, init: RequestInit = {}) : P
     }
   }
 
-
-
-
-  const response = await fetch(input, init)
-  const timeEnd = Date.now()
-
+  const response = await fetch(input, init);
+  const timeEnd = Date.now();
 
   const clone = response.clone();
   const buffer = await clone.arrayBuffer();
@@ -59,10 +48,8 @@ export  const fetchWithSizes = async (input: string, init: RequestInit = {}) : P
       duration: Math.round(timeEnd - performanceNow),
       status: response.status,
       ok: response.ok,
-      url: response.url
-    }
-  }
-
-
-}
+      url: response.url,
+    },
+  };
+};
 export default fetchWithSizes;

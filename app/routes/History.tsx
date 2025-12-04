@@ -1,15 +1,9 @@
 import React from 'react';
-import MetricsList from '~/components/history/MetricsList';
 import type { Route } from './+types/History';
-import type { IMetricItem } from '~/components/history/MetricItem';
 import { getHistory, type PayloadHistory } from '~/firebase/apicalls';
-import { onAuthStateChanged, type Unsubscribe, type User, type UserCredential } from 'firebase/auth';
+import { onAuthStateChanged, type User } from 'firebase/auth';
 import { auth } from '~/firebase';
-
-
-
-
-
+import MetricsList from '~/components/history/MetricsList';
 
 export const clientLoader = async ({ request }: Route.ClientLoaderArgs): Promise<{ metrics: PayloadHistory[] }> => {
   const userCredential: User = await new Promise((resolve) => {
@@ -19,23 +13,26 @@ export const clientLoader = async ({ request }: Route.ClientLoaderArgs): Promise
   });
 
   const { email, displayName } = userCredential;
-  console.log(displayName);
+  // console.log(displayName);
   if (email) {
   }
 
   const history = await getHistory(email);
   console.log(history, 'History');
 
-  return { metrics: history };
+  return {metrics:history}
 };
 
+const History = ({ loaderData }: Route.ComponentProps) => {
 
-const  History = ({loaderData}:Route.ComponentProps)=> {
+  // console.log(loaderData);
+
+
   return (
     <section className='flex flex-col   h-full history-page'>
-      {/* <MetricsList listItems={loaderData.metrics as IMetricItem[]} /> */}
+      <MetricsList listItems={loaderData.metrics} />
     </section>
   );
-}
+};
 
 export default History;

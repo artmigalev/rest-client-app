@@ -20,8 +20,6 @@ const HeadersEditorComponent = () => {
 
   const onChangeHeader = (id: number, field: 'key' | 'value', value: string) => {
     setHeaders((prev) => prev.map((header) => (header.id === id ? { ...header, [field]: value } : header)));
-
-
   };
 
   return (
@@ -63,7 +61,7 @@ const HeadersEditorComponent = () => {
           />
         </div>
       ))}
-      <input type="hidden" name="headers" value={JSON.stringify(headers)} />
+      <input type='hidden' name='headers' value={JSON.stringify(headers)} />
     </div>
   );
 };

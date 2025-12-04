@@ -39,10 +39,8 @@ function SignInComponent(_: Route.ComponentProps) {
     if (data) {
       const { email, password } = data;
       signInWithEmailAndPassword(email, password);
-
     }
   }, [data]);
-
 
   if (loading) return <HydrateFallBack />;
 

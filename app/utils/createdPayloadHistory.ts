@@ -5,7 +5,7 @@ import type { IFetchWithSizesResult } from './fetchWrapper';
 export const createdPayloadHistory = async (
   response: Response,
   metrics: IFetchWithSizesResult['metrics'],
-  method: IRestFullClient['options']['methodSelector'],
+  method: IRestFullClient['options']['methodSelector']
 ): Promise<PayloadHistory | string> => {
   if (!response || !metrics) {
     console.log('no valid data');
@@ -31,12 +31,10 @@ export const createdPayloadHistory = async (
     }
     payload['requestDuration'] = new Date(metrics.duration).getMilliseconds();
 
-
     payload['responseSize'] = metrics.responseSize;
-    payload['requestSize'] =metrics.requestSize;
+    payload['requestSize'] = metrics.requestSize;
 
     console.log('created payload', payload);
-
 
     return payload;
   } catch (error) {
