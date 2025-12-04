@@ -33,7 +33,7 @@ export const clientLoader = async ({ request }: Route.ClientLoaderArgs): Promise
 const  History = ({loaderData}:Route.ComponentProps)=> {
   return (
     <section className='flex flex-col   h-full history-page'>
-      <MetricsList listItems={loaderData.metrics as IMetricItem[]} />
+      {/* <MetricsList listItems={loaderData.metrics as IMetricItem[]} /> */}
     </section>
   );
 }

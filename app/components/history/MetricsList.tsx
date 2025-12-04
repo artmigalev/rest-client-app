@@ -15,9 +15,9 @@ const MetricsList = ({ listItems }: IMetricList) => {
 
   return (
     <ul className='w-full h-full metric-list'>
-      {items.map((item) => (
-        <li  key={item.requestTimestamp}>
-          <MetricItem  {...items } dispatcher={onDeleteItem}    />
+      {items.map((item, index) => (
+        <li  key={item.requestTimestamp + index }>
+         {item && ( <MetricItem  {...item } dispatcher={onDeleteItem}    />)}
         </li>
       ))}
     </ul>
