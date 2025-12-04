@@ -62,7 +62,7 @@ body {
     box-shadow: var(--shadow-header);
   }
   .main{
-    overflow-y: hidden;
+    overflow: hidden;
   }
   .footer{
     width: 100%;
@@ -74,13 +74,35 @@ body {
     padding-top:1rem;
   }
 }
+.metric-list{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  gap: 1rem;
+
+  .metric-item{
+    display: flex;
+    background-color: lightgrey;
+    width: max-content ;
+    border-radius: 12px;
+    padding: 1rem;
+    font-size: small;
+
+  }
+}
 
 
 
 
 
-
-
+.item-remove{
+  transform: translate(-100vh);
+  transition: 3s;
+}
 
 
 
