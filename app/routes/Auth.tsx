@@ -3,11 +3,10 @@ import type Resources from '~/@types/resources';
 import { useTranslation } from 'react-i18next';
 import type { IndexContext } from './Index';
 import { type ProtectedLayoutProps } from '~/components/ProtectedLayout';
+import List from '~/components/List';
+import { useEffect } from 'react';
 
-export async function clientLoader(): Promise<IAuth['dataLoader']> {
-  const resData = await fetch('locales/en/auth.json');
-  return await resData.json();
-}
+
 
 interface IAuth {
   dataLoader: {
@@ -19,10 +18,14 @@ interface IAuth {
 }
 
 function Auth({ forbidAuth = true, redirectPath = '/' }: ProtectedLayoutProps) {
-  const { lang, username } = useOutletContext<IndexContext>();
-  const data = useLoaderData<IAuth['dataLoader']>();
-  const { navigation, signInComponent, registerComponent } = data;
-  const { t } = useTranslation('auth', { keyPrefix: 'navigation', useSuspense: true });
+  const {  lang,username } = useOutletContext<IndexContext>();
+
+  const { t, i18n } = useTranslation('auth');
+
+
+  const navigationLayout = t('navigation', {returnObjects:true})
+
+
   const location = useLocation();
 
   const isAuth = Boolean(username);
@@ -32,13 +35,24 @@ function Auth({ forbidAuth = true, redirectPath = '/' }: ProtectedLayoutProps) {
   }
 
   const ifActive = ({ isActive }) => (isActive ? 'text-main capitalize' : '');
+  useEffect(() => {
+    if (lang) {
+        i18n.changeLanguage(lang)
+    }
+
+
+
+  },[lang])
+
   return (
     <div className='flex-1 w-full h-[100%]   flex justify-evenly  items-center'>
       <div className='container w-[80%] max-w-[450px] flex flex-col gap-3 items-center  max-h-[650px] h-[400px] '>
         <div className=' font-bold  flex gap-[1rem] py-[1rem] '>
-          {Object.keys(navigation).map((key) => (
+
+
+          {Object.keys(navigationLayout).map((key) => (
             <NavLink key={key} style={{ textTransform: 'capitalize' }} className={ifActive} to={key} viewTransition>
-              {t(key as keyof Resources['auth']['navigation'])}
+              {t(`navigation.${key}`)}
             </NavLink>
           ))}
         </div>

@@ -12,6 +12,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   const email = String(formData.get('email'));
   const password = String(formData.get('password'));
   const errors = {};
+  
   if (!email.includes('@')) {
     Object.defineProperty(errors, 'email', { value: 'auth/invalid-email', writable: true, enumerable: true });
   }

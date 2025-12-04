@@ -37,7 +37,7 @@ function Navigation({ items, displayName }: INavigation['props']) {
 
   return (
     <nav>
-      <List callbackFn={logout} styles='justify-around' items={authItems} isLink={true} />
+      <List callbackFn={logout} styles={{ classList: 'justify-around' }} items={authItems} returnedTypeItems='links' />
     </nav>
   );
 }

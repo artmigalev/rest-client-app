@@ -10,6 +10,7 @@ import type { Route } from './+types/RegisterComponent';
 import { FirebaseError } from 'firebase/app';
 import { HydrateFallBack } from '~/root';
 import { AuthUserError } from '~/components/errors/erros-auth';
+import { createUser } from '~/firebase/apicalls';
 
 type ReturnTypeDataForm = {
   email: string;
@@ -46,7 +47,7 @@ function RegisterComponent(_: Route.ComponentProps) {
 
   const { t } = useTranslation('auth', { keyPrefix: 'registerComponent', useSuspense: true });
 
-  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, _user, loading, error] = useCreateUserWithEmailAndPassword(auth);
 
   const navigate = useNavigate();
 
@@ -60,18 +61,27 @@ function RegisterComponent(_: Route.ComponentProps) {
         const resp = await createUserWithEmailAndPassword(email, password);
         if (resp) {
           await updateProfile(resp.user, { displayName });
+          const result= await createUser({email})
+          if (!result.success) {
+            throw new AuthUserError('auth', result.message as string)
+          }
+          if (result.success) {
 
-          navigate('/', { viewTransition: true });
+            return navigate('/', { viewTransition: true });
+
+          }
+
+
         }
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
           Object.defineProperty(errors, 'email', { value: 'auth/invalid-email', writable: true, enumerable: true });
-          throw new AuthUserError('auth', 'fuck!!!');
+          throw new AuthUserError('auth', error.message);
         }
       }
     }
     if (userData) {
-      createWithUserDt(userData);
+      createWithUserDt(userData)
     }
   }, [userData, errors]);
 
