@@ -6,7 +6,7 @@ export const createdPayloadHistory = async (
   response: Response,
   metrics: IFetchWithSizesResult['metrics'],
   method: IRestFullClient['options']['methodSelector']
-): Promise<PayloadHistory | string> => {
+): Promise<PayloadHistory> => {
   if (!response || !metrics) {
     console.log('no valid data');
     throw new Error('exit');
@@ -40,9 +40,7 @@ export const createdPayloadHistory = async (
   } catch (error) {
     if (error instanceof Error) {
       console.log(error);
-      if (error.message === 'exit') {
-        return error.message;
-      }
+
       payload['errorDetails'] = error.message;
     }
     return payload;
