@@ -10,7 +10,7 @@ export interface IMetricItem extends metrica {
 const MetricItem = ({ dispatcher, item }: IMetricItem) => {
   const itemref = useRef(null);
   console.log(item);
-  
+
   const remove = (item: metrica) => {
     if (itemref.current && 'remove' in itemref.current) {
       const card = itemref.current as HTMLDivElement;
@@ -27,10 +27,10 @@ const MetricItem = ({ dispatcher, item }: IMetricItem) => {
     <div ref={itemref} className='metric-item relative'>
       <div className='content-container'>
         <div className='item-field'>
-          <span className='key'>Endpoint:</span>
+          <span className='key '>Endpoint:</span>
           <Link
             to={href('/client/:method?/:encodedUrl?', { method: 'GET', encodedUrl: 'item.endpointURL' })}
-            className='value'
+            className='value url'
           >
             {item.endpointURL || 'link to endpoint'}
           </Link>
@@ -41,15 +41,15 @@ const MetricItem = ({ dispatcher, item }: IMetricItem) => {
         </div>
         <div className='item-field'>
           <span className='key'>Response Status Code:</span>
-          <span className='value'>{item.responseStatusCode}</span>
+          <span className='value text-main!'>{item.responseStatusCode}</span>
         </div>
         <div className='item-field'>
           <span className='key'>Request Timestamp:</span>
-          <span className='value'>{item.requestTimestamp}</span>
+          <span className='value border-b-2'>{item.requestTimestamp}</span>
         </div>
         <div className='item-field'>
           <span className='key'>Request Method:</span>
-          <span className='value'>{item.requestMethod}</span>
+          <span className='value  text-main!'>{item.requestMethod}</span>
         </div>
         <div className='item-field'>
           <span className='key'>Request Size:</span>
@@ -66,7 +66,7 @@ const MetricItem = ({ dispatcher, item }: IMetricItem) => {
           </div>
         </Activity>
       </div>
-      <img onClick={() => remove(item)} className='w-5 h-max m-1.5! cursor-pointer' src='delete-icon.svg' alt='' />
+      <img onClick={() => remove(item)} className='w-5 h-max  cursor-pointer' src='delete-icon.svg' alt='' />
     </div>
   );
 };

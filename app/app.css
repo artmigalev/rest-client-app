@@ -256,11 +256,25 @@ body {
       display: flex;
 
       .content-container{
+        padding-right: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
         .item-field {
           display: flex;
           flex-direction: row;
           flex-wrap: nowrap;
+          gap: 0.5rem;
           .key {
+            font-weight: bold;
+          }
+          .value{
+            font-weight: bold;
+            color: grey;
+          }
+          .url{
+            color: rgb(2, 58, 77);
+            border-bottom: #243137 1px solid;
             font-weight: bold;
           }
         }
