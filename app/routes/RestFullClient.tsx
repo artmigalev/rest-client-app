@@ -10,32 +10,18 @@ import MethodSelectorComponent from '~/components/restfull-client/MethodSelector
 import HeadersEditorComponent from '~/components/restfull-client/HeadersEditorComponent';
 import { aC } from 'node_modules/react-router/dist/development/routeModules-D5iJ6JYT';
 
-// export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) => {
-
-//   const { method, encodedUrl } = params
-//   let result = {
-//     error: '',
-//     dataResponse:''
-//   }
-//   if (!encodedUrl?.length) {
-//     throw new Error('Endpoint empty')
-//   }
-//   try {
-
-//   } catch (error) {
-//     if (error instanceof Error) {
-//       result.error =error.message
-//     }
-//     return result
-
-//   }
-
-// };
 export type ClientResponse = {
   success: boolean;
   pathname: string;
   error: null | string;
   responseData?: { [key: string]: string } | { [key: string]: string }[];
+};
+
+export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) => {
+
+  const decoderURL = decodeURIComponent(atob(params.encodedUrl || '')).trim();
+
+  return {url: decoderURL }
 };
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
@@ -75,8 +61,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
 
     const metricPayload = await createdPayloadHistory(requestPayload.response, requestPayload.metrics, 'GET');
 
-    // const { email } = await credentialUser();
-    // await updateUserHistory(email, metricPayload);
+
 
     const path = href('/client/:method?/:encodedUrl?', {
       method: 'get',
@@ -97,9 +82,9 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
   }
 }
 
-function RestFullClient({actionData}:Route.ComponentProps) {
+function RestFullClient({actionData,loaderData}:Route.ComponentProps) {
   const fetcher = useFetcher<typeof clientAction>({ key: 'client-action' });
-  const navigation = useNavigation();
+  
   const navigate = useNavigate();
 
   const stateLink = ({ isActive, isPending }) => ({
@@ -121,12 +106,10 @@ function RestFullClient({actionData}:Route.ComponentProps) {
     return ()=> fetcher.data?.success
   }, [fetcher.data]);
     if (fetcher.data?.pathname) {
-      // console.log);
 
       const { pathname } = fetcher.data;
       navigate(`${pathname}/response`);
-      // if (navigation.location?.pathname.includes('response')) {
-      // }
+
     }
   }, [fetcher.data?.pathname]);
 
@@ -135,7 +118,7 @@ function RestFullClient({actionData}:Route.ComponentProps) {
       <fetcher.Form method='post' action='/client' key='client-action' className='form-client-endpoint'>
         <div className='flex flex-row items-center justify-between '>
           <MethodSelectorComponent />
-          <TextInputForEndpointURLComponent />
+          <TextInputForEndpointURLComponent value={loaderData.url} />
         </div>
         <HeadersEditorComponent />
       </fetcher.Form>
@@ -155,12 +138,6 @@ function RestFullClient({actionData}:Route.ComponentProps) {
   );
 }
 
-// export const usePropsRestClient = () => {
-//   return useOutletContext<Pick<IRestFullClient['contextType'], 'method' | 'url' | 'headers'>>();
-// };
 
-// export const useDataResponse = () => {
-//   return useOutletContext<Pick<IRestFullClient['contextType'], 'responseData' | 'error'>>();
-// };
 
 export default RestFullClient;
