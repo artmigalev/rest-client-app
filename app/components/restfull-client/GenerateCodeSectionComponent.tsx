@@ -1,12 +1,14 @@
 import { HTTPSnippet, type ClientId, type TargetId } from 'httpsnippet-lite';
 // import { targets } from '/node_modules/httpsnippet-lite/dist/esm/targets/targets.mjs';
 import { availableTargets } from 'httpsnippet-lite';
-import { Activity, useEffect, useMemo, useState } from 'react';
+import { Activity, useCallback, useEffect, useMemo, useState } from 'react';
 // import type { Itargets } from '~/@types/target';
 import type { TargetInfo } from 'node_modules/httpsnippet-lite/dist/types/targets/targets';
-import { usePropsRestClient } from '~/routes/RestFullClient';
 import SelectComponent from '../Select';
 import type { AvailableTarget } from 'node_modules/httpsnippet-lite/dist/types/helpers/utils';
+import type { Header } from '~/@types';
+import type { Route } from '../+types/ProtectedLayout';
+import generateCode from '~/utils/generateCode';
 
 export interface IGenerateCodeSectionComponent {
   baseUrl: string;
@@ -18,13 +20,14 @@ const styles = {
   stylesSelect: 'text-main h-12 text-base text-center p-2.5 rounded-xl relative border-gray-500 border-2',
 };
 
-const GenerateCodeSectionComponent = () => {
+const GenerateCodeSectionComponent = ({params}:Route.ComponentProps) => {
   const [target, setTarget] = useState<AvailableTarget['title']>(targets[0].key);
   const [clients, setClients] = useState<AvailableTarget['clients']>(targets[0].clients);
 
   const [clientById, setClientById] = useState<ClientId>(clients[0].key);
   const [code, setCode] = useState<string | string[] | null>('');
-  const { url, method, headers } = usePropsRestClient();
+
+
 
   const onHandleChange = (value: string) => {
     if (targets.some((target) => target.key === value)) {
@@ -33,19 +36,15 @@ const GenerateCodeSectionComponent = () => {
       setClientById(value);
     }
   };
-  const generateCode = async (name: TargetId, clientById: ClientId) => {
-    const snippet = new HTTPSnippet({
-      method: method,
-      url: url,
-    });
-    const options = { indent: '\t' };
-    const output = await snippet.convert(name, clientById, options);
-    setCode(output);
-  };
+
+
+
 
   useEffect(() => {
     if (target || clientById) {
-      generateCode(target as TargetId, clientById);
+      generateCode(target as TargetId, clientById,).then(
+        res=> setCode(res)
+      );
     }
   }, [target, clientById]);
 
@@ -69,14 +68,14 @@ const GenerateCodeSectionComponent = () => {
   }, [clients]);
   return (
     <section className='padding-headers-input w-full h-full flex flex-col gap-4 '>
-      <div className='flex flex-row gap-4 w-max'>
-        <SelectComponent
+      <div className='flex flex-row gap-4 w-max' >
+        <SelectComponent<TargetId>
           options={targetTitles}
           styles={styles}
-          value={target as TargetInfo['title']}
+          value={target as TargetId}
           dispatcher={onHandleChange}
         />
-        <SelectComponent options={clientTitles} styles={styles} dispatcher={onHandleChange} />
+        <SelectComponent<ClientId> options={clientTitles} styles={styles} dispatcher={onHandleChange} />
       </div>
 
       <Activity mode={code ? 'visible' : 'hidden'}>
