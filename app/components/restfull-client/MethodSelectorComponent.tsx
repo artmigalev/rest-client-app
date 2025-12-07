@@ -7,25 +7,25 @@ interface IMethodSelectorComponent {
   dispatcher?: Dispatch<React.SetStateAction<IRestFullClient['options']>>;
 }
 const styles: ISelect<string>['styles'] = {
-  stylesSelect: 'h-12 text-base text-center p-2.5 rounded-xl relative border-gray-500 border-2',
+  stylesSelect: 'p-4 font-bold',
 };
 
 const MethodSelectorComponent = () => {
   const methods = {
     get: 'GET',
     put: 'PUT',
-    patch: 'PATCH',
+    patch: 'POST',
   };
 
   return (
-    <div>
+    <>
       <Select
         name={'method-select'}
         value={methods.get}
-        styles={styles.stylesSelect}
+        styles={styles}
         options={Object.entries(methods)}
       />
-    </div>
+    </>
   );
 };
 

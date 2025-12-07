@@ -129,6 +129,7 @@ body {
       align-items: center;
       width: 100%;
       min-width: 20rem;
+      max-width: 50rem;
       gap: 1rem;
       border: 1px solid lightgrey;
 

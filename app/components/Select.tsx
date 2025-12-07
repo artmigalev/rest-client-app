@@ -3,8 +3,8 @@ import React, { type Dispatch, type SetStateAction } from 'react';
 export interface ISelect<T> {
   options: [T | string, string][];
   styles?: Partial<{
-    stylesSelect: string;
-    stylesOption: string;
+    stylesSelect?: string;
+    stylesOption?: string;
   }>;
   name: string;
   value: T;
