@@ -29,7 +29,10 @@ const MetricItem = ({ dispatcher, item }: IMetricItem) => {
         <div className='item-field'>
           <span className='key '>Endpoint:</span>
           <Link
-            to={href('/client/:method?/:encodedUrl?', { method: item.requestMethod,encodedUrl: item.endpointURL })}
+            to={href('/client/:method?/:encodedUrl?', {
+              method: item.requestMethod,
+              encodedUrl: encodeURI(btoa(item.endpointURL)),
+            })}
             className='value url'
           >
             {item.endpointURL || 'link to endpoint'}

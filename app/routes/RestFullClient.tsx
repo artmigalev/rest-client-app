@@ -18,9 +18,10 @@ export type ClientResponse = {
 };
 
 export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) => {
+
   const decoderURL = decodeURIComponent(atob(params.encodedUrl || '')).trim();
 
-  return { url: decoderURL };
+  return {url: decoderURL }
 };
 
 export async function clientAction({ request }: Route.ClientActionArgs) {
@@ -63,6 +64,7 @@ export async function clientAction({ request }: Route.ClientActionArgs) {
     await updateUserHistory(email, metricPayload)
 
 
+
     const path = href('/client/:method?/:encodedUrl?', {
       method: 'get',
       encodedUrl: encodeURI(btoa(baseUrl)),
@@ -93,8 +95,10 @@ function RestFullClient({  loaderData }: Route.ComponentProps) {
 
   useEffect(() => {
     if (fetcher.data?.pathname) {
+
       const { pathname } = fetcher.data;
       navigate(`${pathname}/response`);
+
     }
   }, [fetcher.data?.pathname]);
 
@@ -122,5 +126,7 @@ function RestFullClient({  loaderData }: Route.ComponentProps) {
     </section>
   );
 }
+
+
 
 export default RestFullClient;
