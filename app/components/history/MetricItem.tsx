@@ -1,17 +1,17 @@
 import React, { Activity, useRef } from 'react';
 import { href, Link } from 'react-router';
 import type { PayloadHistory } from '~/firebase/apicalls';
-type metrica = PayloadHistory;
+type Metric = PayloadHistory;
 
-export interface IMetricItem extends metrica {
-  dispatcher: (key: metrica['requestTimestamp']) => void;
+export interface IMetricItem  {
+  dispatcher: (key: Metric['requestTimestamp']) => void;
+  item:Metric
 }
 
 const MetricItem = ({ dispatcher, item }: IMetricItem) => {
   const itemref = useRef(null);
-  console.log(item);
 
-  const remove = (item: metrica) => {
+  const remove = (item: Metric) => {
     if (itemref.current && 'remove' in itemref.current) {
       const card = itemref.current as HTMLDivElement;
 
@@ -29,7 +29,7 @@ const MetricItem = ({ dispatcher, item }: IMetricItem) => {
         <div className='item-field'>
           <span className='key '>Endpoint:</span>
           <Link
-            to={href('/client/:method?/:encodedUrl?', { method: 'GET', encodedUrl: 'item.endpointURL' })}
+            to={href('/client/:method?/:encodedUrl?', { method: item.requestMethod,encodedUrl: item.endpointURL })}
             className='value url'
           >
             {item.endpointURL || 'link to endpoint'}

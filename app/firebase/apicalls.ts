@@ -1,4 +1,4 @@
-import { addDoc, arrayUnion, collection, doc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, doc, getDocs, limit, orderBy, query, setDoc, startAfter, startAt, updateDoc, where } from 'firebase/firestore';
 import { db } from '~/firebase';
 
 type PayloadRegister = {
@@ -61,18 +61,27 @@ export const updateUserHistory = async (email: string, payload: PayloadHistory) 
 };
 
 
-export const getHistory = async (email: string) => {
+export const getHistory = async (email: string, next) => {
+
+  const snapshotItems = []
 
 
   const userCollection = collection(db, 'users', email, 'history')
+  const q = query(userCollection, orderBy('requestTimestamp'),limit(4),  startAfter(next));
 
-  const snapShotUserHistory = await getDocs(userCollection)
-  const snapshotItems =[]
+
+
+  const snapShotUserHistory = await getDocs(q)
+  // console.log(snapShotUserHistory.size);
+  const lastDoc = snapShotUserHistory.docs[snapShotUserHistory.docs.length - 1]
+
+
   snapShotUserHistory.forEach(doc => {
+
     snapshotItems.push(doc.data())
 
   })
 
-  return snapshotItems
+  return {metrics: snapshotItems, lastSnapshot: lastDoc}
 };
 
