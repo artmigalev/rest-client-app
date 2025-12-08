@@ -42,12 +42,6 @@ function SignInComponent(_: Route.ComponentProps) {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (user) {
-      navigate('/', { viewTransition: true });
-    }
-  }, [user]);
-
   if (loading) return <HydrateFallBack />;
 
   return (

@@ -7,7 +7,7 @@ import { useAppDispatch } from '~/hooks';
 import { setByLang, type lang } from '~/reducers/langSlice';
 import { type User } from '~/reducers/userSlice';
 import Navigation from './Navigation';
-import logo from '../../public/logo-48px.png'
+import logo from '../../public/logo-48px.png';
 type NavKeys = keyof Resources['header']['navigation'];
 // type LangsKeys = keyof Resources['header']['langs'];
 

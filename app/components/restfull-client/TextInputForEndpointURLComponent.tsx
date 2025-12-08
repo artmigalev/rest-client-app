@@ -1,12 +1,11 @@
-import React, { type ChangeEvent, type Dispatch } from 'react';
-import type { IRestFullClient } from '~/routes/RestFullClient';
+import React from 'react';
 
 // interface ITextInputForEndpointURLComponent {
 //   defaultValue: string;
 //   dispatcher: Dispatch<React.SetStateAction<IRestFullClient['options']>>;
 // }
 
-function TextInputForEndpointURLComponent() {
+function TextInputForEndpointURLComponent({ url }: { url: string }) {
   const prefix = 'http://';
 
   // const onHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +23,7 @@ function TextInputForEndpointURLComponent() {
         aria-label='url'
         name='base-url'
         type='text'
-        defaultValue=''
+        defaultValue={url}
         className='flex items-center justify-center outline-0 font-medium border-0  bg-input-bg py-2.5 w-full text-sm'
         placeholder='Endpoint'
       />
