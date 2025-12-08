@@ -1,5 +1,20 @@
-import { addDoc, arrayUnion, collection, doc, getDocs, limit, orderBy, query, setDoc, startAfter, startAt, updateDoc, where } from 'firebase/firestore';
-import { db } from '~/firebase';
+import { onAuthStateChanged, type User } from 'firebase/auth';
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  setDoc,
+  startAfter,
+  startAt,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
+import { auth, db } from '~/firebase';
 
 type PayloadRegister = {
   email: string;
@@ -50,9 +65,9 @@ export const createUser = async (payload: PayloadRegister) => {
 
 export const updateUserHistory = async (email: string, payload: PayloadHistory) => {
   try {
-    const userHistoryRef = collection(db, 'users', email, "history");
+    const userHistoryRef = collection(db, 'users', email, 'history');
 
-    await addDoc(userHistoryRef, payload)
+    await addDoc(userHistoryRef, payload);
 
     console.log('update history');
   } catch (error) {
@@ -60,28 +75,27 @@ export const updateUserHistory = async (email: string, payload: PayloadHistory) 
   }
 };
 
-
 export const getHistory = async (email: string, next) => {
+  const snapshotItems = [];
 
-  const snapshotItems = []
+  const userCollection = collection(db, 'users', email, 'history');
+  const q = query(userCollection, orderBy('requestTimestamp'), limit(4), startAfter(next));
 
-
-  const userCollection = collection(db, 'users', email, 'history')
-  const q = query(userCollection, orderBy('requestTimestamp'),limit(4),  startAfter(next));
-
-
-
-  const snapShotUserHistory = await getDocs(q)
+  const snapShotUserHistory = await getDocs(q);
   // console.log(snapShotUserHistory.size);
-  const lastDoc = snapShotUserHistory.docs[snapShotUserHistory.docs.length - 1]
+  const lastDoc = snapShotUserHistory.docs[snapShotUserHistory.docs.length - 1];
 
+  snapShotUserHistory.forEach((doc) => {
+    snapshotItems.push(doc.data());
+  });
 
-  snapShotUserHistory.forEach(doc => {
-
-    snapshotItems.push(doc.data())
-
-  })
-
-  return {metrics: snapshotItems, lastSnapshot: lastDoc}
+  return { metrics: snapshotItems, lastSnapshot: lastDoc };
 };
 
+export const credentialUser = async (): Promise<User> => {
+  return await new Promise((resolve) => {
+    onAuthStateChanged(auth, (user) => {
+      resolve(user);
+    });
+  });
+};

@@ -1,11 +1,6 @@
 import React, { useState, type ChangeEvent, type Dispatch } from 'react';
-import type { IRestFullClient } from '~/routes/RestFullClient';
 
-interface IHeadersEditorComponent {
-  props: {
-    setOptions: Dispatch<React.SetStateAction<IRestFullClient['options']>>;
-  };
-}
+
 
 const HeadersEditorComponent = () => {
   const [headers, setHeaders] = useState<{ id: number; key: string; value: string }[]>([]);
@@ -26,7 +21,7 @@ const HeadersEditorComponent = () => {
     <div className='w-full flex flex-col gap-4 p-4 border-2 border-gray-400 rounded-xl'>
       <div className='flex items-center justify-between'>
         <h4 className='font-bold'>Headers:</h4>
-        <button onClick={onAddHeader} className='border-main border-2 rounded-xl p-2.5'>
+        <button type='button' onClick={onAddHeader} className='border-main border-2 rounded-xl p-2.5'>
           Add header
         </button>
       </div>

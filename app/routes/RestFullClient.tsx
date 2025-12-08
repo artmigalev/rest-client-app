@@ -1,46 +1,51 @@
-import { useEffect } from 'react';
-import { Form, href, NavLink, Outlet, useNavigate } from 'react-router';
-import HeadersEditorComponent from '~/components/restfull-client/HeadersEditorComponent';
-import MethodSelectorComponent from '~/components/restfull-client/MethodSelectorComponent';
-import TextInputForEndpointURLComponent from '~/components/restfull-client/TextInputForEndpointURLComponent';
+import { Form, href, NavLink, Outlet, useFetcher, useNavigate, useNavigation } from 'react-router';
 import type { Route } from './+types/RestFullClient';
-import { createdPayloadHistory } from '~/utils/createdPayloadHistory';
+import { useEffect } from 'react';
 import fetchWithSizes from '~/utils/fetchWrapper';
-import { updateUserHistory } from '~/firebase/apicalls';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '~/firebase';
+import { init } from 'i18next';
+import { createdPayloadHistory } from '~/utils/createdPayloadHistory';
+import { credentialUser, updateUserHistory } from '~/firebase/apicalls';
+import TextInputForEndpointURLComponent from '~/components/restfull-client/TextInputForEndpointURLComponent';
+import MethodSelectorComponent from '~/components/restfull-client/MethodSelectorComponent';
+import HeadersEditorComponent from '~/components/restfull-client/HeadersEditorComponent';
+import { aC } from 'node_modules/react-router/dist/development/routeModules-D5iJ6JYT';
 
-export interface IRestFullClient {
-  options: {
-    methodSelector: 'GET' | 'POST' | 'PUT';
-    textInput: string;
-    headers: ({ key: string; value: string } | null)[];
-  };
-  contextType: {
-    url: string;
-    method: string;
-    responseData: Promise<Response['json']>;
-    error: string;
-    headers: HeadersInit | null;
-  };
-}
+export type ClientResponse = {
+  success: boolean;
+  pathname: string;
+  error: null | string;
+  responseData?: { [key: string]: string } | { [key: string]: string }[];
+};
+
 export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) => {
-  console.log(request);
+
+  const decoderURL = decodeURIComponent(atob(params.encodedUrl || '')).trim();
+
+  return {url: decoderURL }
+};
+
+export async function clientAction({ request }: Route.ClientActionArgs) {
+  const formData = await request.formData();
+
+  const baseUrl = String(formData.get('url-endpoint'));
+  const method = String(formData.get('method-select'));
+  const headerParams = String(formData.get('headers'));
+
+  let clientResponse: ClientResponse = {
+    success: false,
+    pathname: '/client',
+    error: null,
+  };
 
   try {
-    const { encodedUrl, method } = params;
-    if (!encodedUrl) {
-      throw new Error('Please input endpoint');
+    if (!String(baseUrl).length) {
+      throw new Error('Endpoint is empty ');
     }
-    const url = new URL(request.url);
+    new URL(baseUrl);
 
-    const headerParams = url.searchParams.get('headers');
-
-    const decoderURL = decodeURIComponent(atob(encodedUrl || '')).trim();
-    const fullUrl = ''.concat(...['https://', decoderURL]);
     const headerObj: HeadersInit = {};
     if (headerParams) {
-      const headers = JSON.parse(headerParams) as [];
+      const headers = JSON.parse(headerParams);
       headers.forEach((header: { key: string; value: string }) => {
         if (header.key && header.value) {
           headerObj[header.key] = header.value;
@@ -48,130 +53,80 @@ export const clientLoader = async ({ request, params }: Route.ClientLoaderArgs) 
       });
     }
 
-    const { response, metrics } = await fetchWithSizes(fullUrl, {
-      method,
-      headers: headerObj,
-    });
-    const payload = await createdPayloadHistory(response, metrics, method);
-    console.log(payload, 'payload history');
+    const requestPayload = await fetchWithSizes(baseUrl, { method: method, headers: headerObj });
 
-    if (!response.ok) {
-      throw new Error('not valid endpoint');
-    }
+    const data = await requestPayload.response.json();
 
-    const data = await response.json();
-    return {
-      responseData: data,
-      methodSelect: method,
-      urlEndpoint: fullUrl,
-      headers: JSON.parse(headerParams),
-      payload,
-    };
-  } catch (error) {
-    console.log(error);
-    if (error instanceof Error) {
-      return { error: error.message };
-    }
-  }
-};
+    clientResponse.responseData = data;
+    clientResponse.success=true
+    const metricPayload = await createdPayloadHistory(requestPayload.response, requestPayload.metrics, 'GET');
+    const {email}= await credentialUser()
+    await updateUserHistory(email, metricPayload)
 
-export async function clientAction({ request }: Route.ClientActionArgs) {
-  try {
-    const formdata = await request.formData();
 
-    const baseUrl = String(formdata.get('base-url'));
-    const methodSelect = String(formdata.get('method-select')) as IRestFullClient['options']['methodSelector'];
-    const headers = String(formdata.get('headers'));
-
-    if (!baseUrl) {
-      throw new Error('URL не может быть пустым');
-    }
 
     const path = href('/client/:method?/:encodedUrl?', {
-      method: methodSelect.toUpperCase(),
-      encodedUrl: encodeURIComponent(btoa(baseUrl.replace('https://', ''))),
+      method: 'get',
+      encodedUrl: encodeURI(btoa(baseUrl)),
     });
-
     const url = new URL(path, location.origin);
-
-    if (headers) {
-      url.searchParams.set('headers', headers);
-    }
-    return {
-      newUrl: url.pathname + url.search,
-    };
+    clientResponse.pathname = url.pathname;
+    clientResponse.success = true;
+    return clientResponse;
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error.message);
+      clientResponse.error = error.message;
     }
+    if (error instanceof TypeError) {
+      clientResponse.error = 'Invalid URL';
+    }
+    return clientResponse;
   }
 }
 
-function RestFullClient({ loaderData, params, actionData }: Route.ComponentProps) {
+function RestFullClient({  loaderData }: Route.ComponentProps) {
+  const fetcher = useFetcher<typeof clientAction>({ key: 'client-action' });
+
   const navigate = useNavigate();
-  const [user, loading, error] = useAuthState(auth);
+
+  const stateLink = ({ isActive, isPending }) => ({
+    color: isActive ? 'red' : isPending ? 'blue' : 'black',
+  });
 
   useEffect(() => {
-    if (actionData?.newUrl) navigate(actionData.newUrl, { replace: true });
-  }, [actionData?.newUrl]);
+    if (fetcher.data?.pathname) {
 
-  useEffect(() => {
-    if (user?.email || loaderData?.payload) {
-      console.log('payload');
+      const { pathname } = fetcher.data;
+      navigate(`${pathname}/response`);
 
-      updateUserHistory(user?.email!, loaderData?.payload);
     }
-  }, [loaderData?.payload, user]);
+  }, [fetcher.data?.pathname]);
 
   return (
-    <div className='flex flex-col overflow-y-auto  p-3 pt-5 h-full'>
-      <Form method='post' action='/client' className='flex flex-col gap-4 items-center justify-between'>
-        <div className='flex flex-row w-full items-center'>
+    <section className='client'>
+      <fetcher.Form method='post' action='/client' key='client-action' className='form-client-endpoint'>
+        <div className='flex flex-row items-center justify-between '>
           <MethodSelectorComponent />
-          <TextInputForEndpointURLComponent url={loaderData?.urlEndpoint} />
-          <button
-            type='submit'
-            className='text-4xl! bg-input-bg h-full   flex items-center justify-center pr-2.5 rounded-t-xl rounded-b-xl cursor-pointer relative pb-3'
-          >
-            📨
-          </button>
+          <TextInputForEndpointURLComponent value={loaderData.url} />
         </div>
         <HeadersEditorComponent />
-      </Form>
-      <nav className='w-full py-2'>
-        <ul className='flex  bg-gray-400 rounded-2xl w-full '>
-          <li className=' text-center  padding-tabs w-full '>
-            <NavLink
-              className={({ isActive }) => (isActive ? 'active-link' : '')}
-              to='code-generate'
-              end
-              viewTransition
-            >
-              Generate Code
-            </NavLink>
-          </li>
-          <li className='text-center padding-tabs w-full '>
-            <NavLink className={({ isActive }) => (isActive ? 'active-link' : '')} to='response' end>
-              Response
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
-      <div className=' w-full min-h-72 h-full   bg-gray-400 rounded-2xl px-4 padding-tabs'>
-        <Outlet
-          context={
-            {
-              url: loaderData?.urlEndpoint || 'https://example.com',
-              method: loaderData?.methodSelect || 'GET',
-              responseData: loaderData?.responseData,
-              error: loaderData?.error || '',
-              headers: loaderData?.headers || null,
-            } satisfies IRestFullClient['contextType']
-          }
-        />
+      </fetcher.Form>
+
+      <div className='container-result '>
+        <nav className='w-full py-2 flex flex-row justify-around bg-[lightgray]'>
+          <NavLink style={stateLink} className={`${stateLink} navLink`} to='response' viewTransition end>
+            Response Section
+          </NavLink>
+          <NavLink className='navLink' style={stateLink} to='code-generate' end>
+            Generate Code
+          </NavLink>
+        </nav>
+        <Outlet />
       </div>
-    </div>
+    </section>
   );
 }
+
+
 
 export default RestFullClient;
